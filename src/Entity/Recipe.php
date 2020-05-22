@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RecipeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -76,6 +78,34 @@ class Recipe
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Type::class, inversedBy="recipes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="recipe", orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="recipe", orphanRemoval=true)
+     */
+    private $rates;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+        $this->rates = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -222,6 +252,92 @@ class Recipe
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getRecipe() === $this) {
+                $comment->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rate[]
+     */
+    public function getRates(): Collection
+    {
+        return $this->rates;
+    }
+
+    public function addRate(Rate $rate): self
+    {
+        if (!$this->rates->contains($rate)) {
+            $this->rates[] = $rate;
+            $rate->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRate(Rate $rate): self
+    {
+        if ($this->rates->contains($rate)) {
+            $this->rates->removeElement($rate);
+            // set the owning side to null (unless already changed)
+            if ($rate->getRecipe() === $this) {
+                $rate->setRecipe(null);
+            }
+        }
 
         return $this;
     }
