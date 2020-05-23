@@ -15,12 +15,17 @@
     <ul>
         <li>Your controller at <code><a href="{{ '/var/www/html/projet-0dechet/src/Controller/MainController.php'|file_link(0) }}">src/Controller/MainController.php</a></code></li>
         <li>Your template at <code><a href="{{ '/var/www/html/projet-0dechet/templates/main/index.html.twig'|file_link(0) }}">templates/main/index.html.twig</a></code></li>
-    </ul>    <pre>
-    {{ dump(bestRecipes) }}
-<pre>
+    </ul>
     <pre>
-    {{ dump(latestRecipes) }}
-<pre>
+        {{ dump(bestRecipes) }}
+    </pre>
+
+{{ form_start(form) }}
+
+    {{ form_row(form) }}
+    
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+{{ form_end(form) }}
 </div>
 
 {% endblock %}
