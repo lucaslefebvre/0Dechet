@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les recettes par type{% endblock %}
+
+{% block body %}
+{#}  {#}
+
+        {% for recipe in type.recipes %}
+            <div>{{recipe.name}}</div>
+        {% endfor %}
+
+
+
+{% endblock %}
