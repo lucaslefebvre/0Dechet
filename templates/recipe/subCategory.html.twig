@@ -1,19 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les recettes par catégories{% endblock %}
+{% block title %}Les recettes par sous catégorie{% endblock %}
 
 {% block body %}
+{#}  {#}
 
-{% for subCategory in category.subCategories %}
-    <div>{{subCategory.name}}</div>
     {% for type in subCategory.types %}
         <div>{{type.name}}</div>
         {% for recipe in type.recipes %}
             <div>{{recipe.name}}</div>
         {% endfor %}
-    {% endfor %}
+
 {% endfor %}
 
-
 {% endblock %}
-
