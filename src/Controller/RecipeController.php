@@ -2,9 +2,13 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Recipe;
 use App\Entity\SubCategory;
 use App\Entity\Type;
+use App\Form\RecipeType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -46,6 +50,31 @@ class RecipeController extends AbstractController
         return $this->render('recipe/type.html.twig', [
             'type' => $type,
             'title' => 'Affichage des recettes selon les types'
+        ]);
+    }
+
+
+     /**
+     * Method for add a new recipe. Send a form, receive the response and flush to the Database
+     * @Route("/ajout", name="new", methods={"GET","POST"})
+     */
+    public function addRecipe(Request $request)
+    {
+        $recipe = new Recipe();
+        $form = $this->createForm(RecipeType::class, $recipe);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($recipe);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('recipe_new');
+        }
+
+        return $this->render('recipe/new.html.twig', [
+            'recipe' => $recipe,
+            'form' => $form->createView(),
         ]);
     }
 
