@@ -327,3 +327,21 @@ label > span {
 .recipe {
     text-align: justify;
 }
+
+h5 {
+    margin-bottom: 1.5rem;
+}
+
+.recipe-division {
+    border-bottom: 1px solid #b7cbad;
+    align-self: center;
+    margin: 1rem 0;
+}
+
+ul.recipe-list li {
+    display: block;
+}
+
+.recipe-list ul {
+    margin-left: -15px;
+}
