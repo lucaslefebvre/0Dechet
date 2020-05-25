@@ -1,4 +1,6 @@
-/* Barre logo + Connexion */
+/* HEADER ALL PAGES */
+
+/* Logo bar + Connexion */
 
 .navbar-top {
     background-color: #739377;
@@ -24,7 +26,7 @@
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
-/* Barre de navigation  */
+/* Navigation bar */
 
 li.dropdown:hover > .dropdown-menu {
     display: block;
@@ -147,7 +149,16 @@ ul li{
     text-decoration: underline !important;
 }
 
-/* Main */
+/* FOOTER ALL PAGES */
+
+footer {
+    background-color: #739377;
+    text-align: center;
+    padding: 1rem;
+    color: #ffffff;
+}
+
+/* ALL PAGES - MAIN */
 
 .main-content {
     min-height: 100vh;
@@ -158,11 +169,11 @@ ul li{
 }
 
 .main-title h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     text-align: justify;
 }
 
-/* Cards */
+/* ALL PAGES - CARDS */
 
 .card {
     background-color: #f0f6e8;
@@ -221,7 +232,8 @@ ul li{
     margin-right: 1rem;
 }
 
-/* Menu left */
+/* RECIPES LIST */
+/* Left Navigation*/
 
 a {text-decoration: none;}
 
@@ -256,6 +268,7 @@ a {text-decoration: none;}
   max-height: 0;
   overflow: hidden;
   transition: max-height .5s ease-in-out;
+  padding-left: 1.5rem;
 }
  
 .nav__list input[type=checkbox]:checked + label + ul {
@@ -281,7 +294,7 @@ label > span {
 }
 
 .fa-angle-right {
-    margin-top: 0.4rem;
+    margin-top: 0.1rem;
     margin-right: 0.5rem;
 }
 
@@ -289,9 +302,10 @@ label > span {
     margin-bottom: 0.3rem;
 }
 
-/* Affichage d'une recette */
-/* Noter la recette */
-.rate-note .fa {
+/* RECIPE DETAILS PAGE */
+/* Recipe rating/comment */
+
+.form-rate .fa {
     font-size: 2rem;
     text-align: center;
 }
@@ -311,28 +325,40 @@ label > span {
     width: 230px;
 }
 
-.card-btn:hover {
+.rate-btn:hover, .comment-btn:hover {
     color: #ffffff;
     text-decoration: underline;
 }
 
-.card-btn:focus {
+.rate-btn:focus, .comment-btn:focus {
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
-/* Commentaire */
 .comments {
     height: 400px;
     background-color: #f9f5f1;
     margin-bottom: 3rem;
 }
 
-.recipe {
+.form-comment-title:hover, .form-comment-content:hover {
+    box-shadow: 0 0 5px #617e64;
+    border: 1px solid #617e64;
+}
+
+.form-comment-title:focus, .form-comment-content:focus {
+    box-shadow: 0 0 5px #617e64 !important;
+    border: 1px solid #617e64 !important; 
+}
+
+/* Recipe Details */
+
+.recipe-content {
     text-align: justify;
 }
 
-h5 {
+.recipe-main h5 {
     margin-bottom: 1.5rem;
+    font-weight: 700;
 }
 
 .recipe-division {
@@ -349,11 +375,6 @@ ul.recipe-list li {
     margin-left: -15px;
 }
 
-/* Footer */
-
-footer {
-    background-color: #739377;
-    text-align: center;
-    padding: 1rem;
-    color: #ffffff;
+.recipe-time-difficulty {
+    font-size: 1.1rem;
 }
