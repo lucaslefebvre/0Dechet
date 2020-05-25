@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recipe index{% endblock %}
+
+{% block body %}
+    <h1>Recipe index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Ingredient</th>
+                <th>Equipement</th>
+                <th>Content</th>
+                <th>Duration</th>
+                <th>Difficulty</th>
+                <th>Conservation</th>
+                <th>Image</th>
+                <th>Status</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>Slug</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recipe in recipes %}
+            <tr>
+                <td>{{ recipe.id }}</td>
+                <td>{{ recipe.name }}</td>
+                <td>{{ recipe.ingredient ? recipe.ingredient|join(', ') : '' }}</td>
+                <td>{{ recipe.equipement ? recipe.equipement|join(', ') : '' }}</td>
+                <td>{{ recipe.content }}</td>
+                <td>{{ recipe.duration }}</td>
+                <td>{{ recipe.difficulty }}</td>
+                <td>{{ recipe.conservation }}</td>
+                <td>{{ recipe.image }}</td>
+                <td>{{ recipe.status ? 'Yes' : 'No' }}</td>
+                <td>{{ recipe.createdAt ? recipe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ recipe.updatedAt ? recipe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ recipe.slug }}</td>
+                <td>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('recipe_new') }}">Create new</a>
+{% endblock %}

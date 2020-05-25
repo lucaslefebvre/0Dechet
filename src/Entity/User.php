@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
+    public function __toString()
+    {
+        return $this->username;
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
