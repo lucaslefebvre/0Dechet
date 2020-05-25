@@ -23,10 +23,10 @@ class CategoryRepository extends ServiceEntityRepository
     //  * @return Category[] Returns an array of Category objects
     //  */
     /*
-    public function findByExampleField($value)
+    public function findRecipeByCategory($value)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+            ->andWhere('c.name = :val')
             ->setParameter('val', $value)
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
