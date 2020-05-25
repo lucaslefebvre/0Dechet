@@ -289,12 +289,12 @@ label > span {
 
 /* Affichage d'une recette */
 /* Noter la recette */
-.rate_note .fa {
-    font-size: 10vh;
+.rate-note .fa {
+    font-size: 2rem;
     text-align: center;
 }
 
-button.rate, button.comment {
+.rate-btn, .comment-btn {
     background-color: #b7cbad !important;
     border: 2px solid #617e64; 
     font-size: 0.8rem;
@@ -302,9 +302,28 @@ button.rate, button.comment {
     text-transform: uppercase;
     font-weight: 700;
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
+    width: 180px;
+}
+
+.comment-btn {
+    width: 230px;
+}
+
+.card-btn:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.card-btn:focus {
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
 /* Commentaire */
 .comments {
     height: 400px;
+    background-color: #f9f5f1;
+}
+
+.recipe {
+    text-align: justify;
 }
