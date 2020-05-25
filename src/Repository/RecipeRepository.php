@@ -26,10 +26,7 @@ class RecipeRepository extends ServiceEntityRepository
     {
         $qb =  $this->createQueryBuilder('r');
         $qb
-            ->leftJoin('r.rates', 'ra')
-            ->addSelect("avg(ra.rate) as average_rate")
-            ->groupBy('r.id')
-            ->orderBy('average_rate', 'DESC')
+            ->orderBy('r.averageRate', 'DESC')
             ->setMaxResults(3)
         ;
             return $qb->getQuery()->getResult();
