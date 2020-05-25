@@ -149,6 +149,10 @@ ul li{
 
 /* Main */
 
+.main-content {
+    min-height: 100vh;
+}
+
 .main-title {
     border-bottom: 1px solid #000000;
 }
@@ -164,7 +168,8 @@ ul li{
     background-color: #f0f6e8;
     border: 0px solid #739377;
     border-radius: 0.25rem;
-    max-width: 280px;
+    min-width: 290px;
+    max-width: 290px;
 }
 
 .card-recipe-title {
