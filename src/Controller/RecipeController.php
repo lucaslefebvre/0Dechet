@@ -15,7 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 */
 class RecipeController extends AbstractController
 {
-    /**
+    /** /**
+     *  Method to display all the recipes in template/recipe/browse.html.twig
      * @Route("/", name="browse", methods={"GET"})
      */
     public function browse(RecipeRepository $recipeRepository): Response
@@ -27,6 +28,7 @@ class RecipeController extends AbstractController
     }
 
     /**
+     * TODO*
      * @Route("/ajout", name="new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -36,7 +38,7 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $recipe->setIngredient(['Pomme']);
+            $recipe->setIngredient(['Pomme', 'Banane', 'Sel']);
             $recipe->setEquipement(['Balance']);
 
             $entityManager = $this->getDoctrine()->getManager();
