@@ -149,10 +149,6 @@ ul li{
 
 /* Main */
 
-.main-content {
-    height: 100vh;
-}
-
 .main-title {
     border-bottom: 1px solid #000000;
 }
@@ -322,6 +318,7 @@ label > span {
 .comments {
     height: 400px;
     background-color: #f9f5f1;
+    margin-bottom: 3rem;
 }
 
 .recipe {
@@ -344,4 +341,13 @@ ul.recipe-list li {
 
 .recipe-list ul {
     margin-left: -15px;
+}
+
+/* Footer */
+
+footer {
+    background-color: #739377;
+    text-align: center;
+    padding: 1rem;
+    color: #ffffff;
 }
