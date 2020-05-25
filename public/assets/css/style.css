@@ -164,6 +164,7 @@ ul li{
     background-color: #f0f6e8;
     border: 0px solid #739377;
     border-radius: 0.25rem;
+    max-width: 280px;
 }
 
 .card-recipe-title {
