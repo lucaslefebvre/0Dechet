@@ -10,14 +10,14 @@
     <div>{{form_help (userForm.password) }}</div>
 
     <div class="user-form-label">{{form_label (userForm.image) }}</div>
-    <div>{{form_widget (userForm.image) }}</div>
+    <div class="user-form-widget">{{form_widget (userForm.image) }}</div>
 
     {% if userForm.cgu is defined %}
-    <div class="user-form-label">{{form_label(userForm.cgu) }}</div>
-    <div class="user-form-input">{{form_widget (userForm.cgu) }}</div>
+    <div>{{form_label (userForm.cgu) }}</div>
+    <div class="user-form-widget">{{form_widget (userForm.cgu) }}</div>
     {% endif %}
 
     <div class="submit-button-container">
     <button type="submit" class="btn form-btn">{{ button_label|default('Ajouter') }}</button>
     <div>
-{{ form_end(userForm)  }}
+{{ form_end(userForm) }}
