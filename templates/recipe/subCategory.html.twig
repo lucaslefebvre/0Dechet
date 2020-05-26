@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}0'dechet - {{subCategory.name}}{% endblock %}
 
 {% block body %}
 
-<div class="container">
+
+
     {% for type in subCategory.types %}
 
         {% for recipe in type.recipes %}
 
-            <div class="container">
+    <div class="container">
         <div class="card col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
           <div class="pt-3">
             <div class="card-recipe-img">
@@ -26,12 +26,13 @@
                 <p>{{recipe.user.username}}</p>
                 <a href="{{ path('recipe_show', {'slug': recipe.slug })}}" class="btn card-btn">Voir la recette</a>
             </div>
+            </div>
+        </div>
+    </div>
 
-
-          
+       
         {% endfor %}
-</div>
 
-{% endfor %}
+        {% endfor %}
 
 {% endblock %}

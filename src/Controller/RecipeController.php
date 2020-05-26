@@ -30,7 +30,7 @@ class RecipeController extends AbstractController
         ]);
     }
   
-/**
+    /**
      *  Method to display all information about a recipe in template/recipe/show.html.twig
      * @Route("/{slug}", name="show", methods={"GET"})
      */
@@ -78,7 +78,7 @@ class RecipeController extends AbstractController
     {
         return $this->render('recipe/category.html.twig', [
             'category' => $category,
-            'title' => 'Affichage des recettes selon les catégories'
+            'title' => $category->getName()
         ]);
     }
           
@@ -90,7 +90,7 @@ class RecipeController extends AbstractController
     {
         return $this->render('recipe/subCategory.html.twig', [
             'subCategory' => $subCategory,
-            'title' => 'Affichage des recettes selon les sous-catégories'
+            'title' => $subCategory->getName()
         ]);
     }
 
@@ -102,21 +102,7 @@ class RecipeController extends AbstractController
     {
         return $this->render('recipe/type.html.twig', [
             'type' => $type,
-            'title' => 'Affichage des recettes selon les types'
+            'title' => $type->getName()
         ]);
     }
-
-        /**
-     * Method to display the recipes by Types in the template type.html.twig from the directory recipe
-     * @Route("/{slug}", name="show")
-     */
-    public function show(Recipe $recipe)
-    {
-        return $this->render('recipe/show.html.twig', [
-            'recipe' => $recipe,
-            'title' => "Affichage d\'une recette"
-        ]);
-    }
-
-
 }
