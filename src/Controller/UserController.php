@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\CreateAccountType;
+use App\Form\DeleteType;
 use App\Services\FileUploader;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,5 +56,28 @@ class UserController extends AbstractController
             'userForm' => $userForm->createView(),
             'title'=>'Créer un profil'
         ]);
+    }
+
+    /**
+     * Method to allow a user to delete his/her account on the website
+     * @Route("/profil/suppression/{id}", name="user_delete", methods={"GET"}, requirements={"id": "\d+"})
+     */
+    public function delete(EntityManagerInterface $em, Request $request, User $user)
+    {
+        $formDelete = $this->createForm(DeleteType::class);
+        $formDelete->handleRequest($request);
+
+        // isValid va vérifier le token CSRF du formulaire et ainsi on s'assure que la requête n'a pas été forgée par un tiers
+        if ($formDelete->isSubmitted() && $formDelete->isValid()) {
+            $em->remove($user);
+            $em->flush();
+        }
+
+        $this->addFlash(
+            'success',
+            'Votre compte bien été supprimé.'
+        );
+
+        return $this->redirectToRoute('main_home');
     }
 }
