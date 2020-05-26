@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Rate;
 use App\Entity\Recipe;
 use App\Entity\SubCategory;
 use App\Entity\Type;
 use App\Entity\User;
+use App\Form\CommentType;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,8 +37,7 @@ class RecipeController extends AbstractController
             'title' => 'Toutes les recettes'
         ]);
     }
- 
-
+  
      /**
      * Method for add a new recipe. Send a form, receive the response and flush to the Database
      * @Route("/ajout", name="new", methods={"GET","POST"})
@@ -60,15 +62,40 @@ class RecipeController extends AbstractController
         ]);
     }
   
-    /**
+      /**
      *  Method to display all information about a recipe in template/recipe/show.html.twig
-     * @Route("/{slug}", name="show", methods={"GET","POST"})
+     * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
-    public function show(Recipe $recipe, UserInterface $user): Response
+    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, UserInterface $user): Response
     {
         $user = $this->getUser();
+        // Comment Form
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
 
-        if ($_POST) {
+      if ($_POST ) {
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            // Recipe linked to the comment
+            $comment->setRecipe($recipe);
+
+            $comment->setStatus(1);
+            $comment->setCreatedAt(new \DateTime());
+          
+            $comment->setUser($user);
+
+            $em = $this->getDoctrine()->getManager();
+            // Cette fois on persiste le genre car c'est un nouvel objet
+            $em->persist($comment);
+            $em->flush();
+
+            return $this->redirectToRoute('recipe_show', [
+                'slug' => $recipe->getSlug(),
+            ]);        
+        }
+      
+      //Homemade RateForm
+         else {
             $rate = new Rate();
             if (isset($_POST['star-5'])) {
                 $rating = 5;
@@ -89,16 +116,18 @@ class RecipeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($rate);
             $entityManager->flush();
-            return $this->redirectToRoute('recipe_browse');
+            return $this->redirectToRoute('recipe_show', [
+                'slug' => $recipe->getSlug(),
+            ]);        
         }
 
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
             'title' => $recipe->getName(),
+            'commentForm' => $commentForm->createView(),
         ]);
     }
-
-         
+        
      /**
      *  Method to display the recipes by Categories in the template category.html.twig from the directory recipe
      * @Route("/categorie/{slug}", name="browseByCategory")
