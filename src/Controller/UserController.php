@@ -44,7 +44,7 @@ class UserController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    'Votre compte à été créé. Vous pouvez dès à présent vous y connecter pour ajouter des recettes et des commentaires.'
+                    'Votre compte a été créé. Vous pouvez dès à présent vous y connecter pour ajouter des recettes et des commentaires.'
                 );
 
                 return $this->redirectToRoute('main_home');
