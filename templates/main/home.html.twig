@@ -1,10 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{{dump(allCategories)}}
-              {% for category in allCategories %}
-              {{dump(category.name)}}
-              {% endfor %}
 
     {% for message in app.flashes('success') %}
     <div class="flash-notice">

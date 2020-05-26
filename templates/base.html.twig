@@ -32,53 +32,27 @@
               <li class="nav-item">
                 <a class="nav-link" href="liste.html">Toutes les recettes</a>
               </li>
-  
-              {% for categories in allCategories %}
-              {% for category in categories %}
-              {{dump(category)}}
+              {% for category in allCategory %}
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
+                <a class="nav-link dropdown-toggle" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
                 <ul class="dropdown-menu dropright" aria-labelledby="navbarDropdown" role="menu">
+                  {% for subCategory in category.subCategories %}
                   <li class="dropdown-submenu">
-                    <a class="dropdown-item" href="#">Buanderie</a>
+                    <a class="dropdown-item" href="{{ path('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}</a>
                     <ul class="dropdown-menu">
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Lessive</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Détachant</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Assouplissant</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Repassage</a></li>
+                    {% for type in subCategory.types %}
+                      <li class="dropdown-item"><a class="dropdown-item" href="{{ path('recipe_browseByType', {'slug': type.slug}) }}">{{type.name}}</a></li>
+                    {% endfor %}
                     </ul>
                   </li>
-                  <li class="dropdown-submenu">
-                    <a class="dropdown-item" href="#">Cuisine et salle de bain</a>
-                    <ul class="dropdown-menu">
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Produits vaisselle</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Nettoyants de surface</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Nettoyants électroménagers</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Produits anticalcaire</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Nettoyant WC</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Miroirs et vitres</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown-submenu">
-                    <a class="dropdown-item" href="#">Garage et jardin</a>
-                    <ul class="dropdown-menu">
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Jardinage</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Entretien de la voiture</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Entretien de la terrasse</a></li>
-                    </ul>
-                  </li>    
+                  {% endfor %}
                 </ul>
               </li>
               {% endfor %}
-              {% endfor %}
-
-
-
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
               </li>
             </ul>
-
             <form class="form-inline my-2 my-lg-0 align-self-center d-lg-flex flex-nowrap">
               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Rechercher">
               <button class="btn my-sm-0 btn-search" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
