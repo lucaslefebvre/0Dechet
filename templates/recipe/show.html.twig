@@ -94,19 +94,20 @@
         </div>
         <div class="col-12 col-md-7 text-center">
           <h5>Ajouter un commentaire :</h5>
-          <form class="col-12 form-comment">
+          {# <form class="col-12 form-comment" method="post"> #}
+          {{ form_start(commentForm) }}
             <div class="row mt-3">
-              <label class="col-12">Titre</label>
-              <input class="col-12 form-comment-title" type="text">
+              <label class="col-12">{{form_label (commentForm.title) }} :</label>
+              {{form_widget (commentForm.title) }}
             </div>
             <div class="row mt-3">
-              <label class="col-12">Commentaires</label>
-              <textarea class="col-12 form-comment-content"></textarea>
+              <label class="col-12">{{form_label (commentForm.content) }} :</label>
+              {{form_widget (commentForm.content) }}
             </div>
             <div class="row justify-content-center m-3">
               <button class="mt-3 btn comment-btn" type="submit">Envoyer le commentaire</button>
             </div>
-          </form>
+          {{ form_end(commentForm) }}
         </div>
       </div>
       <div class="row justify-content-center">
