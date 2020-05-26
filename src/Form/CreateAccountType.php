@@ -71,6 +71,7 @@ class CreateAccountType extends AbstractType
             ->add('image', FileType::class, [
                 'required' => false,
                 'mapped' => false,
+                'attr' => ['placeholder' => 'Sélectionner votre fichier']
             ])
 
                 // To modify the form, it depend of the context
