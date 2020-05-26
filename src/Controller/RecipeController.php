@@ -58,10 +58,9 @@ class RecipeController extends AbstractController
             }
 
             $rate->setRate($rating);
-            $rate->setRecipe($recipe->getId());
-            $rate->setUser($user->id);
+            $rate->setRecipe($recipe);
+            $rate->setUser($user);
 
-            dd($rate);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($rate);
             $entityManager->flush();
