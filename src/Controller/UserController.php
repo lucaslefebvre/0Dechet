@@ -19,6 +19,10 @@ class UserController extends AbstractController
      */
     public function add(Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('main_home');
+        }
+
         $user = new User;
 
         $userForm = $this->createForm(CreateAccountType::class, $user);
