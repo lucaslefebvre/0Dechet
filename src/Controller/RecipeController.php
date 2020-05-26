@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Rate;
-use App\Entity\SubCategory;
 use App\Entity\Recipe;
+use App\Entity\SubCategory;
 use App\Entity\Type;
 use App\Entity\User;
 use App\Form\RecipeType;
@@ -32,6 +32,31 @@ class RecipeController extends AbstractController
         return $this->render('recipe/browse.html.twig', [
             'recipes' => $recipeRepository->findAll(),
             'title' => 'Toutes les recettes'
+        ]);
+    }
+ 
+
+     /**
+     * Method for add a new recipe. Send a form, receive the response and flush to the Database
+     * @Route("/ajout", name="new", methods={"GET","POST"})
+     */
+    public function addRecipe(Request $request)
+    {
+        $recipe = new Recipe();
+        $form = $this->createForm(RecipeType::class, $recipe);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($recipe);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('recipe_new');
+        }
+
+        return $this->render('recipe/new.html.twig', [
+            'recipe' => $recipe,
+            'form' => $form->createView(),
         ]);
     }
   
@@ -73,33 +98,6 @@ class RecipeController extends AbstractController
         ]);
     }
 
-
-    /**
-     *TODO
-     * @Route("/ajout", name="new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $recipe = new Recipe();
-        $form = $this->createForm(RecipeType::class, $recipe);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $recipe->setIngredient(['Pomme', 'Banane', 'Sel']);
-            $recipe->setEquipement(['Balance']);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($recipe);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('recipe_browse');
-        }
-
-        return $this->render('recipe/new.html.twig', [
-            'recipe' => $recipe,
-            'form' => $form->createView(),
-        ]);
-    }
          
      /**
      *  Method to display the recipes by Categories in the template category.html.twig from the directory recipe
@@ -136,4 +134,5 @@ class RecipeController extends AbstractController
             'title' => $type->getName()
         ]);
     }
+
 }

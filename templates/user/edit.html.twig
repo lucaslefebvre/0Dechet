@@ -1,32 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
-
 {% block body %}
 
-<main class="container main-content">
-    {{ form_start(userForm) }}
-
-        <div>{{form_label (userForm.username) }}</div>
-        <div class="user-form-help">{{form_widget (userForm.username) }}</div>
-
-        <div>{{form_label (userForm.email) }}</div>
-        <div class="user-form-help">{{form_widget (userForm.email) }}</div>
-
-        <div>{{form_widget (userForm.password) }}</div>
-        <div class="user-form-help">{{form_help (userForm.password) }}</div>
-
-        <div>{{form_widget (userForm.image) }}</div>
-        <div class="user-form-help">{{form_help (userForm.image) }}</div>
-
-        {% if userForm.cgu is defined %}
-        <div>{{form_label(userForm.cgu) }}</div>
-        <div class="user-form-input">{{form_widget (userForm.cgu) }}</div>
-        {% endif %}
-
-        <button type="submit" class="btn btn-warning">{{ button_label|default('Modifier') }}</button>
-
-    {{ form_end(userForm)  }}
+<main class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 pt-3 main-title">
+    <h2>Mettre à jour son profil</h2>
+    </div>
+  {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
+  <div>
+  
+    <form action="{{ path('user_delete', {'id': userForm.vars.data.id}) }}" method="post" class="ml-2">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="btn form-btn-delete">{{ button_label|default('Supprimer mon compte') }}</button>
+    </form>
 </main>
 
 {% endblock %}
