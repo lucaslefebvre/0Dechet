@@ -19,39 +19,25 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
-    // /** 
-    //  * @return Recipe[] Returns an array of Recipe objects
-    //  */
-    /*
-    public function getByType($slug)
+    /**
+     * @return Recipe[] Returns an array of the 3 best recipes objects order by the best average_rate
+     */
+    public function findBestRecipes()
     {
-        $qb = $this->createQueryBuilder('r');
-
+        $qb =  $this->createQueryBuilder('r');
         $qb
-
-            ->select('r')
-            ->leftJoin('r.type', 't')
-            ->addSelect('t')
-            ->where('t.slug = :slug')
-            ->setParameter('slug', $slug);
-            
-
+            ->orderBy('r.averageRate', 'DESC')
+            ->setMaxResults(3)
+        ;
             return $qb->getQuery()->getResult();
-
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Recipe
+    public function findLatestRecipes()
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->orderBy('r.createdAt', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
-
-
 }

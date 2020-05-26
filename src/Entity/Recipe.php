@@ -101,10 +101,20 @@ class Recipe
      */
     private $rates;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $averageRate;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->rates = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -338,6 +348,18 @@ class Recipe
                 $rate->setRecipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAverageRate(): ?float
+    {
+        return $this->averageRate;
+    }
+
+    public function setAverageRate(?float $averageRate): self
+    {
+        $this->averageRate = $averageRate;
 
         return $this;
     }

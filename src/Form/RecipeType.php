@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 class RecipeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -100,9 +99,7 @@ class RecipeType extends AbstractType
             ->add('type', null, [
                 'placeholder' => 'Sélectionner', 
                 'required' =>true,
-            ])
-
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
