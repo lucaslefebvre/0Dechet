@@ -76,58 +76,59 @@ class RecipeController extends AbstractController
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->handleRequest($request);
 
-      if ($_POST ) {
-        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            // Recipe linked to the comment
-            $comment->setRecipe($recipe);
+        if ($_POST) {
+            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+                // Recipe linked to the comment
+                $comment->setRecipe($recipe);
 
-            $comment->setStatus(1);
-            $comment->setCreatedAt(new \DateTime());
+                $comment->setStatus(1);
+                $comment->setCreatedAt(new \DateTime());
           
-            $comment->setUser($user);
+                $comment->setUser($user);
 
-            $em = $this->getDoctrine()->getManager();
-            // Cette fois on persiste le genre car c'est un nouvel objet
-            $em->persist($comment);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                // Cette fois on persiste le genre car c'est un nouvel objet
+                $em->persist($comment);
+                $em->flush();
 
-            return $this->redirectToRoute('recipe_show', [
+                return $this->redirectToRoute('recipe_show', [
                 'slug' => $recipe->getSlug(),
-            ]);        
-        }
-      
-      //Homemade RateForm
-         else {
-            $rate = new Rate();
-            if (isset($_POST['star-5'])) {
-                $rating = 5;
-            } elseif (isset($_POST['star-4'])) {
-                $rating = 4;
-            } elseif (isset($_POST['star-3'])) {
-                $rating = 3;
-            } elseif (isset($_POST['star-2'])) {
-                $rating = 2;
-            } else {
-                $rating = 1;
+            ]);
             }
+      
+            //Homemade RateForm
+            else {
+                $rate = new Rate();
+                if (isset($_POST['star-5'])) {
+                    $rating = 5;
+                } elseif (isset($_POST['star-4'])) {
+                    $rating = 4;
+                } elseif (isset($_POST['star-3'])) {
+                    $rating = 3;
+                } elseif (isset($_POST['star-2'])) {
+                    $rating = 2;
+                } else {
+                    $rating = 1;
+                }
 
-            $rate->setRate($rating);
-            $rate->setRecipe($recipe);
-            $rate->setUser($user);
+                $rate->setRate($rating);
+                $rate->setRecipe($recipe);
+                $rate->setUser($user);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($rate);
-            $entityManager->flush();
-            return $this->redirectToRoute('recipe_show', [
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($rate);
+                $entityManager->flush();
+                return $this->redirectToRoute('recipe_show', [
                 'slug' => $recipe->getSlug(),
-            ]);        
+            ]);
+            }
         }
-
-        return $this->render('recipe/show.html.twig', [
+            return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
             'title' => $recipe->getName(),
             'commentForm' => $commentForm->createView(),
         ]);
+        
     }
         
      /**
