@@ -29,27 +29,15 @@ class RecipeController extends AbstractController
             'title' => 'Toutes les recettes'
         ]);
     }
-  
-    /**
-     *  Method to display all information about a recipe in template/recipe/show.html.twig
-     * @Route("/{slug}", name="show", methods={"GET"})
-     */
-    public function show(Recipe $recipe): Response
-    {
-        return $this->render('recipe/show.html.twig', [
-            'recipe' => $recipe,
-            'title' => $recipe->getName()
-        ]);
-    }
-
 
     /**
-     *TODO
+     *
      * @Route("/ajout", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request)
     {
-        $recipe = new Recipe();
+        $recipe = new Recipe;
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
@@ -67,6 +55,18 @@ class RecipeController extends AbstractController
         return $this->render('recipe/new.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
+        ]);
+    }
+  
+    /**
+     *  Method to display all information about a recipe in template/recipe/show.html.twig
+     * @Route("/{slug}", name="show", methods={"GET"})
+     */
+    public function show(Recipe $recipe): Response
+    {
+        return $this->render('recipe/show.html.twig', [
+            'recipe' => $recipe,
+            'title' => $recipe->getName()
         ]);
     }
          

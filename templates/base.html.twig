@@ -32,8 +32,12 @@
               <li class="nav-item">
                 <a class="nav-link" href="liste.html">Toutes les recettes</a>
               </li>
+  
+              {% for categories in allCategories %}
+              {% for category in categories %}
+              {{dump(category)}}
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Entretien de la maison</a>
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
                 <ul class="dropdown-menu dropright" aria-labelledby="navbarDropdown" role="menu">
                   <li class="dropdown-submenu">
                     <a class="dropdown-item" href="#">Buanderie</a>
@@ -65,38 +69,11 @@
                   </li>    
                 </ul>
               </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hygiène et beauté</a>
-                <ul class="dropdown-menu dropright" aria-labelledby="navbarDropdown" role="menu">
-                  <li class="dropdown-submenu">
-                    <a class="dropdown-item" href="#">Douche et bain</a>
-                    <ul class="dropdown-menu">
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Savons</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Gels douche</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Galets et sels de bain</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown-submenu">
-                    <a class="dropdown-item" href="#">Soin du visage</a>
-                    <ul class="dropdown-menu">
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Crèmes et sérums</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Masques et gommages</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Nettoyants et démaquillants</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Soin de la barbe</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Soin des lèvres</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropdown-submenu">
-                    <a class="dropdown-item" href="#">Soin des cheveux</a>
-                    <ul class="dropdown-menu">
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Shampoings</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Après-shampoings et masques</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Colorations</a></li>
-                      <li class="dropdown-item"><a class="dropdown-item" href="#">Produits coiffants</a></li>
-                    </ul>
-                  </li> 
-                </ul>
-              </li>
+              {% endfor %}
+              {% endfor %}
+
+
+
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
               </li>
