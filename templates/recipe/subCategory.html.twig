@@ -1,44 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}0'dechet - {{subCategory.name}}{% endblock %}
-
 {% block body %}
-
-
-    {% for type in subCategory.types %}
-
-        {% for recipe in type.recipes %}
-
-      
-      
         <div class="col-12 col-md-8 col-lg-9 col-xl-10 mb-5">
           <div class="row pt-3 pl-3 ml-md-2 mr-md-1 main-title">
             <h2>{{subCategory.name}}</h2>
           </div>
-          <div class="row justify-content-center">
-            <div class="card col-11 col-sm-5 col-lg-3 pb-4 mt-3 mx-1 mx-md-2">
-              <div class="pt-3">
-                <div class="card-recipe-img">
-                  <a href="{{ path('recipe_show', {'slug': recipe.slug})}}"><img src="{{recipe.image}}" class="card-img-top" alt="{{recipe.name}}"></a>
-                </div>
-                <div class="card-body p-2">
-                  <h5 class="card-title card-recipe-title"><a href="{{ path('recipe_show', {'slug': recipe.slug})}}">{{recipe.image}}</a></h5>
-                  <p class="card-rate"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></p>
-                </div>
+          <div class="row justify-content-center"
+
+    {% for type in subCategory.types %}
+
+    {% for recipe in type.recipes %}
+    
+          <div class="card col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
+            <div class="pt-3">
+              <div class="card-recipe-img">
+                <a href="{{ path('recipe_show', {'slug': recipe.slug})}}"><img src="{{recipe.image}}" class="card-img-top" alt="{{recipe.name}}"></a>
               </div>
-              <div class="d-flex justify-content-center">
-                 <img src="{{recipe.user.image}}" class="card-profil-image" alt="{{recipe.user.image}}">
-                <div class="card-profil">
-                    <p>{{recipe.user.username}}</p>
-                    <a href="{{ path('recipe_show', {'slug': recipe.slug})}}" class="btn card-btn">Voir la recette</a>
-                </div>
+              <div class="card-body p-2">
+                <h5 class="card-title card-recipe-title"><a href="{{ path('recipe_show', {'slug': recipe.slug})}}">{{recipe.image}}</a></h5>
+                <p class="card-rate"><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></p>
               </div>
             </div>
+            <div class="d-flex justify-content-center">
+              <img src="{{recipe.user.image}}" class="card-profil-image" alt="{{recipe.user.image}}">
+              <div class="card-profil">
+                  <p>{{recipe.user.username}}</p>
+                  <a href="{{ path('recipe_show', {'slug': recipe.slug })}}" class="btn card-btn">Voir la recette</a>
             </div>
+          </div>
+     
+    {% endfor %}
+    {% endfor %}
+      </div>
         </div>
-       
-        {% endfor %}
-
-        {% endfor %}
-
 {% endblock %}
