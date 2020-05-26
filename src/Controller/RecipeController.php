@@ -19,6 +19,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class RecipeController extends AbstractController
 {
     /**
+     * Method for add a new recipe. Send a form, receive the response and flush to the Database
+     * @Route("/ajout", name="new", methods={"GET","POST"})
+     */
+    public function addRecipe(Request $request)
+    {
+        $recipe = new Recipe();
+        $form = $this->createForm(RecipeType::class, $recipe);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($recipe);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('recipe_browse');
+        }
+
+        return $this->render('recipe/new.html.twig', [
+            'recipe' => $recipe,
+            'form' => $form->createView(),
+        ]);
+    }    
+    
+    /**
      *  Method to display all the recipes in template/recipe/browse.html.twig
      * @Route("/", name="browse", methods={"GET"})
      */
@@ -42,34 +66,6 @@ class RecipeController extends AbstractController
         ]);
     }
 
-
-    /**
-     *TODO
-     * @Route("/ajout", name="new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $recipe = new Recipe();
-        $form = $this->createForm(RecipeType::class, $recipe);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $recipe->setIngredient(['Pomme', 'Banane', 'Sel']);
-            $recipe->setEquipement(['Balance']);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($recipe);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('recipe_browse');
-        }
-
-        return $this->render('recipe/new.html.twig', [
-            'recipe' => $recipe,
-            'form' => $form->createView(),
-        ]);
-    }
-         
      /**
      *  Method to display the recipes by Categories in the template category.html.twig from the directory recipe
      * @Route("/categorie/{slug}", name="browseByCategory")
