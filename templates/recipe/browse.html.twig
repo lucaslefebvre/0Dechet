@@ -33,7 +33,7 @@
                 {% else %}
                 <i class="fa fa-star-o" aria-hidden="true"></i>
                 {% endif %}
-              {% endfor %} 
+            {% endfor %} 
               </p>
             </div>
           </div>
@@ -41,7 +41,7 @@
             <img src="{{ asset('assets/images/' ~ recipe.user.image) }}" class="card-profil-image" alt="">
             <div class="card-profil">
                 <p>Proposé par {{ recipe.user }}</p>
-                <a href="#" class="btn card-btn">Voir la recette</a>
+                <a href="{{ path('recipe_show', { 'slug': recipe.slug }) }}" class="btn card-btn">Voir la recette</a>
                 {# {{ path('recipe_show', { 'slug': recipe.slug }) }} #}
             </div>
           </div>
