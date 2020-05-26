@@ -13,9 +13,9 @@ class DeleteType extends AbstractType
     {
         $builder
             ->setMethod('DELETE')
-            ->add('deleteButton', SubmitType::class, [
-                'label' => 'Supprimer',
-            ])
+            // ->add('deleteButton', SubmitType::class, [
+            //     'label' => 'Supprimer',
+            // ])
         ;
     }
 
