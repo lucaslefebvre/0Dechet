@@ -44,7 +44,7 @@ class RecipeController extends AbstractController
 
 
     /**
-     *TODO
+     * //Todo
      * @Route("/ajout", name="new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -103,18 +103,6 @@ class RecipeController extends AbstractController
         return $this->render('recipe/type.html.twig', [
             'type' => $type,
             'title' => 'Affichage des recettes selon les types'
-        ]);
-    }
-
-        /**
-     * Method to display the recipes by Types in the template type.html.twig from the directory recipe
-     * @Route("/{slug}", name="show")
-     */
-    public function show(Recipe $recipe)
-    {
-        return $this->render('recipe/show.html.twig', [
-            'recipe' => $recipe,
-            'title' => "Affichage d\'une recette"
         ]);
     }
 
