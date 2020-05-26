@@ -62,29 +62,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * Method to allow a user to delete his/her account on the website
-     * @Route("/profil/suppression/{id}", name="user_delete", methods={"GET"}, requirements={"id": "\d+"})
-     */
-    public function delete(EntityManagerInterface $em, Request $request, User $user)
-    {
-        $formDelete = $this->createForm(DeleteType::class);
-        $formDelete->handleRequest($request);
-
-        // isValid va vérifier le token CSRF du formulaire et ainsi on s'assure que la requête n'a pas été forgée par un tiers
-        if ($formDelete->isSubmitted() && $formDelete->isValid()) {
-            $em->remove($user);
-            $em->flush();
-        }
-
-        $this->addFlash(
-            'success',
-            'Votre compte bien été supprimé.'
-        );
-
-        return $this->redirectToRoute('main_home');
-    }
-      
      /**
      * Method to edit an existing account on the website
      * @Route("/profil/edition/{id}", name="user_edit", methods={"GET","POST"}, requirements={"id": "\d+"})
@@ -119,10 +96,38 @@ class UserController extends AbstractController
 
                 return $this->redirectToRoute('main_home');
             }
+            
+        $formDelete = $this->createForm(DeleteType::class, null, [
+            'action' => $this->generateUrl('user_delete', ['id' => $user->getId()])
+        ]);
 
         return $this->render('user/edit.html.twig', [
             'userForm' => $userForm->createView(),
+            'deleteForm' => $formDelete->createView(),
             'title'=>'Modifier son profil'
         ]);
+    }
+
+    /**
+     * Method to allow a user to delete his/her account on the website
+     * @Route("/profil/suppression/{id}", name="user_delete", methods={"DELETE"}, requirements={"id": "\d+"})
+     */
+    public function delete(EntityManagerInterface $em, Request $request, User $user)
+    {
+        $formDelete = $this->createForm(DeleteType::class);
+        $formDelete->handleRequest($request);
+
+        // isValid va vérifier le token CSRF du formulaire et ainsi on s'assure que la requête n'a pas été forgée par un tiers
+        if ($formDelete->isSubmitted() && $formDelete->isValid()) {
+            $em->remove($user);
+            $em->flush();
+        }
+
+        $this->addFlash(
+            'success',
+            'Votre compte bien été supprimé.'
+        );
+
+        return $this->redirectToRoute('main_home');
     }
 }
