@@ -378,3 +378,37 @@ ul.recipe-list li {
 .recipe-time-difficulty {
     font-size: 1.1rem;
 }
+
+/* concernant la partie formulaire d'inscription */
+.user-form-label,
+.user-form-input{
+    margin-top: 2rem;
+}
+
+.form-btn {
+    width:8rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    background-color: #b7cbad !important;
+    border: 2px solid #617e64; 
+    font-size: 0.8rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
+}
+
+.form-btn:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.form-btn:focus {
+    border: 2px solid #617e64; 
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
+}
+
+.submit-button-container{
+    display: flex;
+    justify-content: center;
+}

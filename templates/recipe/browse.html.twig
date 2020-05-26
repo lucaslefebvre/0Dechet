@@ -1,55 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recipe index{% endblock %}
-
 {% block body %}
-    <h1>Recipe index</h1>
+    <main class="container">
+      {# <div class="row justify-content-center">
+        <div class="col-12 col-md-8 px-4 py-3 mt-md-2 banner-top">
+          <p>Envie de partager une de vos recettes avec nous ? </p>
+          <p>Inscrivez-vous et rejoignez-nous dans l'aventure zéro déchet !</p>
+          <button class="btn banner-top-btn" type="button">Devenir membre</button>
+        </div>
+        <div class="col-12 col-md-8 px-4 py-3 mt-md-2 banner-top">
+          <p>Envie de partager une de vos recettes avec nous ? </p>
+          <button class="btn banner-top-btn" type="button">Ajouter une recette</button>
+        </div>
+      </div> #}
+      <div class="row justify-content-center best-recipes">
+        <div class="col-12 pt-3 main-title">
+          <h2>Toutes les recettes</h2>
+        </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Ingredient</th>
-                <th>Equipement</th>
-                <th>Content</th>
-                <th>Duration</th>
-                <th>Difficulty</th>
-                <th>Conservation</th>
-                <th>Image</th>
-                <th>Status</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>Slug</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for recipe in recipes %}
-            <tr>
-                <td>{{ recipe.id }}</td>
-                <td>{{ recipe.name }}</td>
-                <td>{{ recipe.ingredient ? recipe.ingredient|join(', ') : '' }}</td>
-                <td>{{ recipe.equipement ? recipe.equipement|join(', ') : '' }}</td>
-                <td>{{ recipe.content }}</td>
-                <td>{{ recipe.duration }}</td>
-                <td>{{ recipe.difficulty }}</td>
-                <td>{{ recipe.conservation }}</td>
-                <td>{{ recipe.image }}</td>
-                <td>{{ recipe.status ? 'Yes' : 'No' }}</td>
-                <td>{{ recipe.createdAt ? recipe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ recipe.updatedAt ? recipe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ recipe.slug }}</td>
-                <td>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="14">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('recipe_new') }}">Create new</a>
+{% for recipe in recipes %}
+        <div class="card col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
+          <div class="pt-3">
+            <div class="card-recipe-img">
+              <a href="recipe.html"><img src="{{ asset('assets/images/' ~ recipe.image) }}" class="card-img-top" alt="..."></a>
+            </div>
+            <div class="card-body p-2">
+              <h5 class="card-title card-recipe-title"><a href="recipe.html">{{ recipe.name }}</a></h5>
+              <p class="card-rate">
+            {% for i in 1..5 %}
+                {% if recipe.averageRate >= i %}
+                <i class="fa fa-star" aria-hidden="true"></i>
+                {% else %}
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                {% endif %}
+            {% endfor %} 
+              </p>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <img src="{{ asset('assets/images/' ~ recipe.user.image) }}" class="card-profil-image" alt="">
+            <div class="card-profil">
+                <p>Proposé par {{ recipe.user }}</p>
+                <a href="{{ path('recipe_show', { 'slug': recipe.slug }) }}" class="btn card-btn">Voir la recette</a>
+                {# {{ path('recipe_show', { 'slug': recipe.slug }) }} #}
+            </div>
+          </div>
+        </div>
+{% endfor %}
+    </main>
 {% endblock %}
