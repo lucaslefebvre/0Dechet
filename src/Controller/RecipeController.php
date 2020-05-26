@@ -37,6 +37,7 @@ class RecipeController extends AbstractController
             'title' => 'Toutes les recettes'
         ]);
     }
+
   
      /**
      * Method for add a new recipe. Send a form, receive the response and flush to the Database
@@ -44,7 +45,8 @@ class RecipeController extends AbstractController
      */
     public function addRecipe(Request $request)
     {
-        $recipe = new Recipe();
+        $recipe = new Recipe;
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
