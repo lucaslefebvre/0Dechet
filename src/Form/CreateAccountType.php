@@ -49,10 +49,10 @@ class CreateAccountType extends AbstractType
                 une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !',
                 'mapped'=>false,
                 'first_options'=>[
-                    'label'=>'Mot de passe'
+                    'label'=>'Mot de passe',
                 ],
                 'second_options'=>[
-                    'label'=>'Retapez le mot de passe'
+                    'label'=>'Retaper le mot de passe',
                 ],
                 'constraints'=> [
                     new NotBlank([
@@ -67,8 +67,8 @@ class CreateAccountType extends AbstractType
                     ])
                 ],
             ])
-
             ->add('image', FileType::class, [
+                'label'=>'Ajouter un photo de profil',
                 'required' => false,
                 'mapped' => false,
                 'attr' => ['placeholder' => 'Sélectionner votre fichier']
