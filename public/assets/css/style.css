@@ -424,3 +424,30 @@ ul.recipe-list li {
     display: flex;
     justify-content: center;
 }
+
+
+/* Rating star */
+.stars {
+	direction: rtl;
+	margin: 0 auto;
+}
+	
+label {
+    cursor: pointer;
+    margin: 0;
+}
+
+.fa-star, .fa-star-o {
+    color: #f4bca6;
+    font-size: 30px;
+}
+
+input:not(:checked) ~ label:not([for="difficulty-1"]) > .fa-star { display: none; }
+
+label:hover > .fa-star-o,
+label:hover ~ label > .fa-star-o,
+input:checked ~ label > .fa-star-o { display: none; }
+
+label:hover > .fa-star,
+label:hover ~ label > .fa-star,
+input:checked ~ label > .fa-star { display: inline-block !important; }
