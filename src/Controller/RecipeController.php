@@ -93,4 +93,17 @@ class RecipeController extends AbstractController
         ]);
     }
 
+        /**
+     * Method to display the recipes by Types in the template type.html.twig from the directory recipe
+     * @Route("/{slug}", name="show")
+     */
+    public function show(Recipe $recipe)
+    {
+        return $this->render('recipe/show.html.twig', [
+            'recipe' => $recipe,
+            'title' => "Affichage d\'une recette"
+        ]);
+    }
+
+
 }
