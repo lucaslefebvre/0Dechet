@@ -44,7 +44,7 @@ class RecipeController extends AbstractController
 
 
     /**
-     *TODO
+     * //Todo
      * @Route("/ajout", name="new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
@@ -105,4 +105,5 @@ class RecipeController extends AbstractController
             'title' => $type->getName()
         ]);
     }
+
 }
