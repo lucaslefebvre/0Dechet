@@ -30,6 +30,19 @@ class RecipeController extends AbstractController
         ]);
     }
   
+/**
+     *  Method to display all information about a recipe in template/recipe/show.html.twig
+     * @Route("/{slug}", name="show", methods={"GET"})
+     */
+    public function show(Recipe $recipe): Response
+    {
+        return $this->render('recipe/show.html.twig', [
+            'recipe' => $recipe,
+            'title' => $recipe->getName()
+        ]);
+    }
+
+
     /**
      *TODO
      * @Route("/ajout", name="new", methods={"GET","POST"})
