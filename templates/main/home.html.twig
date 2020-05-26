@@ -6,7 +6,6 @@
     <div class="flash-notice">
         <div class="alert alert-dismissible alert-success">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h4 class="alert-heading">Bienvenue!</h4>
             <p class="mb-0">{{message}}</p>
         </div>
     </div>
@@ -27,72 +26,24 @@
         </div>
         {% endif %}
       </div>
+
       <div class="row justify-content-center best-recipes">
         <div class="col-12 pt-3 main-title">
           <h2>Les recettes les mieux notées</h2>
         </div>
-
-{% for recipe in bestRecipes %}
-        <div class="card col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
-          <div class="pt-3">
-            <div class="card-recipe-img">
-              <a href="{# {{ path('recipe_show', { 'slug': recipe.slug }) }} #}"><img src="{{ asset('assets/images/photo-recette.jpg') }}" class="card-img-top" alt="photo de la recette"></a>
-            </div>
-            <div class="card-body p-2">
-              <h5 class="card-title card-recipe-title"><a href="{# {{ path('recipe_show', { 'slug': recipe.slug }) }} #}">{{recipe.name}}</a></h5>
-              <p class="card-rate">
-              {% for i in 1..5 %}
-                {% if recipe.averageRate >= i %}
-                <i class="fa fa-star" aria-hidden="true"></i>
-                {% else %}
-                <i class="fa fa-star-o" aria-hidden="true"></i>
-                {% endif %}
-              {% endfor %}
-              </p>
-            </div>
-          </div>
-          <div class="d-flex justify-content-center">
-            <img src="{{ asset ('assets/images/image-profil.png') }}" class="card-profil-image" alt="">
-            <div class="card-profil">
-                <p>{{recipe.user.username}}</p>
-                <a href="{# {{ path('recipe_show', { 'slug': recipe.slug }) }} #}" class="btn card-btn">Voir la recette</a>
-            </div>
-          </div>
-        </div>
-{% endfor %}
+      {% for recipe in bestRecipes %}
+        {{ include('partials/card.html.twig') }}
+      {% endfor %}
+      </div>
 
       <div class="row justify-content-center last-recipes mb-5">
         <div class="col-12 pt-3 main-title">
           <h2>Les dernières recettes</h2>
         </div>
-{% for recipe in latestRecipes %}
-        <div class="card col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
-          <div class="pt-3">
-            <div class="card-recipe-img">
-              <a href="{# {{ path('recipe_show', { 'slug': recipe.slug }) }} #}"><img src="{{ asset('assets/images/photo-recette.jpg') }}" class="card-img-top" alt="photo de la recette"></a>
-            </div>
-            <div class="card-body p-2">
-              <h5 class="card-title card-recipe-title"><a href="{# {{ path('recipe_show', { 'slug': recipe.slug }) }} #}">{{recipe.name}}</a></h5>
-              <p class="card-rate">
-              {% for i in 1..5 %}
-                {% if recipe.averageRate >= i %}
-                <i class="fa fa-star" aria-hidden="true"></i>
-                {% else %}
-                <i class="fa fa-star-o" aria-hidden="true"></i>
-                {% endif %}
-              {% endfor %}
-              </p>
-            </div>
-          </div>
-          <div class="d-flex justify-content-center">
-            <img src="{{ asset ('assets/images/image-profil.png') }}" class="card-profil-image" alt="">
-            <div class="card-profil">
-                <p>{{recipe.user.username}}</p>
-                <a href="{# {{ path('recipe_show', { 'slug': recipe.slug }) }} #}" class="btn card-btn">Voir la recette</a>
-            </div>
-          </div>
-        </div>
-{% endfor %}
+        {% for recipe in latestRecipes %}
+          {{ include('partials/card.html.twig') }}
+        {% endfor %}
+      </div>
     </main>
 
 {% endblock %}

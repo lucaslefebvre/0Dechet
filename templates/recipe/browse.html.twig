@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <main class="container">
+    <main class="container-fluid">
       {# <div class="row justify-content-center">
         <div class="col-12 col-md-8 px-4 py-3 mt-md-2 banner-top">
           <p>Envie de partager une de vos recettes avec nous ? </p>
@@ -13,39 +13,20 @@
           <button class="btn banner-top-btn" type="button">Ajouter une recette</button>
         </div>
       </div> #}
-      <div class="row justify-content-center best-recipes">
-        <div class="col-12 pt-3 main-title">
-          <h2>Toutes les recettes</h2>
-        </div>
+      <div class="row justify-content-center main-content">
 
-{% for recipe in recipes %}
-        <div class="card col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
-          <div class="pt-3">
-            <div class="card-recipe-img">
-              <a href="recipe.html"><img src="{{ asset('assets/images/' ~ recipe.image) }}" class="card-img-top" alt="..."></a>
-            </div>
-            <div class="card-body p-2">
-              <h5 class="card-title card-recipe-title"><a href="recipe.html">{{ recipe.name }}</a></h5>
-              <p class="card-rate">
-            {% for i in 1..5 %}
-                {% if recipe.averageRate >= i %}
-                <i class="fa fa-star" aria-hidden="true"></i>
-                {% else %}
-                <i class="fa fa-star-o" aria-hidden="true"></i>
-                {% endif %}
-            {% endfor %} 
-              </p>
-            </div>
+      {{ include('partials/left-nav.html.twig') }}
+
+        <div class="col-12 col-md-8 col-lg-9 col-xl-10 mb-5">
+          <div class="row pt-3 pl-3 ml-md-2 mr-md-1 main-title">
+            <h2>Toutes les recettes</h2>
           </div>
-          <div class="d-flex justify-content-center">
-            <img src="{{ asset('assets/images/' ~ recipe.user.image) }}" class="card-profil-image" alt="">
-            <div class="card-profil">
-                <p>Proposé par {{ recipe.user }}</p>
-                <a href="{{ path('recipe_show', { 'slug': recipe.slug }) }}" class="btn card-btn">Voir la recette</a>
-                {# {{ path('recipe_show', { 'slug': recipe.slug }) }} #}
-            </div>
+          <div class="row justify-content-center">
+          {% for recipe in recipes %}
+            {{ include('partials/card.html.twig') }}
+          {% endfor %}
           </div>
         </div>
-{% endfor %}
+      </div>
     </main>
 {% endblock %}
