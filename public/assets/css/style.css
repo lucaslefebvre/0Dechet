@@ -160,6 +160,10 @@ footer {
 
 /* ALL PAGES - MAIN */
 
+main {
+    min-height: 100vh;
+}
+
 .main-content {
     min-height: 100vh;
 }
@@ -452,4 +456,10 @@ input:checked ~ label > .fa-star-o { display: none; }
 
 label:hover > .fa-star,
 label:hover ~ label > .fa-star,
-input:checked ~ label > .fa-star { display: inline-block !important; }
+input:checked ~ label > .fa-star { display: inline-block !important;}
+
+/* USER PROFILE */
+
+.user-profil-img {
+    max-height: 200px;
+}

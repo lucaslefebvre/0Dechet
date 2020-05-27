@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\CreateAccountType;
 use App\Form\DeleteType;
+use App\Repository\UserRepository;
 use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +16,18 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
+    /**
+     * Method to display the account page of the connected user
+     * @Route("/profil/{id}", name="user_read", methods={"GET"}, requirements={"id": "\d+"})
+     */
+    public function read(User $user)
+    {
+        return $this->render('user/read.html.twig', [
+            'user' => $user,
+            'title' => 'Mon profil'
+        ]);
+    }
+
     /**
      * Method to create a new account on the website
      * @Route("/inscription", name="user_add", methods={"GET","POST"})
