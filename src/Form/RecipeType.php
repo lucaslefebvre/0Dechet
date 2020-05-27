@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Recipe;
+use App\Entity\Type;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -99,6 +101,14 @@ class RecipeType extends AbstractType
             ->add('type', null, [
                 'placeholder' => 'Sélectionner', 
                 'required' =>true,
+            ])
+
+            ->add('type', EntityType::class, [
+                'class' => Type::class,
+                'label' => false,
+                'group_by' => function(Type $type) {
+                    return $type->getSubCategory()->getName();
+                }
             ]);
     }
 
