@@ -19,22 +19,37 @@
             </a>
             <button class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-connexion" type="button">Connexion</button>
         </nav>
+        {% set route = app.request.attributes.get('_route') %}
+        {% set appSubCategory = app.request.attributes.get('subCategory') %}
+        {% set appType = app.request.attributes.get('type') %}
         <nav class="d-flex navbar navbar-light navbar-expand-lg navbar-bottom">
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-
           <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
             <ul class="navbar-nav">
-              <li class="nav-item active">
+              {% if route == 'main_home' %}<li class="nav-item active">{% else %}<li class="nav-item">{% endif %}
                 <a class="nav-link" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
+              {% if route == 'recipe_browse' %}<li class="nav-item active">{% else %}<li class="nav-item">{% endif %}
                 <a class="nav-link" href="{{ path('recipe_browse') }}">Toutes les recettes</a>
               </li>
               {% for category in allCategory %}
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
+              <li class="nav-item dropdown ">
+              
+                {% if category.slug == app.request.attributes.get('slug') %}
+                <a class="nav-link dropdown-toggle active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}" role="button" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
+
+                {% elseif appSubCategory is not null and appSubCategory.category == category %}
+                <a class="nav-link dropdown-toggle active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}" role="button" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
+
+                {% elseif appType is not null and appType.subCategory.category == category %}
+                <a class="nav-link dropdown-toggle active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}" role="button" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
+
+                {% else %}
+                <a class="nav-link dropdown-toggle" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}" role="button" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
+                {% endif %}
+                
                 <ul class="dropdown-menu dropright" aria-labelledby="navbarDropdown" role="menu">
                   {% for subCategory in category.subCategories %}
                   <li class="dropdown-submenu">
