@@ -27,7 +27,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class RecipeController extends AbstractController
 {
     /**
-     *  Method to display all the recipes in template/recipe/browse.html.twig
+     * Method to display all the recipes in template/recipe/browse.html.twig
      * @Route("/", name="browse", methods={"GET"})
      */
     public function browse(RecipeRepository $recipeRepository): Response
@@ -35,6 +35,24 @@ class RecipeController extends AbstractController
         return $this->render('recipe/browse.html.twig', [
             'recipes' => $recipeRepository->findAll(),
             'title' => 'Toutes les recettes'
+        ]);
+    }
+
+    /**
+     * Method to display results for research done in the nav search bar
+     * Submit the search bar form will redirect on this route
+     * @Route("/recherche", name="search", methods={"GET"})
+     */
+    public function search(RecipeRepository $recipeRepository, Request $request): Response
+    {
+        //We recuperate the data send in the url by the search form
+        $q = $request->query->get('search');
+        //Then put it in our customQuery
+        $recipes = $recipeRepository->findAllWithSearch($q);
+        //dd($recipes);
+        return $this->render('recipe/search.html.twig', [
+            'recipes' => $recipes,
+            'title' => 'Résultat pour '.$q
         ]);
     }
 
