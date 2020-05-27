@@ -99,18 +99,7 @@ class RecipeController extends AbstractController
             //Homemade RateForm
             else {
                 $rate = new Rate();
-                if (isset($_POST['star-5'])) {
-                    $rating = 5;
-                } elseif (isset($_POST['star-4'])) {
-                    $rating = 4;
-                } elseif (isset($_POST['star-3'])) {
-                    $rating = 3;
-                } elseif (isset($_POST['star-2'])) {
-                    $rating = 2;
-                } else {
-                    $rating = 1;
-                }
-
+                $rating = $_POST['difficulty'];
                 $rate->setRate($rating);
                 $rate->setRecipe($recipe);
                 $rate->setUser($user);

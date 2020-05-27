@@ -86,27 +86,27 @@
             <div class="row justify-content-center m-3">
               <form action="" method="post">
                 <div class="stars">
-                  <input type="radio" name="star-5" id="difficulty-5" hidden>
+                  <input type="radio" name="difficulty" id="difficulty-5" value="5" hidden>
                   <label for="difficulty-5">
                       <i class="fa fa-star"></i>
                       <i class="fa fa-star-o"></i>
                   </label>
-                  <input type="radio" name="star-4" id="difficulty-4" hidden>
+                  <input type="radio" name="difficulty" id="difficulty-4" value="4" hidden>
                   <label for="difficulty-4">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-o"></i>
                   </label>
-                  <input type="radio" name="star-3" id="difficulty-3" hidden>
+                  <input type="radio" name="difficulty" id="difficulty-3" value="3" hidden>
                   <label for="difficulty-3">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-o"></i>
                   </label>
-                  <input type="radio" name="star-2" id="difficulty-2" hidden>
+                  <input type="radio" name="difficulty" id="difficulty-2" value="2" hidden>
                   <label for="difficulty-2">
                     <i class="fa fa-star"></i>
                     <i class="fa fa-star-o"></i>
                   </label>
-                  <input type="radio" name="star-1" id="difficulty-1" hidden checked>
+                  <input type="radio" name="difficulty" id="difficulty-1" value="1" hidden>
                   <label for="difficulty-1">
                     <i class="fa fa-star"></i>
                   </label>
@@ -160,3 +160,11 @@
       </div>
     </main>
 {% endblock %}
+
+{% block javascript %}
+  <script type="text/javascript">
+let rating = document.querySelector('input:checked').value;
+$.post("{{ path('recipe_show') }}", {variable : rating},function data(reply){});
+</script>
+{% endblock %}
+
