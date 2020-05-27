@@ -15,6 +15,7 @@ use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
 use App\Services\Slugger;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,6 +61,7 @@ class RecipeController extends AbstractController
   
      /**
      * Method for add a new recipe. Send a form, receive the response and flush to the Database
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/ajout", name="new", methods={"GET","POST"})
      */
     public function add(Request $request, Slugger $slugger)
@@ -87,9 +89,8 @@ class RecipeController extends AbstractController
      *  Method to display all information about a recipe in template/recipe/show.html.twig
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
-    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, UserInterface $user): Response
+    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
-        $user = $this->getUser();
         // Comment Form
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
@@ -103,7 +104,7 @@ class RecipeController extends AbstractController
                 $comment->setStatus(1);
                 $comment->setCreatedAt(new \DateTime());
           
-                $comment->setUser($user);
+                $comment->setUser($this->getUser());
 
                 $em = $this->getDoctrine()->getManager();
                 // Cette fois on persiste le genre car c'est un nouvel objet
@@ -121,7 +122,7 @@ class RecipeController extends AbstractController
                 $rating = $_POST['difficulty'];
                 $rate->setRate($rating);
                 $rate->setRecipe($recipe);
-                $rate->setUser($user);
+                $rate->setUser($this->getUser());
 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($rate);

@@ -20,12 +20,22 @@ body {
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
-.header-btn-connexion:hover {
+.header-btn-deconnexion {
+    background-color: #f4bca6; 
+    border: 2px solid  #F1AF96; 
+    font-size: 0.8rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
+}
+
+.header-btn-connexion:hover, .header-btn-deconnexion:hover {
     color: #ffffff;
     text-decoration: underline;
 }
 
-.header-btn-connexion:focus {
+.header-btn-connexion:focus, .header-btn-deconnexion:focus {
     border: 2px solid #617e64; 
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }

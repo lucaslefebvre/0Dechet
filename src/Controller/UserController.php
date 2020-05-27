@@ -8,6 +8,7 @@ use App\Form\DeleteType;
 use App\Repository\UserRepository;
 use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -77,6 +78,7 @@ class UserController extends AbstractController
 
      /**
      * Method to edit an existing account on the website
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/profil/edition/{id}", name="user_edit", methods={"GET","POST"}, requirements={"id": "\d+"})
      */
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
@@ -125,6 +127,7 @@ class UserController extends AbstractController
 
     /**
      * Method to allow a user to delete his/her account on the website
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/profil/suppression/{id}", name="user_delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
     public function delete(EntityManagerInterface $em, Request $request, User $user)
