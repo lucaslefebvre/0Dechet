@@ -54,17 +54,18 @@ class CreateAccountType extends AbstractType
                 'second_options'=>[
                     'label'=>'Retaper le mot de passe',
                 ],
+                'invalid_message' => 'Les deux mots de passe ne correspondent pas',
                 'constraints'=> [
                     new NotBlank([
                     'allowNull'=>true,
                     'normalizer'=>'trim',
                     'message'=>'Ce champ ne doit pas être vide',
                     ]),
-                    new Regex([
+                    /*new Regex([
                         'pattern'=>'/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/',
                         'message' => 'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,
                          une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !',
-                    ])
+                    ])*/
                 ],
             ])
             ->add('image', FileType::class, [
@@ -99,17 +100,18 @@ class CreateAccountType extends AbstractType
                         'second_options'=>[
                             'label'=>'Retapez le mot de passe'
                         ],
+                        'invalid_message' => 'Les deux mots de passe ne correspondent pas',
                         'required'=>'true',
                         'constraints'=> [
                             new NotBlank([
                             'normalizer'=>'trim',
                             'message'=>'Ce champ ne doit pas être vide',
                             ]),
-                            new Regex([
+                            /*new Regex([
                                 'pattern'=>'/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/',
                                 'message' => 'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,
                                  une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !',
-                            ])
+                            ])*/
                         ],
                     ]);
                 }

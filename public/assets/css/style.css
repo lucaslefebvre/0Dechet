@@ -49,10 +49,6 @@ li.dropdown:hover > .dropdown-menu {
 .dropdown:hover>.dropdown-menu {
     display: block;
 }
-  
-.dropdown>.dropdown-toggle:active {
-    pointer-events: none;
-}
 
 .dropdown:hover>.dropdown-menu {
     display: block;
@@ -73,10 +69,6 @@ ul li{
     
 .ml-auto {
     display:inline-block!important;
-}
-  
-.dropdown>.dropdown-toggle:active {
-    pointer-events: none;
 }
 
 .dropdown-submenu:hover>.dropdown-menu {
@@ -159,7 +151,8 @@ ul li{
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
-.active .nav-link {
+.active .nav-link,
+.active{
     text-decoration: underline !important;
 }
 
@@ -268,14 +261,22 @@ a {text-decoration: none;}
 }
 
 /* Styling top level items */
+.nav{
+    margin-right: 2rem;
+}
 
-.nav a,
-.nav label {
-  display: block;
+.left-nav-link-type,
+.left-nav-link{
+    color: #000000;
+}
+
+.left-nav-link-type{
+    display: block;
 }
 
 .nav label {
     cursor: pointer;
+    display: block;
 }
 
 /* Hide nested lists */
@@ -296,12 +297,12 @@ a {text-decoration: none;}
 
 /* Rotating chevron icon */
 
-label > span {
-  float: left;
+label > i {
+  float: right;
   transition: transform .65s ease;
 }
 
-.nav__list input[type=checkbox]:checked + label > span {
+.nav__list input[type=checkbox]:checked + label > i {
     transform: rotate(90deg);
 }
 
@@ -309,6 +310,7 @@ label > span {
     background-color: #f0f6e8;
     margin-left: -15px;
     margin-top: -8px;
+    padding-right: 2rem;
 }
 
 .fa-angle-right {
