@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<main class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 pt-3 mb-5 main-title">
+      <h2>Admin</h2>
+    </div>
+    <a href=""><button class="btn banner-top-btn mb-5" type="button">Accéder au BackOffice</button></a>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-12 pt-3 mb-3 main-title">
+      <h2>Mon profil</h2>
+    </div>
+  </div>
+  <div class="row justify-content-center align-items-center mb-3">
+    <div class="col-12 col-sm-6 mb-3 mb-sm-0 text-center text-sm-right">
+    {% if user.image is not empty %}
+      <img src="{{ asset('assets/images/users/' ~ user.image) }}" class="img-fluid user-profil-img ml-auto" alt="Photo de profil de {{user.username}}">
+    {% else %}
+      <img src="{{ asset('assets/images/default-user.png') }}" class="img-fluid user-profil-img ml-auto" alt="">
+    {% endif %}
+    </div>
+    <div class="col-12 col-sm-6 text-center text-sm-left">
+      <p>Pseudo : {{user.username}}<br>
+      Email : {{user.email}}</p>
+      <a href="{{ path('user_edit', {'id': user.id })}}"><button class="btn banner-top-btn" type="button">Modifier le profil</button></a>
+    </div>
+  </div>
+
+    <div class="row justify-content-center mb-5">
+      <div class="col-12 pt-3 mb-3 main-title">
+        <h2>Mes recettes</h2>
+      </div>
+      {% for recipe in user.recipes %}
+        <div class="card col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
+          <div class="pt-3">
+            <div class="card-recipe-img">
+            {% if recipe.image is not empty %}
+              <a href="{{ path('recipe_show', {'slug': recipe.slug})}}"><img src="{{ asset('assets/images/recipes/' ~ recipe.image) }}" class="card-img-top" alt="{{recipe.name}}"></a>
+            {% else %}
+              <a href="{{ path('recipe_show', {'slug': recipe.slug})}}"><img src="{{ asset('assets/images/default-recipe.jpg') }}" class="card-img-top" alt="Logo 0'Déchet"></a>
+            {% endif %}
+            </div>
+            <div class="card-body p-2">
+              <h5 class="card-title card-recipe-title"><a href="{{ path('recipe_show', {'slug': recipe.slug})}}">{{ recipe.name }}</a></h5>
+              <p class="card-rate">
+          {% for i in 1..5 %}
+              {% if recipe.averageRate >= i %}
+              <i class="fa fa-star" aria-hidden="true"></i>
+              {% else %}
+              <i class="fa fa-star-o" aria-hidden="true"></i>
+              {% endif %}
+          {% endfor %} 
+              </p>
+            </div>
+          </div>
+          <div class="row justify-content-center mb-2">
+            <a href="{{ path('recipe_show', {'slug': recipe.slug })}}" class="btn card-btn">Voir la recette</a>
+          </div>
+          <div class="row justify-content-center">
+            <a href="" class="btn card-btn">Modifier la recette</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+</main>
+
+{% endblock %}
