@@ -404,6 +404,7 @@ ul.recipe-list li {
     background-color: #f4bca6; 
     border: 2px solid  #F1AF96; 
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
+    margin-left: 1rem;
 }
 
 .form-btn:hover, .form-btn-delete:hover {

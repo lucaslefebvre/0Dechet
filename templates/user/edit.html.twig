@@ -10,10 +10,9 @@
   {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
   <div>
   
-    <form action="{{ path('user_delete', {'id': userForm.vars.data.id}) }}" method="post" class="ml-2">
-        <input type="hidden" name="_method" value="delete">
-        <button type="submit" class="btn form-btn-delete">{{ button_label|default('Supprimer mon compte') }}</button>
-    </form>
+    {{ form_start(deleteForm) }}
+      {{ form_widget(deleteForm.deleteButton, {'attr': {'class': 'form-btn-delete'}}) }}
+    {{ form_end(deleteForm) }}
 </main>
 
 {% endblock %}

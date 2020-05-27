@@ -93,7 +93,7 @@ class RecipeController extends AbstractController
 
                 return $this->redirectToRoute('recipe_show', [
                 'slug' => $recipe->getSlug(),
-            ]);
+                ]);
             }
       
             //Homemade RateForm
@@ -120,7 +120,7 @@ class RecipeController extends AbstractController
                 $entityManager->flush();
                 return $this->redirectToRoute('recipe_show', [
                 'slug' => $recipe->getSlug(),
-            ]);
+                ]);
             }
         }
             return $this->render('recipe/show.html.twig', [

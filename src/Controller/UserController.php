@@ -94,7 +94,9 @@ class UserController extends AbstractController
                     'Votre compte a bien été modifié.'
                 );
 
-                return $this->redirectToRoute('main_home');
+                return $this->redirectToRoute('user_edit', [
+                    'id' => $user->getId(),
+                ]);
             }
             
         $formDelete = $this->createForm(DeleteType::class, null, [
@@ -117,17 +119,20 @@ class UserController extends AbstractController
         $formDelete = $this->createForm(DeleteType::class);
         $formDelete->handleRequest($request);
 
-        // isValid va vérifier le token CSRF du formulaire et ainsi on s'assure que la requête n'a pas été forgée par un tiers
         if ($formDelete->isSubmitted() && $formDelete->isValid()) {
             $em->remove($user);
             $em->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre compte bien été supprimé.'
+            );
+
+            return $this->redirectToRoute('main_home');
         }
 
-        $this->addFlash(
-            'success',
-            'Votre compte bien été supprimé.'
-        );
-
-        return $this->redirectToRoute('main_home');
+        return $this->redirectToRoute('user_edit', [
+            'id' => $user->getId(),
+        ]);
     }
 }
