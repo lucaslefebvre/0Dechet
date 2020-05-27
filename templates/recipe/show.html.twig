@@ -38,7 +38,11 @@
       </div>
       <div class="row flex-lg-nowrap pt-md-3 px-3 ml-md-2 mr-md-1">
         <div class="col-12 col-lg-6 order-lg-2 mb-3 mb-lg-0">
-          <img src="{{ asset('assets/images/' ~ recipe.image) }}" class="img-fluid" alt="">
+        {% if recipe.image is not empty %}
+          <img src="{{ asset('assets/images/recipes/' ~ recipe.image) }}" class="img-fluid" alt="">
+        {% else %}
+          <img src="{{ asset('assets/images/default-recipe.jpg') }}" class="img-fluid" alt="">
+        {% endif %}
         </div>
         <div class="col-12 col-lg-6 p-0">
           <div class="row">
@@ -141,7 +145,7 @@
       <div class="row pt-3 px-3 ml-md-2 mr-md-1">
         <h5>Commentaires :</h5>
         {% if recipe.comments is empty %}
-        <div class="ml-2">Aucun commentaire n'a été trouvé pour cette recette</div>
+        <div class="ml-2">Cette recette n'a pas encore de commentaire</div>
         {% else %}
         <div class="comments col-12 overflow-auto">
           {% for comment in recipe.comments %}

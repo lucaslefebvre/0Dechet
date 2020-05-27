@@ -43,7 +43,7 @@ class RecipeController extends AbstractController
      * Method for add a new recipe. Send a form, receive the response and flush to the Database
      * @Route("/ajout", name="new", methods={"GET","POST"})
      */
-    public function addRecipe(Request $request)
+    public function add(Request $request)
     {
         $recipe = new Recipe;
 

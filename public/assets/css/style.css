@@ -335,7 +335,8 @@ label > span {
 }
 
 .comments {
-    height: 400px;
+    min-height: 100px;
+    max-height: 400px;
     background-color: #f9f5f1;
     margin-bottom: 3rem;
 }
