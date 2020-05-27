@@ -16,7 +16,7 @@
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="col-12 col-md-8 px-4 py-3 mt-md-2 banner-top">
           <p>Envie de partager une de vos recettes avec nous ? </p>
-          <a href=""><button class="btn banner-top-btn" type="button">Ajouter une recette</button></a>
+          <a href="{{ path('recipe_add') }}"><button class="btn banner-top-btn" type="button">Ajouter une recette</button></a>
         </div>
         {% else %}
         <div class="col-12 col-md-8 px-4 py-3 mt-md-2 banner-top">
