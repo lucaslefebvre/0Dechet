@@ -40,4 +40,26 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @param string|null $term
+     * @return Recipe[] Returns an array of result for the term write in the search bar
+     */
+    public function findAllWithSearch(?string $term)
+    {
+        $qb = $this->createQueryBuilder('r');
+        if ($term) {
+            $qb
+                ->addSelect('u')
+                ->leftJoin('r.user', 'u')
+                ->andWhere('r.name LIKE :term OR r.content LIKE :term OR r.ingredient LIKE :term OR u.username LIKE :term')
+                ->setParameter('term', '%' . $term . '%')
+                ;
+        }
+        return $qb
+            ->orderBy('r.name', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

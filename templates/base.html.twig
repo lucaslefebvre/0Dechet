@@ -53,9 +53,9 @@
                 <a class="nav-link" href="#">Contact</a>
               </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0 align-self-center d-lg-flex flex-nowrap">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Rechercher">
-              <button class="btn my-sm-0 btn-search" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+            <form class="form-inline my-2 my-lg-0 align-self-center d-lg-flex flex-nowrap" method="get">
+              <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Rechercher">
+              <button class="btn my-sm-0 btn-search" type="submit" formaction="{{ path('recipe_search') }}"><i class="fa fa-search" aria-hidden="true"></i></button>
             </form>
           </div>
         </nav>
