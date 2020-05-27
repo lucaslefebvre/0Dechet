@@ -13,6 +13,7 @@ use App\Form\CommentType;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
+use App\Services\Slugger;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,7 +62,7 @@ class RecipeController extends AbstractController
      * Method for add a new recipe. Send a form, receive the response and flush to the Database
      * @Route("/ajout", name="new", methods={"GET","POST"})
      */
-    public function add(Request $request)
+    public function add(Request $request, Slugger $slugger)
     {
         $recipe = new Recipe;
 
@@ -82,7 +83,7 @@ class RecipeController extends AbstractController
         ]);
     }
   
-      /**
+    /**
      *  Method to display all information about a recipe in template/recipe/show.html.twig
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
