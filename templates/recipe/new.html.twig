@@ -6,6 +6,7 @@
 
 <div class ="container">
 
+
     {{ form_row(form.name) }}
 
 
@@ -92,10 +93,22 @@ jQuery(document).ready(function () {
 
         var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
         newElem.appendTo(list);
+        addTagFormDeleteLink(newElem)
     });
 });
+        $collectionHolder = $('ul#ingredient-fields-list', 'ul#equipement-fields-list');
+        $collectionHolder.find('li').each(function() {
+            addTagfromDeleteLink($(this))
+        });
+        function addTagFormDeleteLink($tagFormLi) {
+        var $removeFormButton = $('<button type="button">&times;</button>');
+        $tagFormLi.append($removeFormButton);
 
-
+        $removeFormButton.on('click', function(e) {
+        // remove the li for the tag form
+        $tagFormLi.remove();
+    });
+}
     </script>
 {% endblock %}
 

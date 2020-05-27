@@ -48,6 +48,10 @@ class Category
     {
         $this->sub_categories = new ArrayCollection();
     }
+    public function __toString()
+    {
+       return $this->name;
+    }
 
     public function getId(): ?int
     {

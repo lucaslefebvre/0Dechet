@@ -4,7 +4,7 @@
     {% if recipe.image is not empty %}
       <a href="{{ path('recipe_show', {'slug': recipe.slug})}}"><img src="{{ asset('assets/images/recipes/' ~ recipe.image) }}" class="card-img-top" alt="{{recipe.name}}"></a>
     {% else %}
-      <a href="{{ path('recipe_show', {'slug': recipe.slug})}}"><img src="{{ asset('assets/images/default-recipe.jpg') }}" class="card-img-top" alt="Logo 0'Déchet"></a>
+     <a href="{{ path('recipe_show', {'slug': recipe.slug})}}"><img src="{{ asset('assets/images/default-recipe.jpg') }}" class="card-img-top" alt="Logo 0'Déchet"></a>
     {% endif %}
     </div>
     <div class="card-body p-2">
@@ -28,7 +28,7 @@
     {% endif %}
     <div class="card-profil">
       <p>Proposé par {{ recipe.user }}</p>
-      <a href="{{ path('recipe_show', {'slug': recipe.slug })}}" class="btn card-btn">Voir la recette</a>
+     <a href="{{ path('recipe_show', {'slug': recipe.slug })}}" class="btn card-btn">Voir la recette</a> 
     </div>
     </div>
 </div>
