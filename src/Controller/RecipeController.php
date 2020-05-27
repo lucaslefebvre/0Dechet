@@ -64,7 +64,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/ajout", name="new", methods={"GET","POST"})
      */
-    public function add(Request $request, Slugger $slugger)
+    public function add(Request $request)
     {
         $recipe = new Recipe;
 

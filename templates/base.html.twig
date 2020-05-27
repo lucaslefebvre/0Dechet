@@ -18,9 +18,9 @@
                 <img src="{{ asset('assets/images/logo.png') }}" height="55px" alt="logo" loading="lazy">
             </a>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <button class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-deconnexion" type="button">Déconnexion</button>  
+            <a class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-deconnexion" href="{{ path('app_logout') }}">Déconnexion</a>
             {% else %}
-            <button class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-connexion" type="button">Connexion</button>
+            <a class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-connexion" href="{{ path('app_login') }}">Connexion</a>
             {% endif %}
         </nav>
         {% set route = app.request.attributes.get('_route') %}
