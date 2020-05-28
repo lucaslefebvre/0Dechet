@@ -10,7 +10,7 @@
     <a href=""><button class="btn banner-top-btn my-4" type="button">Accéder au BackOffice</button></a>
   </div>
 
-  <div class="row justify-content-between pt-3 px-3 ml-md-2 mr-md-1 main-title">
+  <div class="row justify-content-between pt-3 px-3 mb-3 ml-md-2 mr-md-1 main-title">
     <h2>Mon profil</h2>
   </div>
   <div class="row justify-content-center align-items-center mb-3">
@@ -60,7 +60,7 @@
           <a href="{{ path('recipe_show', {'slug': recipe.slug })}}" class="btn card-btn">Voir la recette</a>
         </div>
         <div class="row justify-content-center">
-          <a href="" class="btn card-btn">Modifier la recette</a>
+          <a href="{{ path('recipe_edit', {'slug': recipe.slug })}}" class="btn card-btn">Modifier la recette</a>
         </div>
       </div>
     {% endfor %}

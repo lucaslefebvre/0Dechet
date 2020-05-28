@@ -91,6 +91,35 @@ class RecipeController extends AbstractController
             'title' => "Ajouter une recette",
         ]);
     }
+
+        /**
+     * Method to edit an existing recipe. Send a form, receive the response and flush to the Database
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Route("/edition/{slug}", name="edit", methods={"GET","POST"})
+     */
+    public function edit(Recipe $recipe, Request $request)
+    {
+        $form = $this->createForm(RecipeType::class, $recipe);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $recipe->setUpdatedAt(new \DateTime());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_read', [
+                'id' => $this->getUser()->getId(),
+            ]);
+        }
+
+        return $this->render('recipe/edit.html.twig', [
+            'recipe' => $recipe,
+            'form' => $form->createView(),
+            'title' => "Modifier une recette",
+        ]);
+    }
   
     /**
      *  Method to display all information about a recipe in template/recipe/show.html.twig
