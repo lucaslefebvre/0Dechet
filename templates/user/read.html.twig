@@ -3,13 +3,14 @@
 {% block body %}
 
 <main class="container">
+  {% if is_granted('ROLE_ADMIN') %}
   <div class="row justify-content-between pt-3 px-3 ml-md-2 mr-md-1 main-title">
     <h2>Admin</h2>
   </div>
   <div class="row justify-content-center pt-3">
     <a href=""><button class="btn banner-top-btn my-4" type="button">Accéder au BackOffice</button></a>
   </div>
-
+  {% endif %}
   <div class="row justify-content-between pt-3 px-3 ml-md-2 mr-md-1 main-title">
     <h2>Mon profil</h2>
   </div>
@@ -23,14 +24,18 @@
     </div>
     <div class="col-12 col-sm-6 text-center text-sm-left">
       <p>Pseudo : {{user.username}}<br>
+      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
       Email : {{user.email}}</p>
       <a href="{{ path('user_edit', {'id': user.id })}}"><button class="btn banner-top-btn" type="button">Modifier le profil</button></a>
+      {% endif %}
     </div>
   </div>
 
   <div class="row justify-content-between pt-3 px-3 ml-md-2 mr-md-1 main-title">
     <h2>Mes recettes</h2>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <a href="{{ path('recipe_add')}}" class="btn card-btn mb-1">Ajouter une recette</a>
+    {% endif %}
   </div>
   <div class="row justify-content-center mb-4">
     {% for recipe in user.recipes %}
@@ -59,9 +64,11 @@
         <div class="row justify-content-center mb-2">
           <a href="{{ path('recipe_show', {'slug': recipe.slug })}}" class="btn card-btn">Voir la recette</a>
         </div>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="row justify-content-center">
           <a href="" class="btn card-btn">Modifier la recette</a>
         </div>
+        {% endif %}
       </div>
     {% endfor %}
   </div>

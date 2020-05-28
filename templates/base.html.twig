@@ -71,6 +71,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
               </li>
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path('user_read', {'id': user.id}) }}">Profil</a>
+              </li>
+              {% endif %}
             </ul>
             <form class="form-inline my-2 my-lg-0 align-self-center d-lg-flex flex-nowrap" method="get">
               <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Rechercher">
