@@ -24,6 +24,8 @@
       {% if recipe.user is not empty %}
         {% if recipe.user.image is not empty %}
           <img src="{{ asset('assets/images/users/' ~ recipe.user.image) }}" class="card-profil-image" alt="{{recipe.user.image}}">
+        {% else %}
+          <img src="{{ asset('assets/images/default-user.png') }}" class="card-profil-image" alt="">
         {% endif %}
       {% else %}
         <img src="{{ asset('assets/images/default-user.png') }}" class="card-profil-image" alt="">
