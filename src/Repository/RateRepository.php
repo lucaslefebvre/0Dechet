@@ -35,7 +35,14 @@ class RateRepository extends ServiceEntityRepository
         ;
     }
     */
-
+    public function getNumberOfRate() {
+       
+        $qb = $this->createQueryBuilder('e');
+ 
+        $qb ->select($qb->expr()->count('e'));
+     
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
     /*
     public function findOneBySomeField($value): ?Rate
     {

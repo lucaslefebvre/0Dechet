@@ -12,6 +12,7 @@ use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\RecipeType;
 use App\Repository\CategoryRepository;
+use App\Repository\RateRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
 use App\Services\Slugger;
@@ -104,6 +105,11 @@ class RecipeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Votre recette a été ajoutée'
+            );
+
 
             return $this->redirectToRoute('recipe_add');
         }
@@ -118,12 +124,13 @@ class RecipeController extends AbstractController
      *  Method to display all information about a recipe in template/recipe/show.html.twig
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
-    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
+    public function show(Recipe $recipe, RateRepository $rateRepository, Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
         // Comment Form
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->handleRequest($request);
+        
 
         if ($_POST) {
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
@@ -166,6 +173,7 @@ class RecipeController extends AbstractController
             'recipe' => $recipe,
             'title' => $recipe->getName(),
             'commentForm' => $commentForm->createView(),
+            'numberOfRate' => $rateRepository->getNumberOfRate(),
         ]);
 
     }
