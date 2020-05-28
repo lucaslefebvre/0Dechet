@@ -76,27 +76,31 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 <script>
-jQuery(document).ready(function () {
+    jQuery(document).ready(function () {
     jQuery('.add-another-collection-widget').click(function (e) {
         var list = jQuery(jQuery(this).attr('data-list-selector'));
-
         var counter = list.data('widget-counter') || list.children().length;
-
         var newWidget = list.attr('data-prototype');
-
         newWidget = newWidget.replace(/__name__/g, counter);
-
         counter++;
-
         list.data('widget-counter', counter);
-
-
         var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
         newElem.appendTo(list);
+        addTagFormDeleteLink(newElem)
+        });
     });
-});
-
-
+        $collectionHolder = $('ul#ingredient-fields-list', 'ul#equipement-fields-list');
+        $collectionHolder.find('li').each(function() {
+            addTagfromDeleteLink($(this))
+        });
+        function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormButton = $('<button type="button">&times;</button>');
+            $tagFormLi.append($removeFormButton);
+            $removeFormButton.on('click', function(e) {
+            // remove the li for the tag form
+            $tagFormLi.remove();
+            });
+        }
     </script>
 {% endblock %}
 
