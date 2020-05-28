@@ -34,12 +34,14 @@ class RecipeType extends AbstractType
                 'maxMessage' => 'Le nom de la recette ne doit pas contenir plus de 35 caractères',
                 ]),
             ]])
+
             ->add('ingredient', CollectionType::class, [
                 'required' => true,
                 'label' => false,
                 'entry_type' => TextType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
+                'prototype' => true,
             ])
             ->add('equipement', CollectionType::class, [
                 'label' => false,
@@ -104,6 +106,7 @@ class RecipeType extends AbstractType
             ->add('image', FileType::class, [
                 'required' => false,
                 'mapped' => false,
+                'attr' => ['placeholder' => 'Sélectionner votre fichier']
             ])
 
             ->add('type', EntityType::class, [
