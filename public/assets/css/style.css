@@ -479,3 +479,8 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
 .user-profil-img {
     max-height: 200px;
 }
+
+/*Pagination*/
+.page-link {
+    color : #739377;
+}

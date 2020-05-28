@@ -17,5 +17,11 @@
           </div>
         </div>
       </div>
+      {# pagination #}
+      <div class="row justify-content-center">
+        <div id="navigation">
+        {{ knp_pagination_render(recipes) }}
+        </div>
+      </div>
     </main>
 {% endblock %}
