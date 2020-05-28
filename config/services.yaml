@@ -31,3 +31,13 @@ services:
             - 
                 name: 'doctrine.event_listener'
                 event: 'prePersist'
+
+    App\EventListener\SlugifyEvent:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    # App\EventListener\TimeStampEvent:
+    #     tags:
+    #         - { name: doctrine.event_listener, event: prePersist }
+    #         - { name: doctrine.event_listener, event: preUpdate }
