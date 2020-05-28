@@ -20,8 +20,8 @@
           {{ form_widget(form.ingredient) }}
           {% for ingredientField in form.ingredient %}
           <li>
-              {{ form_errors(ingredientField) }}
-              {{ form_widget(ingredientField) }}
+              {# {{ form_errors(ingredientField) }}
+              {{ form_widget(ingredientField) }} #}
           </li>
           {% endfor %}
       </ul>
@@ -36,8 +36,8 @@
           data-widget-counter="{{ form.equipement|length }}">
           {% for equipement in form.equipement %}
           <li>
-              {{ form_errors(equipementField) }}
-              {{ form_widget(equipementField) }}
+              {# {{ form_errors(equipementField) }}
+              {{ form_widget(equipementField) }} #}
           </li>
           {% endfor %}
       </ul>
