@@ -62,7 +62,7 @@ class RecipeController extends AbstractController
      /**
      * Method for add a new recipe. Send a form, receive the response and flush to the Database
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @Route("/ajout", name="new", methods={"GET","POST"})
+     * @Route("/ajout", name="add", methods={"GET","POST"})
      */
     public function add(Request $request)
     {
@@ -76,10 +76,10 @@ class RecipeController extends AbstractController
             $entityManager->persist($recipe);
             $entityManager->flush();
 
-            return $this->redirectToRoute('recipe_new');
+            return $this->redirectToRoute('recipe_add');
         }
 
-        return $this->render('recipe/new.html.twig', [
+        return $this->render('recipe/add.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
         ]);

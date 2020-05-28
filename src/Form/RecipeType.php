@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Recipe;
+use App\Entity\Type;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -51,7 +53,7 @@ class RecipeType extends AbstractType
                 ])],
             ])
             ->add('duration', ChoiceType::class,  [
-                'placeholder' => 'Sélectionner une durée',
+                'placeholder' => 'Sélectionner la durée',
                 'choices' => [
                     '0 mn' => '0',
                     '15 mn' => '15',
@@ -69,7 +71,7 @@ class RecipeType extends AbstractType
             ])
             ->add('difficulty', ChoiceType::class, [
                 'label' => 'Difficulté',
-                'placeholder' => 'Sélectionner un niveau',
+                'placeholder' => 'Sélectionner le niveau',
                 'choices' => [
                     'Débutant' => '0',
                     'Intérmediaire' => '1',
@@ -79,7 +81,7 @@ class RecipeType extends AbstractType
                 'expanded' => false,
             ])
             ->add('conservation', ChoiceType::class,  [
-                'placeholder' => 'Sélectionner',
+                'placeholder' => 'Sélectionner le temps de conservation',
                 'choices' => [
                     '1 semaine' => '7',
                     '2 semaines' => '14',
@@ -89,16 +91,20 @@ class RecipeType extends AbstractType
                     '6 mois' => '180'],
                 'multiple' => false,
                 'expanded' => false,
-                'label' => 'Temps de conservation',
+                'label' => 'Temps le conservation',
             ])
             ->add('image', FileType::class, [
                 'required' => false,
                 'mapped' => false,
             ])
-            ->add('status')
-            ->add('type', null, [
-                'placeholder' => 'Sélectionner', 
-                'required' =>true,
+
+            ->add('type', EntityType::class, [
+                'class' => Type::class,
+                'label' => "Type de recette",
+                'placeholder' => 'Sélectionner le type',
+                'group_by' => function(Type $type) {
+                    return $type->getSubCategory()->getName();
+                }
             ]);
     }
 
