@@ -14,6 +14,7 @@ use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
 use App\Services\Slugger;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,6 +73,11 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $recipe->setStatus(1);
+            $recipe->setCreatedAt(new \DateTime());
+            $recipe->setSlug('test');
+            $recipe->setUser($this->getUser());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);
             $entityManager->flush();
@@ -82,6 +88,7 @@ class RecipeController extends AbstractController
         return $this->render('recipe/add.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
+            'title' => "Ajouter une recette",
         ]);
     }
   

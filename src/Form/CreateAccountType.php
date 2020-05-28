@@ -101,7 +101,7 @@ class CreateAccountType extends AbstractType
                             'label'=>'Retapez le mot de passe'
                         ],
                         'invalid_message' => 'Les deux mots de passe ne correspondent pas',
-                        'required'=>'true',
+                        'required'=> true,
                         'constraints'=> [
                             new NotBlank([
                             'normalizer'=>'trim',

@@ -23,6 +23,7 @@ class RecipeType extends AbstractType
             ->add('name', TextType::class,
             [   
                 'label' => 'Nom de la recette',
+                'required' => true,
                 'constraints' => new Assert\NotBlank(),
                 'constraints' => [
                 new Assert\Length
@@ -34,22 +35,26 @@ class RecipeType extends AbstractType
                 ]),
             ]])
             ->add('ingredient', CollectionType::class, [
+                'required' => true,
+                'label' => false,
                 'entry_type' => TextType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
             ])
             ->add('equipement', CollectionType::class, [
+                'label' => false,
                 'entry_type' => TextType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
             ])
             ->add('content', TextareaType::class, [
+                'required' => true,
                 'label' => 'Détail de la préparation',
                 'constraints' => [
                 new Assert\Length
                 ([
                 'min' => 30,
-                'minMessage' => 'La recette doit contenir une description',
+                'minMessage' => 'La recette doit contenir au moins 30 caractères',
                 ])],
             ])
             ->add('duration', ChoiceType::class,  [
@@ -67,18 +72,20 @@ class RecipeType extends AbstractType
                 ],
                 'multiple' => false,
                 'expanded' => false,
+                'required' => true,
                 'label' => 'Durée',
             ])
             ->add('difficulty', ChoiceType::class, [
                 'label' => 'Difficulté',
                 'placeholder' => 'Sélectionner le niveau',
                 'choices' => [
-                    'Débutant' => '0',
-                    'Intérmediaire' => '1',
-                    'Expert' => '2',
+                    'Débutant' => '1',
+                    'Intérmediaire' => '2',
+                    'Expert' => '3',
                 ],
                 'multiple' => false,
                 'expanded' => false,
+                'required' => true,
             ])
             ->add('conservation', ChoiceType::class,  [
                 'placeholder' => 'Sélectionner le temps de conservation',
@@ -91,6 +98,7 @@ class RecipeType extends AbstractType
                     '6 mois' => '180'],
                 'multiple' => false,
                 'expanded' => false,
+                'required' => false,
                 'label' => 'Temps le conservation',
             ])
             ->add('image', FileType::class, [
@@ -100,6 +108,7 @@ class RecipeType extends AbstractType
 
             ->add('type', EntityType::class, [
                 'class' => Type::class,
+                'required' => true,
                 'label' => "Type de recette",
                 'placeholder' => 'Sélectionner le type',
                 'group_by' => function(Type $type) {

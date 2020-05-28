@@ -26,13 +26,13 @@
       <div class="row pt-0 pt-md-3 px-3 ml-md-2 mr-md-1 recipe-time-difficulty">
         <p>Temps : environ {{ recipe.duration }} minutes<br>
         {% if recipe.difficulty == 1 %}
-          {% set difficulty = 'débutant' %}
+          {% set difficulty = 'Débutant' %}
         {% endif %}
         {% if recipe.difficulty == 2 %}
-          {% set difficulty = 'intermédiare' %}
+          {% set difficulty = 'Intermédiare' %}
         {% endif %}
         {% if recipe.difficulty == 3 %}
-          {% set difficulty = 'expert' %} 
+          {% set difficulty = 'Expert' %} 
         {% endif %}
         Difficulté : {{ difficulty }}</p>
       </div>
