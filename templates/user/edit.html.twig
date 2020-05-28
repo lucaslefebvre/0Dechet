@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<main class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 pt-3 main-title">
+      <h2>Mettre à jour son profil</h2>
+    </div>
+  {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
+  <div>
+  
+    {{ form_start(deleteForm) }}
+      {{ form_widget(deleteForm.deleteButton, {'attr': {'class': 'form-btn-delete'}}) }}
+    {{ form_end(deleteForm) }}
+</main>
+
+{% endblock %}

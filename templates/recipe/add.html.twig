@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une nouvelle recette{% endblock %}
+
+{% block body %}
+
+<main class="container">
+  <div class="row justify-content-between pt-3 px-3 ml-md-2 mr-md-1 mb-5 main-title">
+    <h2>Ajouter une recette</h2>
+  </div>
+
+    {{ form_row(form.name) }}
+
+       <ul id="ingredient-fields-list"
+        data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e }}"
+        data-widget-tags="{{ '<li></li>'|e }}"
+        data-widget-counter="{{ form.ingredient|length }}">
+    {% for ingredientField in form.ingredient %}
+        <li>
+            {{ form_errors(ingredientField) }}
+            {{ form_widget(ingredientField) }}
+        </li>
+    {% endfor %}
+    </ul>
+    <button type="button"
+    class="add-another-collection-widget btn form-btn"
+    data-list-selector="#ingredient-fields-list">Ajouter un ingrédient</button>
+    <br>
+    <br>
+
+         <ul id="equipement-fields-list"
+        data-prototype="{{ form_widget(form.equipement.vars.prototype)|e }}"
+        data-widget-tags="{{ '<li></li>'|e }}"
+        data-widget-counter="{{ form.equipement|length }}">
+    {% for equipement in form.equipement %}
+        <li>
+            {{ form_errors(equipementField) }}
+            {{ form_widget(equipementField) }}
+        </li>
+    {% endfor %}
+    </ul>
+    <button type="button"
+    class="add-another-collection-widget btn form-btn"
+    data-list-selector="#equipement-fields-list">Ajouter un ustensile</button>
+    <br>
+    <br>
+
+
+    {{ form_row(form.content) }}
+    <br>
+    <br>
+    {{ form_row(form.duration) }}
+    <br>
+    <br>
+    {{ form_row(form.difficulty) }}
+    <br>
+    <br>
+    {{ form_row(form.conservation) }}
+    <br>
+    <br>
+    {{ form_row(form.image) }}
+    <br>
+    <br>
+    {{ form_row(form.type) }}
+    <br>
+    <div class="submit-button-container">
+        <button class="btn form-btn">{{ button_label|default('Ajouter') }}</button>
+    </div>
+    <br>
+
+
+</main>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<script>
+    jQuery(document).ready(function () {
+    jQuery('.add-another-collection-widget').click(function (e) {
+        var list = jQuery(jQuery(this).attr('data-list-selector'));
+        var counter = list.data('widget-counter') || list.children().length;
+        var newWidget = list.attr('data-prototype');
+        newWidget = newWidget.replace(/__name__/g, counter);
+        counter++;
+        list.data('widget-counter', counter);
+        var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+        newElem.appendTo(list);
+        addTagFormDeleteLink(newElem)
+        });
+    });
+        $collectionHolder = $('ul#ingredient-fields-list', 'ul#equipement-fields-list');
+        $collectionHolder.find('li').each(function() {
+            addTagfromDeleteLink($(this))
+        });
+        function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormButton = $('<button type="button">&times;</button>');
+            $tagFormLi.append($removeFormButton);
+            $removeFormButton.on('click', function(e) {
+            // remove the li for the tag form
+            $tagFormLi.remove();
+            });
+        }
+    </script>
+{% endblock %}
+

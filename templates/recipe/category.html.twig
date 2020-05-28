@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="container-fluid">
+      <div class="row justify-content-center main-content">
+
+      {{ include('partials/left-nav.html.twig') }}
+
+        <div class="col-12 col-md-8 col-lg-9 col-xl-10 mb-5">
+          <div class="row pt-3 pl-3 ml-md-2 mr-md-1 main-title">
+            <h2>{{category.name}}</h2>
+          </div>
+          <div class="row justify-content-center">
+          {% for subCategory in category.subCategories %}
+          {% for type in subCategory.types %}
+          {% for recipe in type.recipes %}
+            {{ include('partials/card.html.twig') }}
+          {% endfor %}
+          {% endfor %}
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </main>
+{% endblock %}

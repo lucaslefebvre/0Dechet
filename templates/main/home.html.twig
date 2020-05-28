@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+    <div class="flash-notice">
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p class="mb-0">{{message}}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    <main class="container">
+      <div class="row justify-content-center">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="col-12 col-md-8 px-4 py-3 mt-md-2 banner-top">
+          <p>Envie de partager une de vos recettes avec nous ? </p>
+          <a href="{{ path('recipe_add') }}"><button class="btn banner-top-btn" type="button">Ajouter une recette</button></a>
+        </div>
+        {% else %}
+        <div class="col-12 col-md-8 px-4 py-3 mt-md-2 banner-top">
+          <p>Envie de partager une de vos recettes avec nous ? </p>
+          <p>Inscrivez-vous et rejoignez-nous dans l'aventure zéro déchet !</p>
+          <a href="{{ path('user_add') }}"><button class="btn banner-top-btn" type="button">Devenir membre</button></a>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="row justify-content-center best-recipes">
+        <div class="col-12 pt-3 main-title">
+          <h2>Les recettes les mieux notées</h2>
+        </div>
+      {% for recipe in bestRecipes %}
+        {{ include('partials/card.html.twig') }}
+      {% endfor %}
+      </div>
+
+      <div class="row justify-content-center last-recipes mb-5">
+        <div class="col-12 pt-3 main-title">
+          <h2>Les dernières recettes</h2>
+        </div>
+        {% for recipe in latestRecipes %}
+          {{ include('partials/card.html.twig') }}
+        {% endfor %}
+      </div>
+    </main>
+
+{% endblock %}

@@ -1,12 +1,105 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
+    {% endblock %}
+    <title>{% block title %}{{title}} - 0Déchet{% endblock %}</title>
+</head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block nav %}
+        <header class="sticky-top">
+        <nav class="navbar justify-content-between navbar-top">
+            <a class="navbar-brand col-4" href="{{ path('main_home') }}">
+                <img src="{{ asset('assets/images/logo.png') }}" height="55px" alt="logo" loading="lazy">
+            </a>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-deconnexion" href="{{ path('app_logout') }}">Déconnexion</a>
+            {% else %}
+            <a class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-connexion" href="{{ path('app_login') }}">Connexion</a>
+            {% endif %}
+        </nav>
+        {% set route = app.request.attributes.get('_route') %}
+        {% set appSubCategory = app.request.attributes.get('subCategory') %}
+        {% set appType = app.request.attributes.get('type') %}
+        <nav class="d-flex navbar navbar-light navbar-expand-lg navbar-bottom">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              {% if route == 'main_home' %}<li class="nav-item active">{% else %}<li class="nav-item">{% endif %}
+                <a class="nav-link" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a>
+              </li>
+              {% if route == 'recipe_browse' %}<li class="nav-item active">{% else %}<li class="nav-item">{% endif %}
+                <a class="nav-link" href="{{ path('recipe_browse') }}">Toutes les recettes</a>
+              </li>
+              {% for category in allCategory %}
+              <li class="nav-item dropdown ">
+              
+                {% if category.slug == app.request.attributes.get('slug') %}
+                <a class="nav-link dropdown-toggle active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}" role="button" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
+
+                {% elseif appSubCategory is not null and appSubCategory.category == category %}
+                <a class="nav-link dropdown-toggle active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}" role="button" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
+
+                {% elseif appType is not null and appType.subCategory.category == category %}
+                <a class="nav-link dropdown-toggle active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}" role="button" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
+
+                {% else %}
+                <a class="nav-link dropdown-toggle" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}" role="button" aria-haspopup="true" aria-expanded="false">{{category.name}}</a>
+                {% endif %}
+                
+                <ul class="dropdown-menu dropright" aria-labelledby="navbarDropdown" role="menu">
+                  {% for subCategory in category.subCategories %}
+                  <li class="dropdown-submenu">
+                    <a class="dropdown-item" href="{{ path('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}</a>
+                    <ul class="dropdown-menu">
+                    {% for type in subCategory.types %}
+                      <li class="dropdown-item"><a class="dropdown-item" href="{{ path('recipe_browseByType', {'slug': type.slug}) }}">{{type.name}}</a></li>
+                    {% endfor %}
+                    </ul>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endfor %}
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0 align-self-center d-lg-flex flex-nowrap" method="get">
+              <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Rechercher">
+              <button class="btn my-sm-0 btn-search" type="submit" formaction="{{ path('recipe_search') }}"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </form>
+          </div>
+        </nav>
+    </header>
+    {% endblock %}
+
+    {% block body %}{% endblock %}
+
+    {% block footer %}
+        <footer>
+            <p>Tous droits réservés © 2020 0'Déchet</p>
+        </footer>
+    {% endblock %}
+    {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <script>
+          $('.custom-file-input').on('change', function(event) {
+              var inputFile = event.currentTarget;
+              $(inputFile).parent()
+                  .find('.custom-file-label')
+                  .html(inputFile.files[0].name);
+          });
+        </script>
+     {% endblock %}
     </body>
 </html>
