@@ -37,7 +37,7 @@ class RecipeController extends AbstractController
      * Method to display all the recipes in template/recipe/browse.html.twig
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(RecipeRepository $recipeRepository, RateRepository $rateRepository, Request $request, PaginatorInterface $paginator): Response
+    public function browse(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
     {
 
     
@@ -52,7 +52,6 @@ class RecipeController extends AbstractController
         return $this->render('recipe/browse.html.twig', [
             'recipes' => $recipes,
             'title' => 'Toutes les recettes',
-            'numberOfRate' => $rateRepository->getNumberOfRate(),
         ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
@@ -65,7 +64,7 @@ class RecipeController extends AbstractController
      * Submit the search bar form will redirect on this route
      * @Route("/recherche", name="search", methods={"GET"})
      */
-    public function search(RecipeRepository $recipeRepository, RateRepository $rateRepository, Request $request, PaginatorInterface $paginator): Response
+    public function search(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
     {
         
         //We recuperate the data send in the url by the search form
@@ -82,7 +81,6 @@ class RecipeController extends AbstractController
         return $this->render('recipe/search.html.twig', [
             'recipes' => $recipes,
             'title' => 'Résultat pour '.$q,
-            'numberOfRate' => $rateRepository->getNumberOfRate(),
         ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
@@ -126,7 +124,7 @@ class RecipeController extends AbstractController
      *  Method to display all information about a recipe in template/recipe/show.html.twig
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
-    public function show(Recipe $recipe, RateRepository $rateRepository, Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
+    public function show(Recipe $recipe, RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
         // Comment Form
         $comment = new Comment();
@@ -175,7 +173,6 @@ class RecipeController extends AbstractController
             'recipe' => $recipe,
             'title' => $recipe->getName(),
             'commentForm' => $commentForm->createView(),
-            'numberOfRate' => $rateRepository->getNumberOfRate(),
         ]);
 
     }
@@ -184,7 +181,7 @@ class RecipeController extends AbstractController
      *  Method to display the recipes by Categories in the template category.html.twig from the directory recipe
      * @Route("/categorie/{slug}", name="browseByCategory")
      */
-    public function browseByCategory(Category $category, RateRepository $rateRepository, PaginatorInterface $paginator, Request $request)
+    public function browseByCategory(Category $category, RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
     {
         $categoryRepository = $this->getDoctrine()->getRepository(Category::class)->findBy([],['createdAt' => 'desc']);
 
@@ -200,7 +197,6 @@ class RecipeController extends AbstractController
                 'recipes' => $recipes,
                 'category' => $category,
                 'title' => $category->getName(),
-                'numberOfRate' => $rateRepository->getNumberOfRate(),
             ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
@@ -213,7 +209,7 @@ class RecipeController extends AbstractController
      * Method to display the recipes by Sub Categories in the template subCategory.html.twig from the directory recipe
      * @Route("/sous-categorie/{slug}", name="browseBySubCategory")
      */
-    public function browseBySubCategory(SubCategory $subCategory, RateRepository $rateRepository, PaginatorInterface $paginator, Request $request)
+    public function browseBySubCategory(SubCategory $subCategory,RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
     {
         $subCategoryRepository = $this->getDoctrine()->getRepository(SubCategory::class)->findBy([],['createdAt' => 'desc']);
 
@@ -229,7 +225,6 @@ class RecipeController extends AbstractController
             'recipes' => $recipes,
             'subCategory' => $subCategory,
             'title' => $subCategory->getName(),
-            'numberOfRate' => $rateRepository->getNumberOfRate(),
         ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
@@ -241,7 +236,7 @@ class RecipeController extends AbstractController
      * Method to display the recipes by Types in the template type.html.twig from the directory recipe
      * @Route("/type/{slug}", name="browseByType")
      */
-    public function browseByType(Type $type, RateRepository $rateRepository, PaginatorInterface $paginator, Request $request)
+    public function browseByType(Type $type, RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
     {
 
         $typeRepository = $this->getDoctrine()->getRepository(SubCategory::class)->findBy([],['createdAt' => 'desc']);
@@ -259,7 +254,6 @@ class RecipeController extends AbstractController
             'recipes' => $recipes,
             'type' => $type,
             'title' => $type->getName(),
-            'numberOfRate' => $rateRepository->getNumberOfRate(),
         ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 

@@ -5,7 +5,7 @@
       <div class="row justify-content-between text-md-right pt-3 px-3 ml-md-2 mr-md-1 main-title">
         <h2>{{ recipe.name }}</h2>
         <div class="d-none d-md-block">
-        Nombre d'avis : {{ numberOfRate }}
+        Nombre d'avis : {{ recipe.rates|length }}
             {% for i in 1..5 %}
                 {% if recipe.averageRate >= i %}
                 <i class="fa fa-star" aria-hidden="true"></i>
