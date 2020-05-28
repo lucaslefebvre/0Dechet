@@ -36,7 +36,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/profil/\w+, roles: [ROLE_USER, ROLE_ADMIN] }
         - { path: ^/recette/ajout, roles: [ROLE_USER, ROLE_ADMIN] }
         - { path: ^/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
