@@ -26,7 +26,6 @@ class SlugifyEvent
 
             //Associate the new slug to the entity
             $recipe->setSlug($newSlug);
-
         }
         //If it's an entity with a slug property other than Recipe
         elseif(property_exists($entity, 'slug')){
@@ -36,18 +35,17 @@ class SlugifyEvent
 
             //Associate the new slug to the entity
             $entity->setSlug($newSlug);
-
         }
     }
-     // This method is executed preUpdate of forms
-     public function preUpdate(LifecycleEventArgs $args, Slugger $slugger)
-     {
-         //$args is the object concerned by the evenement
-         // if it's modified and flushed, it's intercepted there
-         $entity = $args->getObject();
+    // This method is executed preUpdate of forms
+    public function preUpdate(LifecycleEventArgs $args, Slugger $slugger)
+    {
+        //$args is the object concerned by the evenement
+        // if it's modified and flushed, it's intercepted there
+        $entity = $args->getObject();
  
          //If it's a Recipe Object
-         if($entity instanceof Recipe){
+        if($entity instanceof Recipe){
  
              $recipe = $entity;
              //Create a new slug for the entity
@@ -55,8 +53,7 @@ class SlugifyEvent
  
              //Associate the new slug to the entity
              $recipe->setSlug($newSlug);
- 
-         }
+        }
          //If it's an entity with a slug property other than Recipe
          elseif(property_exists($entity, 'slug')){
  
@@ -65,7 +62,6 @@ class SlugifyEvent
  
              //Associate the new slug to the entity
              $entity->setSlug($newSlug);
- 
-         }
-     }
+        }
+    }
 }
