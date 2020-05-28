@@ -41,12 +41,15 @@ class RecipeController extends AbstractController
         $recipes = $paginator->paginate(  // add paginator
             $recipeRepository->findAll(),   // query to display all the recipes
             $request->query->getInt('page', 1), // number of the current page in the Url, if only one = 1
-            1,    // number of results in a page
+            15,    // number of results in a page
         );
+
+        
         return $this->render('recipe/browse.html.twig', [
             'recipes' => $recipes,
             'title' => 'Toutes les recettes'
         ]);
+      
     }
 
     /**
@@ -65,10 +68,12 @@ class RecipeController extends AbstractController
                 $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
                 15, // number of results in a page
         );
+       
         return $this->render('recipe/search.html.twig', [
             'recipes' => $recipes,
             'title' => 'Résultat pour '.$q
         ]);
+       
     }
 
   
@@ -167,17 +172,15 @@ class RecipeController extends AbstractController
             1, // number of results in a page
         );
 
-        if(!empty($recipes->getItems())){
+       
             return $this->render('recipe/category.html.twig', [
                 'recipes' => $recipes,
                 'category' => $category,
                 'title' => $category->getName()
             ]);
 
-        }else{
-        throw $this->createNotFoundException('Pas de recette');
-        }
-        }
+    
+    }
           
      /**
      * Method to display the recipes by Sub Categories in the template subCategory.html.twig from the directory recipe
@@ -193,15 +196,13 @@ class RecipeController extends AbstractController
             15, // number of results in a page
         );
 
-        if(!empty($recipes->getItems())){
+        
         return $this->render('recipe/subCategory.html.twig', [
             'recipes' => $recipes,
             'subCategory' => $subCategory,
             'title' => $subCategory->getName()
         ]);
-        }else{
-        throw $this->createNotFoundException('Pas de recette');
-       }
+        
     }
 
     /**
@@ -219,15 +220,13 @@ class RecipeController extends AbstractController
             15, // number of results in a page
         );
 
-        if(!empty($recipes->getItems())){
+        
         return $this->render('recipe/type.html.twig', [
             'recipes' => $recipes,
             'type' => $type,
             'title' => $type->getName()
         ]);
-        }else{
-        throw $this->createNotFoundException('Pas de recette');
-       }
+        
     }
 
 }
