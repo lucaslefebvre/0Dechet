@@ -46,7 +46,7 @@ class RecipeController extends AbstractController
      * Submit the search bar form will redirect on this route
      * @Route("/recherche", name="search", methods={"GET"})
      */
-    public function search(RecipeRepository $recipeRepository, Request $request, UserRepository $user): Response
+    public function search(RecipeRepository $recipeRepository, Request $request): Response
     {
         //We recuperate the data send in the url by the search form
         $q = $request->query->get('search');
@@ -56,7 +56,6 @@ class RecipeController extends AbstractController
         return $this->render('recipe/search.html.twig', [
             'recipes' => $recipes,
             'title' => 'Résultat pour '.$q,
-            'user' => $this->getUser(),
         ]);
     }
 
@@ -66,7 +65,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/ajout", name="add", methods={"GET","POST"})
      */
-    public function add(Request $request, UserRepository $user)
+    public function add(Request $request)
     {
         $recipe = new Recipe;
 
@@ -84,7 +83,6 @@ class RecipeController extends AbstractController
         return $this->render('recipe/add.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
-            'user' => $this->getUser(),
         ]);
     }
   
@@ -139,7 +137,6 @@ class RecipeController extends AbstractController
             'recipe' => $recipe,
             'title' => $recipe->getName(),
             'commentForm' => $commentForm->createView(),
-            'user' => $this->getUser(),
         ]);
         
     }
@@ -148,12 +145,11 @@ class RecipeController extends AbstractController
      *  Method to display the recipes by Categories in the template category.html.twig from the directory recipe
      * @Route("/categorie/{slug}", name="browseByCategory")
      */
-    public function browseByCategory(Category $category, UserRepository $user)
+    public function browseByCategory(Category $category)
     {
         return $this->render('recipe/category.html.twig', [
             'category' => $category,
             'title' => $category->getName(),
-            'user' => $this->getUser(),
         ]);
     }
           
@@ -161,12 +157,11 @@ class RecipeController extends AbstractController
      * Method to display the recipes by Sub Categories in the template subCategory.html.twig from the directory recipe
      * @Route("/sous-categorie/{slug}", name="browseBySubCategory")
      */
-    public function browseBySubCategory(SubCategory $subCategory, UserRepository $user)
+    public function browseBySubCategory(SubCategory $subCategory)
     {
         return $this->render('recipe/subCategory.html.twig', [
             'subCategory' => $subCategory,
             'title' => $subCategory->getName(),
-            'user' => $this->getUser(),
         ]);
     }
 
@@ -174,12 +169,11 @@ class RecipeController extends AbstractController
      * Method to display the recipes by Types in the template type.html.twig from the directory recipe
      * @Route("/type/{slug}", name="browseByType")
      */
-    public function browseByType(Type $type, UserRepository $user)
+    public function browseByType(Type $type)
     {
         return $this->render('recipe/type.html.twig', [
             'type' => $type,
             'title' => $type->getName(),
-            'user' => $this->getUser(),
         ]);
     }
 

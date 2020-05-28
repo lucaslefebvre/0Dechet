@@ -17,13 +17,12 @@ class MainController extends AbstractController
      * Method for the homepage to show the 3 lastest and the 3 gradest recipes
      * @Route("/", name="home")
      */
-    public function home(RecipeRepository $recipeRepository, Request $request, UserRepository $user)
+    public function home(RecipeRepository $recipeRepository, Request $request)
     {
         return $this->render('main/home.html.twig', [
             'bestRecipes'=>$recipeRepository->findBestRecipes(),
             'latestRecipes' => $recipeRepository->findLatestRecipes(),
             'title'=>'Accueil',
-            'user' => $this->getUser(),
         ]);
     }
 }
