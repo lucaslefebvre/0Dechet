@@ -37,7 +37,7 @@ class RecipeController extends AbstractController
      * Method to display all the recipes in template/recipe/browse.html.twig
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
+    public function browse(RecipeRepository $recipeRepository, RateRepository $rateRepository, Request $request, PaginatorInterface $paginator): Response
     {
 
     
@@ -51,7 +51,8 @@ class RecipeController extends AbstractController
         if (!empty($recipes->getItems())) {
         return $this->render('recipe/browse.html.twig', [
             'recipes' => $recipes,
-            'title' => 'Toutes les recettes'
+            'title' => 'Toutes les recettes',
+            'numberOfRate' => $rateRepository->getNumberOfRate(),
         ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
@@ -64,7 +65,7 @@ class RecipeController extends AbstractController
      * Submit the search bar form will redirect on this route
      * @Route("/recherche", name="search", methods={"GET"})
      */
-    public function search(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
+    public function search(RecipeRepository $recipeRepository, RateRepository $rateRepository, Request $request, PaginatorInterface $paginator): Response
     {
         
         //We recuperate the data send in the url by the search form
@@ -80,7 +81,8 @@ class RecipeController extends AbstractController
         if (!empty($recipes->getItems())) {
         return $this->render('recipe/search.html.twig', [
             'recipes' => $recipes,
-            'title' => 'Résultat pour '.$q
+            'title' => 'Résultat pour '.$q,
+            'numberOfRate' => $rateRepository->getNumberOfRate(),
         ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
@@ -182,7 +184,7 @@ class RecipeController extends AbstractController
      *  Method to display the recipes by Categories in the template category.html.twig from the directory recipe
      * @Route("/categorie/{slug}", name="browseByCategory")
      */
-    public function browseByCategory(Category $category, PaginatorInterface $paginator, Request $request)
+    public function browseByCategory(Category $category, RateRepository $rateRepository, PaginatorInterface $paginator, Request $request)
     {
         $categoryRepository = $this->getDoctrine()->getRepository(Category::class)->findBy([],['createdAt' => 'desc']);
 
@@ -197,7 +199,8 @@ class RecipeController extends AbstractController
             return $this->render('recipe/category.html.twig', [
                 'recipes' => $recipes,
                 'category' => $category,
-                'title' => $category->getName()
+                'title' => $category->getName(),
+                'numberOfRate' => $rateRepository->getNumberOfRate(),
             ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
@@ -210,7 +213,7 @@ class RecipeController extends AbstractController
      * Method to display the recipes by Sub Categories in the template subCategory.html.twig from the directory recipe
      * @Route("/sous-categorie/{slug}", name="browseBySubCategory")
      */
-    public function browseBySubCategory(SubCategory $subCategory, PaginatorInterface $paginator, Request $request)
+    public function browseBySubCategory(SubCategory $subCategory, RateRepository $rateRepository, PaginatorInterface $paginator, Request $request)
     {
         $subCategoryRepository = $this->getDoctrine()->getRepository(SubCategory::class)->findBy([],['createdAt' => 'desc']);
 
@@ -225,7 +228,8 @@ class RecipeController extends AbstractController
         return $this->render('recipe/subCategory.html.twig', [
             'recipes' => $recipes,
             'subCategory' => $subCategory,
-            'title' => $subCategory->getName()
+            'title' => $subCategory->getName(),
+            'numberOfRate' => $rateRepository->getNumberOfRate(),
         ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
@@ -237,7 +241,7 @@ class RecipeController extends AbstractController
      * Method to display the recipes by Types in the template type.html.twig from the directory recipe
      * @Route("/type/{slug}", name="browseByType")
      */
-    public function browseByType(Type $type, PaginatorInterface $paginator, Request $request)
+    public function browseByType(Type $type, RateRepository $rateRepository, PaginatorInterface $paginator, Request $request)
     {
 
         $typeRepository = $this->getDoctrine()->getRepository(SubCategory::class)->findBy([],['createdAt' => 'desc']);
@@ -254,7 +258,8 @@ class RecipeController extends AbstractController
         return $this->render('recipe/type.html.twig', [
             'recipes' => $recipes,
             'type' => $type,
-            'title' => $type->getName()
+            'title' => $type->getName(),
+            'numberOfRate' => $rateRepository->getNumberOfRate(),
         ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 

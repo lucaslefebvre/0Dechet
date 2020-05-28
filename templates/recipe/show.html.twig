@@ -5,6 +5,7 @@
       <div class="row justify-content-between text-md-right pt-3 px-3 ml-md-2 mr-md-1 main-title">
         <h2>{{ recipe.name }}</h2>
         <div class="d-none d-md-block">
+        Nombre d'avis : {{ numberOfRate }}
             {% for i in 1..5 %}
                 {% if recipe.averageRate >= i %}
                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -82,7 +83,6 @@
       <div class="row pt-3 px-3 ml-md-2 mr-md-1">
         <div class="col-12 col-md-5 text-center">
           <h5>Noter la recette :</h5>
-          <p> Nombre d'avis : {{ numberOfRate }} </p>
           <div class="col-12 form-rate">
             <div class="row justify-content-center m-3">
               <form action="" method="post">
