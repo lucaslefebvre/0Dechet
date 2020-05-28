@@ -24,6 +24,7 @@ class GlobalCategoriesVariables implements EventSubscriberInterface {
         $this->manager = $manager;
     }
 
+    // this method is to inject a global variable of Category for Nav and left nav
     public function injectGlobalVariables() {
         $categoryGlobal = $this->manager->getRepository(Category::class)->findAll();
         $this->twig->addGlobal( 'allCategory', $categoryGlobal);
