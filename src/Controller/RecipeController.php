@@ -59,7 +59,6 @@ class RecipeController extends AbstractController
         ]);
     }
 
-  
      /**
      * Method for add a new recipe. Send a form, receive the response and flush to the Database
      * @IsGranted("IS_AUTHENTICATED_FULLY")
