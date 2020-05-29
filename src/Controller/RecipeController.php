@@ -39,8 +39,6 @@ class RecipeController extends AbstractController
      */
     public function browse(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
     {
-
-    
         $recipes = $paginator->paginate(  // add paginator
             $recipeRepository->findAll(),   // query to display all the recipes
             $request->query->getInt('page', 1), // number of the current page in the Url, if only one = 1
@@ -53,6 +51,7 @@ class RecipeController extends AbstractController
             'recipes' => $recipes,
             'title' => 'Toutes les recettes',
         ]);
+          
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
         }    
@@ -88,7 +87,6 @@ class RecipeController extends AbstractController
        
     }
 
-  
      /**
      * Method for add a new recipe. Send a form, receive the response and flush to the Database
      * @IsGranted("IS_AUTHENTICATED_FULLY")
@@ -201,8 +199,6 @@ class RecipeController extends AbstractController
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
         }    
-
-    
     }
           
      /**
