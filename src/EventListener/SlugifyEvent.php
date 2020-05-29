@@ -11,11 +11,14 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 class SlugifyEvent
 {
     // This method is executed prePersist of forms
-    public function prePersist(LifecycleEventArgs $args, Slugger $slugger)
+    public function prePersist(LifecycleEventArgs $args)
     {
         //$args is the object concerned by the evenement
         // if it's modified and flushed, it's intercepted there
+        
         $entity = $args->getObject();
+
+        $slugger = new Slugger;
 
         //If it's a Recipe Object
         if($entity instanceof Recipe){
@@ -38,12 +41,14 @@ class SlugifyEvent
         }
     }
     // This method is executed preUpdate of forms
-    public function preUpdate(LifecycleEventArgs $args, Slugger $slugger)
+    public function preUpdate(LifecycleEventArgs $args)
     {
         //$args is the object concerned by the evenement
         // if it's modified and flushed, it's intercepted there
         $entity = $args->getObject();
  
+        $slugger = new Slugger;
+
          //If it's a Recipe Object
         if($entity instanceof Recipe){
  

@@ -1,6 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="flash-notice">
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p class="mb-0">{{message}}</p>
+            </div>
+        </div>
+    {% endfor %}
+
    <main class="container recipe-main">
       <div class="row justify-content-between text-md-right pt-3 px-3 ml-md-2 mr-md-1 main-title">
         <h2>{{ recipe.name }}</h2>

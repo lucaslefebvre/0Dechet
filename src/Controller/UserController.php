@@ -96,7 +96,7 @@ class UserController extends AbstractController
                 }
 
                 // We use a Services to move and rename the file
-                $newName = $fileUploader->saveFile($userForm['image'], 'assets/users');
+                $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
                 $user->setImage($newName);
 
                 $em = $this->getDoctrine()->getManager();
@@ -109,7 +109,7 @@ class UserController extends AbstractController
                     'Votre compte a bien été modifié.'
                 );
 
-                return $this->redirectToRoute('user_edit', [
+                return $this->redirectToRoute('user_read', [
                     'id' => $user->getId(),
                 ]);
             }

@@ -15,6 +15,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\RateRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
+use App\Services\FileUploader;
 use App\Services\Slugger;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,7 +44,7 @@ class RecipeController extends AbstractController
         $recipes = $paginator->paginate(  // add paginator
             $recipeRepository->findAll(),   // query to display all the recipes
             $request->query->getInt('page', 1), // number of the current page in the Url, if only one = 1
-            1,    // number of results in a page
+            15,    // number of results in a page
         ); 
 
         // If number of pagination exist we return the view
@@ -93,7 +94,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/ajout", name="add", methods={"GET","POST"})
      */
-    public function add(Request $request)
+    public function add(Request $request, FileUploader $fileUploader)
     {
         $recipe = new Recipe;
 
@@ -102,9 +103,11 @@ class RecipeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe->setStatus(1);
-            $recipe->setCreatedAt(new \DateTime());
-            $recipe->setSlug('test');
             $recipe->setUser($this->getUser());
+
+            // We use a Services to move and rename the file
+            $newName = $fileUploader->saveFile($form['image'], 'assets/images/recipes');
+            $recipe->setImage($newName);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);
@@ -114,8 +117,9 @@ class RecipeController extends AbstractController
                 'Votre recette a été ajoutée'
             );
 
-
-            return $this->redirectToRoute('recipe_add');
+            return $this->redirectToRoute('recipe_show', [
+                'slug' => $recipe->getSlug(),
+                ]);
         }
 
         return $this->render('recipe/add.html.twig', [
@@ -130,21 +134,27 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/edition/{slug}", name="edit", methods={"GET","POST"})
      */
-    public function edit(Recipe $recipe, Request $request)
+    public function edit(Recipe $recipe, Request $request, FileUploader $fileUploader)
     {
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $recipe->setUpdatedAt(new \DateTime());
+            // We use a Services to move and rename the file
+            $newName = $fileUploader->saveFile($form['image'], 'assets/images/recipes');
+            $recipe->setImage($newName);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Votre recette a été modifié'
+            );
 
-            return $this->redirectToRoute('user_read', [
-                'id' => $this->getUser()->getId(),
-            ]);
+            return $this->redirectToRoute('recipe_show', [
+                'slug' => $recipe->getSlug(),
+                ]);
         }
 
         return $this->render('recipe/edit.html.twig', [
@@ -172,7 +182,6 @@ class RecipeController extends AbstractController
                 $comment->setRecipe($recipe);
 
                 $comment->setStatus(1);
-                $comment->setCreatedAt(new \DateTime());
           
                 $comment->setUser($this->getUser());
 
