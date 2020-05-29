@@ -78,7 +78,7 @@
       <div class="row justify-content-center">
         <div class="col-10 recipe-division"></div>
       </div>
-
+      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
       <div class="row pt-3 px-3 ml-md-2 mr-md-1">
         <div class="col-12 col-md-5 text-center">
           <h5>Noter la recette :</h5>
@@ -118,6 +118,7 @@
             </div>
           </div>
         </div>
+        
         <div class="col-12 d-md-none">
           <div class="recipe-division"></div>
         </div>
@@ -142,6 +143,7 @@
       <div class="row justify-content-center">
         <div class="col-10 recipe-division"></div>
       </div>
+      {% endif %}
       <div class="row pt-3 px-3 ml-md-2 mr-md-1">
         <h5>Commentaires :</h5>
         {% if recipe.comments is empty %}

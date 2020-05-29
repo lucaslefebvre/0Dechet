@@ -32,11 +32,12 @@ class RecipeController extends AbstractController
      * Method to display all the recipes in template/recipe/browse.html.twig
      * @Route("/", name="browse", methods={"GET"})
      */
-    public function browse(RecipeRepository $recipeRepository): Response
+    public function browse(RecipeRepository $recipeRepository, UserRepository $user): Response
     {
         return $this->render('recipe/browse.html.twig', [
             'recipes' => $recipeRepository->findAll(),
-            'title' => 'Toutes les recettes'
+            'title' => 'Toutes les recettes',
+            'user' => $this->getUser(),
         ]);
     }
 
@@ -54,7 +55,7 @@ class RecipeController extends AbstractController
         //dd($recipes);
         return $this->render('recipe/search.html.twig', [
             'recipes' => $recipes,
-            'title' => 'Résultat pour '.$q
+            'title' => 'Résultat pour '.$q,
         ]);
     }
 
@@ -148,7 +149,7 @@ class RecipeController extends AbstractController
     {
         return $this->render('recipe/category.html.twig', [
             'category' => $category,
-            'title' => $category->getName()
+            'title' => $category->getName(),
         ]);
     }
           
@@ -160,7 +161,7 @@ class RecipeController extends AbstractController
     {
         return $this->render('recipe/subCategory.html.twig', [
             'subCategory' => $subCategory,
-            'title' => $subCategory->getName()
+            'title' => $subCategory->getName(),
         ]);
     }
 
@@ -172,7 +173,7 @@ class RecipeController extends AbstractController
     {
         return $this->render('recipe/type.html.twig', [
             'type' => $type,
-            'title' => $type->getName()
+            'title' => $type->getName(),
         ]);
     }
 

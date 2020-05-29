@@ -121,7 +121,8 @@ class UserController extends AbstractController
         return $this->render('user/edit.html.twig', [
             'userForm' => $userForm->createView(),
             'deleteForm' => $formDelete->createView(),
-            'title'=>'Modifier son profil'
+            'title'=>'Modifier son profil',
+            'user' => $this->getUser(),
         ]);
     }
 
