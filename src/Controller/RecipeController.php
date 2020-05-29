@@ -136,14 +136,21 @@ class RecipeController extends AbstractController
      */
     public function edit(Recipe $recipe, Request $request, FileUploader $fileUploader)
     {
+        $image = $recipe->getImage();
+        
         $form = $this->createForm(RecipeType::class, $recipe);
+        
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             // We use a Services to move and rename the file
             $newName = $fileUploader->saveFile($form['image'], 'assets/images/recipes');
             $recipe->setImage($newName);
+            if ($recipe->getImage() === null){
+                $recipe->setImage($image);
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
