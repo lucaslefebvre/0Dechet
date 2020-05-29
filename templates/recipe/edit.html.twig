@@ -65,6 +65,11 @@
         <button type="submit" class="btn form-btn">{{ button_label|default('Modifier') }}</button>
     </div>
   {{ form_end(form) }}
+    <div class="row justify-content-center">
+    {{ form_start(deleteForm) }}
+      {{ form_widget(deleteForm.deleteButton, {'attr': {'class': 'form-btn-delete'}, 'label': "Supprimer ma recette"}) }}
+    {{ form_end(deleteForm) }}
+    </div>
 
     <div class="row">
       <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
