@@ -32,67 +32,76 @@
           <label for="tm" id="toggle-menu"><span class="drop-icon-burger">&equiv;</span></label>
           <input type="checkbox" id="tm">
 
-              <ul class="main-menu clearfix">
-                <li>
-                {% if route == 'main_home' %}
-                <a class="nav-link active" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
-                {% else %}
-                <a class="nav-link" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
-                {% endif %}
-                </li>
-
-                {% if route == 'recipe_browse' %}
-                <li>
-                <a class="nav-link active" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
-                {% else %}
-                <a class="nav-link" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
-                {% endif %}
-                </li>
-
-                {% for category in allCategory %}
-                <li>        
-                  {% if category.slug == app.request.attributes.get('slug') %}
-                  <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm1">▾</label></a>
-
-                  {% elseif appSubCategory is not null and appSubCategory.category == category %}
-                  <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm1">▾</label></a>
-
-                  {% elseif appType is not null and appType.subCategory.category == category %}
-                  <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm1">▾</label></a>
-
-                  {% else %}
-                  <a class="nav-link" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm1">▾</label></a>
-                  {% endif %}
-
-                  <input type="checkbox" id="sm1">
-                  <ul class="sub-menu">
-                  {% for subCategory in category.subCategories %}
-                    <li><a class="nav-link" href="{{ path('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}
-                        <span class="drop-icon">&rtrif;</span>
-                        <label title="Toggle Drop-down" class="drop-icon" for="sm2">▾</label>
-                      </a>
-                      <input type="checkbox" id="sm2">
-                      <ul class="sub-menu">
-                      {% for type in subCategory.types %}
-                        <li><a class="nav-link" href="{{ path('recipe_browseByType', {'slug': type.slug}) }}">{{type.name}}</a></li>
-                  {% endfor %}
-                      </ul>
-                    </li>
-                  {% endfor %}
-                  </ul>
-                </li>
-                {% endfor %}
-                <li><a class="nav-link" href="#">Contact</a></li>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li>
-                  <a class="nav-link" href="{{ path('user_read', {'id': app.user.id}) }}">Profil</a>
-                </li>
+            <ul class="main-menu clearfix">
+              <li>
+              {% if route == 'main_home' %}
+              <a class="nav-link active" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
+              {% else %}
+              <a class="nav-link" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
               {% endif %}
-                <li><form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
-                  <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Rechercher">
-                  <button class="btn my-sm-0 btn-search" type="submit" formaction="{{ path('recipe_search') }}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </form></li>
-              </ul>
+              </li>
+
+              {% if route == 'recipe_browse' %}
+              <li>
+              <a class="nav-link active" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
+              {% else %}
+              <a class="nav-link" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
+              {% endif %}
+              </li>
+
+              {% for category in allCategory %}
+              <li>        
+                {% if category.slug == app.request.attributes.get('slug') %}
+                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}">▾</label></a>
+
+                {% elseif appSubCategory is not null and appSubCategory.category == category %}
+                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}">▾</label></a>
+
+                {% elseif appType is not null and appType.subCategory.category == category %}
+                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}">▾</label></a>
+
+                {% else %}
+                <a class="nav-link" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}">▾</label></a>
+                {% endif %}
+
+                <input type="checkbox" id="sm{{loop.index}}">       
+                <ul class="sub-menu">
+                {% for subCategory in category.subCategories %}
+                  <li><a class="nav-link" href="{{ path('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}
+                      <span class="drop-icon">&rtrif;</span>
+                      {% if category.id == 1 %}
+                      <label title="Toggle Drop-down" class="drop-icon" for="sm{{100 + loop.index}}">▾</label>
+                      {% else %}
+                      <label title="Toggle Drop-down" class="drop-icon" for="sm{{200 + loop.index}}">▾</label>
+                      {% endif %}
+                    </a>
+                    {% if category.id == 1 %}
+                    <input type="checkbox" id="sm{{100 + loop.index}}">
+                    {% else %}
+                    <input type="checkbox" id="sm{{200 + loop.index}}">
+                    {% endif %}
+                    <ul class="sub-menu">
+                    {% for type in subCategory.types %}
+                      <li><a class="nav-link" href="{{ path('recipe_browseByType', {'slug': type.slug}) }}">{{type.name}}</a></li>
+                    {% endfor %}
+                    </ul>
+                  </li>
+                {% endfor %}
+                </ul>
+                
+              </li>
+              {% endfor %}
+              <li><a class="nav-link" href="#">Contact</a></li>
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              <li>
+                <a class="nav-link" href="{{ path('user_read', {'id': app.user.id}) }}">Profil</a>
+              </li>
+              {% endif %}
+              <li><form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
+                <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Rechercher">
+                <button class="btn my-sm-0 btn-search" type="submit" formaction="{{ path('recipe_search') }}"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </form></li>
+            </ul>
         </nav>
     </header>
     {% endblock %}
