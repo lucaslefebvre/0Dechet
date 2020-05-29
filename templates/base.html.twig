@@ -83,14 +83,17 @@
                 </li>
                 {% endfor %}
                 <li><a class="nav-link" href="#">Contact</a></li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li>
+                  <a class="nav-link" href="{{ path('user_read', {'id': app.user.id}) }}">Profil</a>
+                </li>
+              {% endif %}
                 <li><form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
                   <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Rechercher">
                   <button class="btn my-sm-0 btn-search" type="submit" formaction="{{ path('recipe_search') }}"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </form></li>
               </ul>
-
         </nav>
-
     </header>
     {% endblock %}
 

@@ -92,7 +92,7 @@ class Recipe
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="recipes")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
 
