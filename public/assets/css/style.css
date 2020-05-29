@@ -65,7 +65,7 @@ ul li{
   }
   
   #menu input[type="checkbox"], 
-  #menu ul span.drop-icon {
+  #menu ul i.drop-icon {
     margin-left: 0.2rem;
     display: none;
   }
@@ -126,12 +126,12 @@ ul li{
     top: 1.25em;
   }
   
-  #menu label.drop-icon, #toggle-menu span.drop-icon {
+  #menu label.drop-icon, #toggle-menu i.drop-icon {
     border-radius: 50%;
     width: 1em;
     height: 1em;
     text-align: center;
-    background-color: #617e64;
+    /* background-color: #617e64; */
     text-shadow: 0 0 0 transparent;
     color: black;
   }
@@ -164,7 +164,7 @@ ul li{
       display: none;
     }
   
-    #menu ul span.drop-icon {
+    #menu ul i.drop-icon {
       display: inline-block;
     }
   
@@ -183,7 +183,7 @@ ul li{
       position: absolute;
       top: 100%;
       left: 0;
-      width: 13.5rem;
+      width: 14rem;
       z-index: 3000;
     }
   
