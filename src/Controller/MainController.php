@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Recipe;
+use App\Repository\RateRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
