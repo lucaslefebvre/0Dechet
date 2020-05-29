@@ -148,6 +148,7 @@ class RecipeController extends AbstractController
             // We use a Services to move and rename the file
             $newName = $fileUploader->saveFile($form['image'], 'assets/images/recipes');
             $recipe->setImage($newName);
+            // If user don't edit the image we let the old image
             if ($recipe->getImage() === null){
                 $recipe->setImage($image);
             }
@@ -175,7 +176,7 @@ class RecipeController extends AbstractController
      *  Method to display all information about a recipe in template/recipe/show.html.twig
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
-    public function show(Recipe $recipe, RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
+    public function show(Recipe $recipe, Request $request, RecipeRepository $recipeRepository, EntityManagerInterface $em, UserRepository $userRepository): Response
     {
         // Comment Form
         $comment = new Comment();
@@ -218,7 +219,7 @@ class RecipeController extends AbstractController
                 ]);
             }
         }
-
+        
             return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
             'title' => $recipe->getName(),
@@ -231,7 +232,7 @@ class RecipeController extends AbstractController
      *  Method to display the recipes by Categories in the template category.html.twig from the directory recipe
      * @Route("/categorie/{slug}", name="browseByCategory")
      */
-    public function browseByCategory(Category $category, RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
+    public function browseByCategory(Category $category, PaginatorInterface $paginator, Request $request)
     {
         $categoryRepository = $this->getDoctrine()->getRepository(Category::class)->findBy([],['createdAt' => 'desc']);
 
@@ -257,7 +258,7 @@ class RecipeController extends AbstractController
      * Method to display the recipes by Sub Categories in the template subCategory.html.twig from the directory recipe
      * @Route("/sous-categorie/{slug}", name="browseBySubCategory")
      */
-    public function browseBySubCategory(SubCategory $subCategory,RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
+    public function browseBySubCategory(SubCategory $subCategory, PaginatorInterface $paginator, Request $request)
     {
         $subCategoryRepository = $this->getDoctrine()->getRepository(SubCategory::class)->findBy([],['createdAt' => 'desc']);
 

@@ -63,5 +63,15 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
+    /*public function findCommentsByOrder()
+    {
+        $qb =  $this->createQueryBuilder('r');
+        $qb
+            ->addSelect('c')
+            ->leftJoin('r.comment', 'c')
+            ->orderBy('createdAt', 'DESC')
+        ;
+            return $qb->getQuery()->getResult();
+    }
+*/
 }
