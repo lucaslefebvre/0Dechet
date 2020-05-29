@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -27,6 +28,10 @@ class CreateAccountType extends AbstractType
                     new NotBlank([
                         'message'=>'Ce champ ne doit pas être vide'
                     ]),
+                    // new UniqueEntity([
+                    //     'fields'=>'username',
+                    //     'message'=>"Ce nom d'utilisateur est déjà utilisé."
+                    // ]),
                 ],
             ])
             ->add('email', null,[

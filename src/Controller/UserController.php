@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -137,15 +138,25 @@ class UserController extends AbstractController
         $formDelete->handleRequest($request);
 
         if ($formDelete->isSubmitted() && $formDelete->isValid()) {
+
+            //You have to clear the Session before deleting user entry in DB
+            $currentUserId = $this->getUser()->getId();
+            if ($currentUserId == $user->getId())
+            {
+              $session = $this->get('session');
+              $session = new Session();
+              $session->invalidate();
+            }
+            //Then remove the user
             $em->remove($user);
             $em->flush();
 
             $this->addFlash(
                 'success',
-                'Votre compte bien été supprimé.'
+                'Votre compte a bien été supprimé.'
             );
 
-            return $this->redirectToRoute('main_home');
+            return $this->redirectToRoute('app_logout');
         }
 
         return $this->redirectToRoute('user_edit', [

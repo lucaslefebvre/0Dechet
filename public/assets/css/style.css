@@ -600,7 +600,7 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
 /*Pagination*/
 .page-link {
     color : #739377;
-
+}
 /* LOGIN FORM */
 /* .form-btn-connexion {
     background-color: #b7cbad !important;
