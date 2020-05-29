@@ -27,13 +27,13 @@
       <div class="row pt-0 pt-md-3 px-3 ml-md-2 mr-md-1 recipe-time-difficulty">
         <p>Temps : environ {{ recipe.duration }} minutes<br>
         {% if recipe.difficulty == 1 %}
-          {% set difficulty = 'débutant' %}
+          {% set difficulty = 'Débutant' %}
         {% endif %}
         {% if recipe.difficulty == 2 %}
-          {% set difficulty = 'intermédiare' %}
+          {% set difficulty = 'Intermédiare' %}
         {% endif %}
         {% if recipe.difficulty == 3 %}
-          {% set difficulty = 'expert' %} 
+          {% set difficulty = 'Expert' %} 
         {% endif %}
         Difficulté : {{ difficulty }}</p>
       </div>
@@ -73,8 +73,9 @@
 
       <div class="row pt-3 px-3 ml-md-2 mr-md-1 recipe-content">
         <h5>Recette :</h5>
-        <div>{{ recipe.content }}
-        </div>
+      </div>
+      <div class="row px-3 ml-md-2 mr-md-1">
+          <p>{{ recipe.content |nl2br }}</p>
       </div>
       <div class="row justify-content-center">
         <div class="col-10 recipe-division"></div>
@@ -147,8 +148,10 @@
       {% endif %}
       <div class="row pt-3 px-3 ml-md-2 mr-md-1">
         <h5>Commentaires :</h5>
+      </div>
+      <div class="row justify-content-center mb-5 px-3 ml-md-2 mr-md-1">
         {% if recipe.comments is empty %}
-        <div class="ml-2">Cette recette n'a pas encore de commentaire</div>
+        <p>Cette recette n'a pas encore de commentaire</p>
         {% else %}
         <div class="comments col-12 overflow-auto">
           {% for comment in recipe.comments %}

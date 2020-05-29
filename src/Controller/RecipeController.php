@@ -16,6 +16,7 @@ use App\Repository\RateRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
 use App\Services\Slugger;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -100,6 +101,11 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $recipe->setStatus(1);
+            $recipe->setCreatedAt(new \DateTime());
+            $recipe->setSlug('test');
+            $recipe->setUser($this->getUser());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);
             $entityManager->flush();
@@ -115,6 +121,36 @@ class RecipeController extends AbstractController
         return $this->render('recipe/add.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
+            'title' => "Ajouter une recette",
+        ]);
+    }
+
+        /**
+     * Method to edit an existing recipe. Send a form, receive the response and flush to the Database
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Route("/edition/{slug}", name="edit", methods={"GET","POST"})
+     */
+    public function edit(Recipe $recipe, Request $request)
+    {
+        $form = $this->createForm(RecipeType::class, $recipe);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $recipe->setUpdatedAt(new \DateTime());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_read', [
+                'id' => $this->getUser()->getId(),
+            ]);
+        }
+
+        return $this->render('recipe/edit.html.twig', [
+            'recipe' => $recipe,
+            'form' => $form->createView(),
+            'title' => "Modifier une recette",
         ]);
     }
   

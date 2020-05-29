@@ -4,7 +4,7 @@
 
 <main class="container">
   <div class="row pt-3 main-title">
-    <h2>Ajouter une recette</h2>
+    <h2>Modifier une recette</h2>
   </div>
 
   {{ form_start(form) }}
@@ -66,10 +66,9 @@
     </div>
   {{ form_end(form) }}
 
-  <div class="row">
-    <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
-  </div>
-    
+    <div class="row">
+      <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
+    </div>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -122,4 +121,3 @@
     }
 </script>
 {% endblock %}
-
