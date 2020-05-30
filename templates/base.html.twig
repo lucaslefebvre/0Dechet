@@ -52,28 +52,27 @@
               {% for category in allCategory %}
               <li>        
                 {% if category.slug == app.request.attributes.get('slug') %}
-                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<i class="fa fa-plus fa-lg drop-icon" aria-hidden="true"></i><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><i class="fa fa-plus fa-lg" aria-hidden="true"></i></label></a>
+                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
 
                 {% elseif appSubCategory is not null and appSubCategory.category == category %}
-                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<i class="fa fa-plus fa-lg drop-icon" aria-hidden="true"></i><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><i class="fa fa-plus fa-lg" aria-hidden="true"></i></label></a>
+                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
 
                 {% elseif appType is not null and appType.subCategory.category == category %}
-                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<i class="fa fa-plus fa-lg drop-icon" aria-hidden="true"></i><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><i class="fa fa-plus fa-lg" aria-hidden="true"></i></label></a>
+                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
 
                 {% else %}
-                <a class="nav-link" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<i class="fa fa-plus fa-lg drop-icon" aria-hidden="true"></i>
-                <label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><i class="fa fa-plus fa-lg" aria-hidden="true"></i></label></a>
+                <a class="nav-link" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
                 {% endif %}
 
                 <input type="checkbox" id="sm{{loop.index}}">       
                 <ul class="sub-menu">
                 {% for subCategory in category.subCategories %}
                   <li><a class="nav-link" href="{{ path('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}
-                      <i class="fa fa-plus fa-lg drop-icon" aria-hidden="true"></i>
+                      <span class="drop-icon">&rtrif;</span>
                       {% if category.id == 1 %}
-                      <label title="Toggle Drop-down" class="drop-icon" for="sm{{100 + loop.index}}"><i class="fa fa-plus fa-lg" aria-hidden="true"></i></label>
+                      <label title="Toggle Drop-down" class="drop-icon" for="sm{{100 + loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label>
                       {% else %}
-                      <label title="Toggle Drop-down" class="drop-icon" for="sm{{200 + loop.index}}"><i class="fa fa-plus fa-lg" aria-hidden="true"></i></label>
+                      <label title="Toggle Drop-down" class="drop-icon" for="sm{{200 + loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label>
                       {% endif %}
                     </a>
                     {% if category.id == 1 %}
