@@ -122,15 +122,50 @@
                   <label for="difficulty-1">
                     <i class="fa fa-star"></i>
                   </label>
-                  <div class="row justify-content-center m-3">
-                    <button class="btn rate-btn">Envoyer la note</button>
-                  </div>
+                  {# {% if recipe.user == app.user %}
+                    <p>Vous ne pouvez pas noter votre recette</p>
+                  {% elseif recipe.rates %}
+                    {% set break = false %}
+                    {% for rate in recipe.rates %}
+                      {% if rate.user == app.user %}
+                        {% if break == false %}
+                          <p>Vous avez déjà donné une note</p>
+                          {% set break = true %}
+                        {% endif %}
+                      {% else %}
+                        {% if break == false %}
+                          <div class="row justify-content-center m-3">
+                            <button class="btn rate-btn">Envoyer la note</button>
+                          </div>
+                          {% set break = true %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  {% else %}
+                    <div class="row justify-content-center m-3">
+                      <button class="btn rate-btn">Envoyer la note</button>
+                    </div>
+                  {% endif %} #}
+                  {% if recipe.user.id == app.user.id %}
+                    <p>Vous ne pouvez pas noter votre recette</p>
+                    {% elseif recipe.rates %}
+                      {% for rate in recipe.rates|filter(rate => rate.user == app.user) %}
+                          <p>Vous avez déjà donné une note</p>
+                      {% else %}
+                          <div class="row justify-content-center m-3">
+                            <button class="btn rate-btn">Envoyer la note</button>
+                          </div>
+                      {% endfor %}
+                    {% else %}
+                    <div class="row justify-content-center m-3">
+                      <button class="btn rate-btn">Envoyer la note</button>
+                    </div>
+                  {% endif %}
                 </div>
               </form>
             </div>
           </div>
         </div>
-        
         <div class="col-12 d-md-none">
           <div class="recipe-division"></div>
         </div>
