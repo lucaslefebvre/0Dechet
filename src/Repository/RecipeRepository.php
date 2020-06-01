@@ -63,5 +63,4 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
 }

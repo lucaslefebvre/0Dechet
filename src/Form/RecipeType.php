@@ -118,8 +118,8 @@ class RecipeType extends AbstractType
                     return $type->getSubCategory()->getName();
                 }
             ]);
+    
     }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
