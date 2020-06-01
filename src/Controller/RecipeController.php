@@ -9,6 +9,7 @@ use App\Entity\Recipe;
 use App\Entity\SubCategory;
 use App\Entity\Type;
 use App\Form\CommentType;
+use App\Form\DeleteType;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
@@ -150,9 +151,14 @@ class RecipeController extends AbstractController
                 ]);
         }
 
+        $formDelete = $this->createForm(DeleteType::class, null, [
+            'action' => $this->generateUrl('recipe_delete', ['id' => $recipe->getId()])
+        ]);
+
         return $this->render('recipe/edit.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
+            'deleteForm' => $formDelete->createView(),
             'title' => "Modifier une recette",
         ]);
     }
@@ -306,4 +312,32 @@ class RecipeController extends AbstractController
             
     }
 
+    /**
+     * Method to allow a user to delete one of his/her recipe off the website
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Route("/recipe/suppression/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
+     */
+    public function delete(EntityManagerInterface $em, Request $request, Recipe $recipe)
+    {
+        $formDelete = $this->createForm(DeleteType::class);
+        $formDelete->handleRequest($request);
+
+        if ($formDelete->isSubmitted() && $formDelete->isValid()) {
+            $em->remove($recipe);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'La recette a bien été supprimé.'
+            );
+
+            return $this->redirectToRoute('user_read', [
+                'id' => $this->getUser()->getId(),
+            ]);
+        }
+
+        return $this->redirectToRoute('recipe_edit', [
+            'slug' => $recipe->getslug(),
+        ]);
+    }
 }
