@@ -10,14 +10,16 @@
     <div class="card-body p-2">
       <h5 class="card-title card-recipe-title"><a href="{{ path('recipe_show', {'slug': recipe.slug})}}">{{ recipe.name }}</a></h5>
       <p class="card-rate">
-  {% for i in 1..5 %}
-      {% if recipe.averageRate >= i %}
-      <i class="fa fa-star" aria-hidden="true"></i>
-      {% else %}
-      <i class="fa fa-star-o" aria-hidden="true"></i>
-      {% endif %}
-  {% endfor %}
-     <br>Nombre d'avis : {{ recipe.rates|length }}
+      {% for i in 1..5 %}
+        {% if recipe.averageRate >= i %}
+        <i class="fa fa-star" aria-hidden="true"></i>
+        {% else %}
+        <i class="fa fa-star-o" aria-hidden="true"></i>
+        {% endif %}
+      {% endfor %}
+      </p>
+      <p class="card-nb-opinion">
+        Nombre d'avis : {{ recipe.rates|length }}
       </p>
     </div>
     </div>

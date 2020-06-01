@@ -316,8 +316,15 @@ main {
 
 .card-rate {
     text-align: center;
-    margin-bottom: 2rem;
     font-size: 1.2rem;
+    margin-bottom: 0;
+
+}
+
+.card-nb-opinion {
+    text-align: center;
+    padding: 0;
+    font-size: 0.7rem;
 }
 
 .card-btn {
@@ -588,6 +595,30 @@ ul.recipe-list li {
 
 .recipe-time-difficulty {
     font-size: 1.1rem;
+}
+
+.recipe-nb-opinion {
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+/* Commentaires */
+
+.recipe-comment-title{
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+.recipe-comment-user{
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-bottom: 0.2rem;
+}
+
+.recipe-comment-content{
+    
 }
 
 /* FORMS */

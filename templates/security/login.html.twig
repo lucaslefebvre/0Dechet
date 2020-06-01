@@ -4,7 +4,7 @@
 
 {% block body %}
     <main class="container">
-      <div class="row justify-content-between pt-3 px-3 ml-md-2 mr-md-1 mb-5 main-title">
+      <div class="row pt-3 main-title">
         <h2>Se connecter</h2>
       </div>
       <form method="post">
@@ -18,9 +18,9 @@
             </div>
         {% endif %}
 
-        <label for="inputEmail">Email</label>
+        <label for="inputEmail" class="user-form-label">Email</label>
         <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-        <label for="inputPassword">Mot de passe</label>
+        <label for="inputPassword" class="user-form-label">Mot de passe</label>
         <input type="password" name="password" id="inputPassword" class="form-control" required>
 
         <input type="hidden" name="_csrf_token"
@@ -39,7 +39,7 @@
         #}
         <div class="submit-button-container pt-3">
           <button class="btn btn-lg form-btn-connexion" type="submit">
-              Sign in
+              Se connecter
           </button>
         </div>
       </form>
