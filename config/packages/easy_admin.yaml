@@ -79,6 +79,7 @@ easy_admin:
                     - { property: 'image', label: 'Image de la recette', type: 'file' }
                     - { property: 'type', label: 'Type' }
                     - { property: 'status', label: 'Status' }
+                    - { property: 'user', label: 'Utilisateur' }
     Rate:
             class: App\Entity\Rate
             label: 'Note'
@@ -126,7 +127,6 @@ easy_admin:
                   - { property: 'createdAt', label: 'Créé le' }
             form:
               fields: 
-                  - 'id'
                   - { property: 'email', label: 'Email', type: 'email' }
                   - { property: 'username', label: 'Pseudo' }
                   - { property: 'password', label: 'Mot de passe', type: 'password' }
