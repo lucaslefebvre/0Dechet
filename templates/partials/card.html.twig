@@ -1,5 +1,5 @@
 <div class="card col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
-    <div class="pt-3">
+  <div class="pt-3">
     <div class="card-recipe-img">
     {% if recipe.image is not empty %}
       <a href="{{ path('recipe_show', {'slug': recipe.slug})}}"><img src="{{ asset('assets/images/recipes/' ~ recipe.image) }}" class="card-img-top" alt="{{recipe.name}}"></a>
@@ -22,19 +22,21 @@
         Nombre d'avis : {{ recipe.rates|length }}
       </p>
     </div>
-    </div>
-    <div class="d-flex justify-content-center">
-      {% if recipe.user is not empty %}
+  </div>
+  <div class="d-flex justify-content-center">
+    <div class="card-profil-img">
+    {% if recipe.user is not empty %}
       <a href="{{ path('user_read', {'id': recipe.user.id})}}">
         {% if recipe.user.image is not empty %}
-          <img src="{{ asset('assets/images/users/' ~ recipe.user.image) }}" class="card-profil-image" alt="{{recipe.user.image}}">
+          <img src="{{ asset('assets/images/users/' ~ recipe.user.image) }}" class="card-img-user" alt="{{recipe.user.image}}">
         {% else %}
-          <img src="{{ asset('assets/images/default-user.png') }}" class="card-profil-image" alt="">
+          <img src="{{ asset('assets/images/default-user.png') }}" class="card-img-user" alt="">
         {% endif %}
       {% else %}
-        <img src="{{ asset('assets/images/default-user.png') }}" class="card-profil-image" alt="">
+        <img src="{{ asset('assets/images/default-user.png') }}" class="card-img-user" alt="">
       {% endif %}
       </a>
+    </div>
     <div class="card-profil">
       <a href="{{ path('user_read', {'id': recipe.user.id})}}">
         <p>Proposé par {{ recipe.user ? recipe.user : "Anonyme" }}</p>
