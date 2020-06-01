@@ -134,6 +134,7 @@ ul li{
     width: 1em;
     height: 1em;
     text-align: center;
+    background-color: #617e64;
     text-shadow: 0 0 0 transparent;
     color: black;
   }
@@ -185,7 +186,7 @@ ul li{
       position: absolute;
       top: 100%;
       left: 0;
-      width: 14rem;
+      width: 13.5rem;
       z-index: 3000;
     }
   
@@ -253,15 +254,6 @@ ul li{
 .banner-top-btn:focus {
     border: 2px solid  #F1AF96; 
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
-}
-
-/* Top banner for addFlash*/
-
-.flash-notice{
-    background-color: #b7cbad;
-    text-align: center;
-    margin-right: -15px;
-    margin-left: -15px;
 }
 
 /* FOOTER ALL PAGES */
@@ -425,12 +417,45 @@ label > .fa-plus-category {
   float: right;
   color: #f4bca6;
   margin-top: 3px;
+  transition: transform .65s ease;
+  transform: rotate(90deg);
 }
 
 label > .fa-plus-subcategory {
     float: right;
     color: #ffffff;
     margin-top: 3px;
+    transition: transform .65s ease;
+    transform: rotate(90deg);
+}
+
+label > .fa-minus-category {
+    display: none;
+    margin-top: 3px;
+  }
+
+label > .fa-minus-subcategory {
+    display: none;
+    margin-top: 3px;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-plus {
+    display: none;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-minus-category {
+    display: block;
+    float: right;
+    color: #ffffff;
+    background-color: #f2d7cb;
+    padding: 2px 5px;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-minus-subcategory {
+    display: block;
+    float: right;
+    color: #ffffff;
+    background-color: #f2d7cb;
 }
 
 label > .fa-minus-category {
