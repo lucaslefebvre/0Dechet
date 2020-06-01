@@ -14,13 +14,14 @@
         {% block nav %}
         <header class="sticky-top">
         <nav class="navbar justify-content-between navbar-top">
-            <a class="navbar-brand col-4" href="{{ path('main_home') }}">
-                <img src="{{ asset('assets/images/logo.png') }}" height="55px" alt="logo" loading="lazy">
+            <a class="navbar-brand" href="{{ path('main_home') }}">
+                <img src="{{ asset('assets/images/logo.png') }}" height="80px" alt="logo" loading="lazy" class="d-none d-sm-block">
+                <img src="{{ asset('assets/images/logo.png') }}" height="60px" alt="logo" loading="lazy" class="d-sm-none">
             </a>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-deconnexion" href="{{ path('app_logout') }}">Déconnexion</a>
+            <a class="mr-md-4 btn header-btn-deconnexion" href="{{ path('app_logout') }}">Déconnexion</a>
             {% else %}
-            <a class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-connexion" href="{{ path('app_login') }}">Connexion</a>
+            <a class="mr-md-4 btn header-btn-connexion" href="{{ path('app_login') }}">Connexion</a>
             {% endif %}
         </nav>
 
