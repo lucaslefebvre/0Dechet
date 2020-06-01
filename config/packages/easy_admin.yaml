@@ -12,48 +12,128 @@ easy_admin:
             class: App\Entity\Category
             label: 'Catégorie'
             list:
-                fields: ['id', { property: 'name', label: 'Nom de la catégorie' }, { property: 'sub_categories', label: 'Sous-catégorie' }, { property: 'slug', label: 'Slug' }, { property: 'createdAt', label: 'Créé le' }]
+                fields:
+                    - 'id'
+                    - { property: 'name', label: 'Nom de la catégorie' }
+                    - { property: 'sub_categories', label: 'Sous-catégorie' }
+                    - { property: 'slug', label: 'Slug' }
+                    - { property: 'createdAt', label: 'Créé le' }
             form:
-                fields: [{ property: 'name', label: 'Nom de la catégorie' }]
+                fields: 
+                    - { property: 'name', label: 'Nom de la catégorie' }
     SubCategory:
             class: App\Entity\SubCategory
             label: 'Sous-catégorie'
             list:
-                fields: ['id', { property: 'name', label: 'Nom de la sous-catégorie' }, { property: 'category', label: 'Catégorie' }, { property: 'types', label: 'Type' }, { property: 'slug', label: 'Slug' }, { property: 'createdAt', label: 'Créé le' }]
+                fields: 
+                    - 'id'
+                    - { property: 'name', label: 'Nom de la sous-catégorie' }
+                    - { property: 'category', label: 'Catégorie' }
+                    - { property: 'types', label: 'Type' }
+                    - { property: 'slug', label: 'Slug' }
+                    - { property: 'createdAt', label: 'Créé le' }
             form:
-                fields: [{ property: 'name', label: 'Nom de la sous-catégorie' }, { property: 'category', label: 'Catégorie' }]
+                fields: 
+                    - { property: 'name', label: 'Nom de la sous-catégorie' }
+                    - { property: 'category', label: 'Catégorie' }
     Type:
             class: App\Entity\Type
             label: 'Type'
             list:
-                fields: ['id', { property: 'name', label: 'Type de produit' }, { property: 'subCategory', label: 'Sous-catégorie' }, { property: 'recipes', label: 'Recette' }, { property: 'slug', label: 'Slug' }, { property: 'createdAt', label: 'Créé le' }]
+                fields: 
+                    - 'id'
+                    - { property: 'name', label: 'Type de produit' }
+                    - { property: 'subCategory', label: 'Sous-catégorie' }
+                    - { property: 'recipes', label: 'Recette' }
+                    - { property: 'slug', label: 'Slug' }
+                    - { property: 'createdAt', label: 'Créé le' }
             form:
-                fields: [{ property: 'name', label: 'Type de produit' }, { property: 'subCategory', label: 'Sous-catégorie' }]
+                fields: 
+                    - { property: 'name', label: 'Type de produit' }
+                    - { property: 'subCategory', label: 'Sous-catégorie' }
     Recipe:
             class: App\Entity\Recipe
             label: 'Recette'
             list:
-                fields: ['id', { property: 'name', label: 'Nom de la recette' }, { property: 'duration', label: 'Durée' }, { property: 'difficulty', label: 'Difficulté' }, { property: 'conservation', label: 'Conservation' }, { property: 'image', label: 'Image de la recette' }, { property: 'status', label: 'Status' }, { property: 'slug', label: 'Slug' }, { property: 'comments', label: 'Commentaire' }, { property: 'averageRate', label: 'Note' }, { property: 'createdAt', label: 'Créé le' }]
+                fields: 
+                    - 'id'
+                    - { property: 'name', label: 'Nom de la recette' }
+                    - { property: 'duration', label: 'Durée' }
+                    - { property: 'difficulty', label: 'Difficulté' }
+                    - { property: 'conservation', label: 'Conservation' }
+                    - { property: 'image', label: 'Image de la recette' }
+                    - { property: 'status', label: 'Status' }
+                    - { property: 'slug', label: 'Slug' }
+                    - { property: 'comments', label: 'Commentaire' }
+                    - { property: 'averageRate', label: 'Note' }
+                    - { property: 'createdAt', label: 'Créé le' }
             form:
-                fields: [{ property: 'name', label: 'Nom de la recette' }, { property: 'content', label: 'Recette' }, { property: 'duration', label: 'Durée' }, { property: 'difficulty', label: 'Difficulté' }, { property: 'conservation', label: 'Conservation' }, { property: 'image', label: 'Image de la recette' }, { property: 'status', label: 'Status' }]
+                fields: 
+                    - { property: 'name', label: 'Nom de la recette' }
+                    - { property: 'ingredient', label: 'Ingrédient' }
+                    - { property: 'equipement', label: 'Matériel' }
+                    - { property: 'content', label: 'Recette' }
+                    - { property: 'duration', label: 'Durée', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'0 mn': '0', '15 mn': '15', '30 mn': '30', '45 mn': '45', '1 h 00': '60', '1 h 15': '75',  '1 h 30': '90', '1 h 45': '105',  '2 h 00': '120'}} }
+                    - { property: 'difficulty', label: 'Difficulté', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'Débutant': '1', 'Intermédiaire': '2', 'Expert': '3'}} }
+                    - { property: 'conservation', label: 'Conservation', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'1 semaine': '7', '2 semaines': '14', '1 mois':'30', '2 mois': '60', '3 mois': '90', '6 mois': '180'}} }
+                    - { property: 'image', label: 'Image de la recette', type: 'file' }
+                    - { property: 'type', label: 'Type' }
+                    - { property: 'status', label: 'Status' }
     Rate:
             class: App\Entity\Rate
             label: 'Note'
             list:
-                fields: ['id', { property: 'rate', label: 'Note' }, { property: 'recipe', label: 'Recette' }, { property: 'user', label: 'Utilisateur' }]
+                fields: 
+                    - 'id'
+                    - { property: 'rate', label: 'Note' }
+                    - { property: 'recipe', label: 'Recette' }
+                    - { property: 'user', label: 'Utilisateur' }
             form:
-                fields: [{ property: 'rate', label: 'Note' }, { property: 'recipe', label: 'Recette' }, { property: 'user', label: 'Utilisateur' }]
+                fields: 
+                    - { property: 'rate', label: 'Note' }
+                    - { property: 'recipe', label: 'Recette' }
+                    - { property: 'user', label: 'Utilisateur' }
     Comment:
             class: App\Entity\Comment
             label: 'Commentaire'
             list:
-              fields: ['id', { property: 'title', label: 'Titre du commentaire' }, { property: 'recipe', label: 'Recette' }, { property: 'user', label: 'Utilisateur' }, { property: 'status', label: 'Status' }, { property: 'createdAt', label: 'Créé le' }]
+              fields: 
+                  - 'id'
+                  - { property: 'title', label: 'Titre du commentaire' }
+                  - { property: 'recipe', label: 'Recette' }
+                  - { property: 'user', label: 'Utilisateur' }
+                  - { property: 'status', label: 'Status' }
+                  - { property: 'createdAt', label: 'Créé le' }
             form:
-              fields: [{ property: 'title', label: 'Titre du commentaire' }, { property: 'content', label: 'Commentaire' }, { property: 'recipe', label: 'Recette' }, { property: 'user', label: 'Utilisateur' }, { property: 'status', label: 'Status' }]
+              fields: 
+                  - { property: 'title', label: 'Titre du commentaire' }
+                  - { property: 'content', label: 'Commentaire' }
+                  - { property: 'recipe', label: 'Recette' }
+                  - { property: 'user', label: 'Utilisateur' }
+                  - { property: 'status', label: 'Status' }
     User:
             class: App\Entity\User
             label: 'Utilisateur'
             list:
-              fields: ['id', { property: 'email', label: 'Email' }, { property: 'username', label: 'Pseudo' }, { property: 'roles', label: 'Rôle' }, { property: 'image', label: 'Photo de profil' }, { property: 'recipes', label: 'Recette ajouté' }, { property: 'comments', label: 'Commentaire lié' }, { property: 'createdAt', label: 'Créé le' }]
+              fields: 
+                  - 'id'
+                  - { property: 'email', label: 'Email' }
+                  - { property: 'username', label: 'Pseudo' }
+                  - { property: 'roles', label: 'Rôle' }
+                  -  { property: 'image', label: 'Photo de profil' }
+                  - { property: 'recipes', label: 'Recette ajouté' }
+                  - { property: 'comments', label: 'Commentaire lié' }
+                  - { property: 'createdAt', label: 'Créé le' }
             form:
-              fields: [{ property: 'email', label: 'Email' }, { property: 'username', label: 'Pseudo' }, { property: 'roles', label: 'Rôle' }, { property: 'image', label: 'Photo de profil' }, { property: 'recipes', label: 'Recette ajouté' }, { property: 'comments', label: 'Commentaire lié' }]
+              fields: 
+                  - 'id'
+                  - { property: 'email', label: 'Email', type: 'email' }
+                  - { property: 'username', label: 'Pseudo' }
+                  - { property: 'password', label: 'Mot de passe', type: 'password' }
+                  - { property: 'image', label: 'Photo de profil', type: 'file' }
+                  - { property: 'recipes', label: 'Recette ajouté' }
+                  - { property: 'comments', label: 'Commentaire lié' }
+                  - { property: 'roles', label: 'Rôles', type: choice, 
+                        type_options: {expanded: true, multiple: true, 
+                          choices: {'Utilisateur':'ROLE_USER', 
+                                    'Administrateur':'ROLE_ADMIN'}}}
