@@ -41,3 +41,8 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+
+    app.filter_response_listener:
+        class: App\EventListener\ResponseListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response }

@@ -688,7 +688,6 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
 .page-link {
     color : #739377;
 }
-
 /* LOGIN FORM */
 
 .form-btn-connexion {
