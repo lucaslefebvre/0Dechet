@@ -17,6 +17,7 @@ body {
     color: #ffffff;
     text-transform: uppercase;
     font-weight: 700;
+    width: 130px;
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
@@ -27,6 +28,7 @@ body {
     color: #ffffff;
     text-transform: uppercase;
     font-weight: 700;
+    width: 130px;
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
@@ -70,11 +72,12 @@ ul li{
     display: none;
   }
   
-  .nav-link{
+  .nav-link {
     color: grey;
+    padding: .5rem .5rem;
   }
 
-  .nav-link:hover{
+  .nav-link:hover {
       color: black;
   }
   
@@ -95,7 +98,7 @@ ul li{
     display: block;
   }
 
-  .active{
+  .active {
     color: black;
     text-decoration: underline !important;
   }
@@ -343,11 +346,8 @@ main {
 /* RECIPES LIST */
 /* Left Navigation*/
 
-a {text-decoration: none;}
-
-.nav__category {
-    border-right: 1px solid black;
-    background-color: #f9f5f1 !important;
+a {
+    text-decoration: none;
 }
 
 /* Hidden fallback */
@@ -358,22 +358,33 @@ a {text-decoration: none;}
 }
 
 /* Styling top level items */
-.nav{
+.nav {
     margin-right: 2rem;
 }
 
 .left-nav-link-type,
-.left-nav-link{
+.left-nav-link {
     color: #000000;
 }
 
-.left-nav-link-type{
+.left-nav-link-type:hover,
+.left-nav-link:hover {
+    opacity: 0.8;
+    color: #000000;
+}
+
+.left-nav-link-type {
     display: block;
 }
 
 .nav label {
     cursor: pointer;
     display: block;
+    margin-top: 7px;
+}
+
+.category-nav-label {
+    font-size: 1.2rem;
 }
 
 /* Hide nested lists */
@@ -386,6 +397,14 @@ a {text-decoration: none;}
   transition: max-height .5s ease-in-out;
   padding-left: 1.5rem;
 }
+
+.group-list, .sub-group-list {
+    background-color: #f2d7cb;
+}
+
+.group-list {
+    margin-top: -2px;
+}
  
 .nav__list input[type=checkbox]:checked + label + ul {
 	/* reset the height when checkbox is checked */
@@ -394,20 +413,88 @@ a {text-decoration: none;}
 
 /* Rotating chevron icon */
 
-label > i {
+label > .fa-plus-category {
   float: right;
+  color: #f4bca6;
+  margin-top: 3px;
   transition: transform .65s ease;
+  transform: rotate(90deg);
 }
 
-.nav__list input[type=checkbox]:checked + label > i {
+label > .fa-plus-subcategory {
+    float: right;
+    color: #ffffff;
+    margin-top: 3px;
+    transition: transform .65s ease;
     transform: rotate(90deg);
 }
 
+label > .fa-minus-category {
+    display: none;
+    margin-top: 3px;
+  }
+
+label > .fa-minus-subcategory {
+    display: none;
+    margin-top: 3px;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-plus {
+    display: none;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-minus-category {
+    display: block;
+    float: right;
+    color: #ffffff;
+    background-color: #f2d7cb;
+    padding: 2px 5px;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-minus-subcategory {
+    display: block;
+    float: right;
+    color: #ffffff;
+    background-color: #f2d7cb;
+}
+
+label > .fa-minus-category {
+    display: none;
+    margin-top: 3px;
+  }
+
+label > .fa-minus-subcategory {
+    display: none;
+    margin-top: 3px;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-plus {
+    display: none;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-minus-category {
+    display: block;
+    float: right;
+    color: #ffffff;
+    background-color: #f2d7cb;
+    padding: 2px 5px;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-minus-subcategory {
+    display: block;
+    float: right;
+    color: #ffffff;
+    background-color: #f2d7cb;
+}
+
 .left-nav {
-    background-color: #f0f6e8;
     margin-left: -15px;
     margin-top: -8px;
     padding-right: 2rem;
+    padding-left: 2rem;
+    max-width: 350px;
+    border-right: 1px solid #F4BCA6;
+    background-color: #f9f5f1;
 }
 
 .fa-angle-right {
@@ -603,7 +690,8 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
 }
 
 /* LOGIN FORM */
-/* .form-btn-connexion {
+
+.form-btn-connexion {
     background-color: #b7cbad !important;
     border: 2px solid #617e64; 
     font-size: 0.8rem;
@@ -611,17 +699,8 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     text-transform: uppercase;
     font-weight: 700;
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
-} */
-
-.form-btn-connexion {
-    background-color: #f4bca6; 
-    border: 2px solid  #F1AF96; 
-    font-size: 0.8rem;
-    color: #ffffff;
-    text-transform: uppercase;
-    font-weight: 700;
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
+
 
 .form-btn-connexion:hover {
     color: #ffffff;

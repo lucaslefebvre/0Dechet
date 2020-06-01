@@ -14,13 +14,14 @@
         {% block nav %}
         <header class="sticky-top">
         <nav class="navbar justify-content-between navbar-top">
-            <a class="navbar-brand col-4" href="{{ path('main_home') }}">
-                <img src="{{ asset('assets/images/logo.png') }}" height="55px" alt="logo" loading="lazy">
+            <a class="navbar-brand" href="{{ path('main_home') }}">
+                <img src="{{ asset('assets/images/logo.png') }}" height="80px" alt="logo" loading="lazy" class="d-none d-sm-block">
+                <img src="{{ asset('assets/images/logo.png') }}" height="60px" alt="logo" loading="lazy" class="d-sm-none">
             </a>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-deconnexion" href="{{ path('app_logout') }}">Déconnexion</a>
+            <a class="mr-md-4 btn header-btn-deconnexion" href="{{ path('app_logout') }}">Déconnexion</a>
             {% else %}
-            <a class="col-4 col-md-2 col-xl-1 mr-md-4 btn header-btn-connexion" href="{{ path('app_login') }}">Connexion</a>
+            <a class="mr-md-4 btn header-btn-connexion" href="{{ path('app_login') }}">Connexion</a>
             {% endif %}
         </nav>
 
@@ -32,67 +33,76 @@
           <label for="tm" id="toggle-menu"><span class="drop-icon-burger">&equiv;</span></label>
           <input type="checkbox" id="tm">
 
-              <ul class="main-menu clearfix">
-                <li>
-                {% if route == 'main_home' %}
-                <a class="nav-link active" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
-                {% else %}
-                <a class="nav-link" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
-                {% endif %}
-                </li>
-
-                {% if route == 'recipe_browse' %}
-                <li>
-                <a class="nav-link active" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
-                {% else %}
-                <a class="nav-link" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
-                {% endif %}
-                </li>
-
-                {% for category in allCategory %}
-                <li>        
-                  {% if category.slug == app.request.attributes.get('slug') %}
-                  <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm1">▾</label></a>
-
-                  {% elseif appSubCategory is not null and appSubCategory.category == category %}
-                  <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm1">▾</label></a>
-
-                  {% elseif appType is not null and appType.subCategory.category == category %}
-                  <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm1">▾</label></a>
-
-                  {% else %}
-                  <a class="nav-link" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm1">▾</label></a>
-                  {% endif %}
-
-                  <input type="checkbox" id="sm1">
-                  <ul class="sub-menu">
-                  {% for subCategory in category.subCategories %}
-                    <li><a class="nav-link" href="{{ path('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}
-                        <span class="drop-icon">&rtrif;</span>
-                        <label title="Toggle Drop-down" class="drop-icon" for="sm2">▾</label>
-                      </a>
-                      <input type="checkbox" id="sm2">
-                      <ul class="sub-menu">
-                      {% for type in subCategory.types %}
-                        <li><a class="nav-link" href="{{ path('recipe_browseByType', {'slug': type.slug}) }}">{{type.name}}</a></li>
-                  {% endfor %}
-                      </ul>
-                    </li>
-                  {% endfor %}
-                  </ul>
-                </li>
-                {% endfor %}
-                <li><a class="nav-link" href="#">Contact</a></li>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li>
-                  <a class="nav-link" href="{{ path('user_read', {'id': app.user.id}) }}">Profil</a>
-                </li>
+            <ul class="main-menu clearfix">
+              <li>
+              {% if route == 'main_home' %}
+              <a class="nav-link active" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
+              {% else %}
+              <a class="nav-link" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
               {% endif %}
-                <li><form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
-                  <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Rechercher">
-                  <button class="btn my-sm-0 btn-search" type="submit" formaction="{{ path('recipe_search') }}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </form></li>
-              </ul>
+              </li>
+
+              {% if route == 'recipe_browse' %}
+              <li>
+              <a class="nav-link active" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
+              {% else %}
+              <a class="nav-link" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
+              {% endif %}
+              </li>
+
+              {% for category in allCategory %}
+              <li>        
+                {% if category.slug == app.request.attributes.get('slug') %}
+                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
+
+                {% elseif appSubCategory is not null and appSubCategory.category == category %}
+                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
+
+                {% elseif appType is not null and appType.subCategory.category == category %}
+                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
+
+                {% else %}
+                <a class="nav-link" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
+                {% endif %}
+
+                <input type="checkbox" id="sm{{loop.index}}">       
+                <ul class="sub-menu">
+                {% for subCategory in category.subCategories %}
+                  <li><a class="nav-link" href="{{ path('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}
+                      <span class="drop-icon">&rtrif;</span>
+                      {% if category.id == 1 %}
+                      <label title="Toggle Drop-down" class="drop-icon" for="sm{{100 + loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label>
+                      {% else %}
+                      <label title="Toggle Drop-down" class="drop-icon" for="sm{{200 + loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label>
+                      {% endif %}
+                    </a>
+                    {% if category.id == 1 %}
+                    <input type="checkbox" id="sm{{100 + loop.index}}">
+                    {% else %}
+                    <input type="checkbox" id="sm{{200 + loop.index}}">
+                    {% endif %}
+                    <ul class="sub-menu">
+                    {% for type in subCategory.types %}
+                      <li><a class="nav-link" href="{{ path('recipe_browseByType', {'slug': type.slug}) }}">{{type.name}}</a></li>
+                    {% endfor %}
+                    </ul>
+                  </li>
+                {% endfor %}
+                </ul>
+                
+              </li>
+              {% endfor %}
+              <li><a class="nav-link" href="#">Contact</a></li>
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              <li>
+                <a class="nav-link" href="{{ path('user_read', {'id': app.user.id}) }}">Profil</a>
+              </li>
+              {% endif %}
+              <li><form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
+                <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Rechercher">
+                <button class="btn my-sm-0 btn-search" type="submit" formaction="{{ path('recipe_search') }}"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </form></li>
+            </ul>
         </nav>
     </header>
     {% endblock %}
@@ -116,6 +126,53 @@
                   .html(inputFile.files[0].name);
           });
         </script>
+        <script>
+    jQuery(document).ready(function () {
+        jQuery('.add-another-collection-widget').click(function (e) {
+            var list = jQuery(jQuery(this).attr('data-list-selector'));
+            // Try to find the counter of the list or use the length of the list
+            var counter = list.data('widget-counter') || list.children().length;
+
+            // grab the prototype template
+            var newWidget = list.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, counter);
+            // Increase the counter
+            counter++;
+            // And store it, the length cannot be used if deleting widgets is allowed
+            list.data('widget-counter', counter);
+
+            // create a new list element and add it to the list
+            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+            newElem.appendTo(list);
+            addTagFormDeleteLink(newElem);
+
+        });
+    });
+
+    $ingredientsCollectionHolder = $('ul#ingredient-fields-list');
+    $ingredientsCollectionHolder.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    $equipmentsCollectionHolder = $('ul#equipement-fields-list');
+    $equipmentsCollectionHolder.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    function addTagFormDeleteLink($tagFormLi) {
+        var $removeFormButton = $('<a class="form-ingredient-delete">Supprimer</a>');
+        $tagFormLi.append($removeFormButton);
+        $removeFormButton.on('click', function(e) {
+            // remove the li for the tag form
+            $tagFormLi.remove();
+        });
+    }
+</script>
+<script src="{{ asset('assets/js/app.js') }}"></script>
+
      {% endblock %}
     </body>
 </html>
