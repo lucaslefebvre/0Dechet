@@ -357,6 +357,12 @@ main {
 }
 
 /* RECIPES LIST */
+
+.fil-ariane, .fil-ariane a{
+    color: grey;
+    font-size: 0.8rem;
+}
+
 /* Left Navigation*/
 
 a {
@@ -605,26 +611,22 @@ ul.recipe-list li {
 
 /* Commentaires */
 
-.recipe-comment-title{
+.recipe-comment-title {
     font-weight: 700;
     font-size: 1.1rem;
     margin-bottom: 0.2rem;
 }
 
-.recipe-comment-user{
+.recipe-comment-user {
     font-size: 0.8rem;
     font-style: italic;
     margin-bottom: 0.2rem;
 }
 
-.recipe-comment-content{
-    
-}
-
 /* FORMS */
 
 .user-form-label,
-.user-form-input{
+.user-form-input {
     margin-top: 2rem;
 }
 

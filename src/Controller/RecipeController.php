@@ -21,14 +21,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use WhiteOctober\BreadcrumbsBundle\Model\BreadCrumbs;
 
 /**
 * @Route("/recette", name="recipe_")
 */
 class RecipeController extends AbstractController
 {
-
-
     /**
      * Method to display all the recipes in template/recipe/browse.html.twig
      * @Route("/", name="browse", methods={"GET"})
@@ -75,7 +74,7 @@ class RecipeController extends AbstractController
         if (!empty($recipes->getItems())) {
         return $this->render('recipe/search.html.twig', [
             'recipes' => $recipes,
-            'title' => 'Résultat pour '.$q,
+            'title' => 'Résultat pour "'.$q .'"',
         ]);
         } else { // if number of pagination does not exist in URL we throw a 404
             throw $this->createNotFoundException('Pas de recette'); 
@@ -348,4 +347,5 @@ class RecipeController extends AbstractController
             'slug' => $recipe->getslug(),
         ]);
     }
+
 }

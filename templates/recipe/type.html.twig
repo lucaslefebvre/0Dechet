@@ -7,7 +7,16 @@
       {{ include('partials/left-nav.html.twig') }}
 
         <div class="col-12 col-lg-8 mx-auto mb-5">
-          <div class="row pt-3 pl-3 ml-md-2 mr-md-1 main-title">
+          <div class="row fil-ariane mt-3">
+            <p>
+              <a href="{{ path('main_home')}}">0'Déchet</a> -
+              <a href="{{ path('recipe_browse')}}">Toutes les recettes</a> -
+              <a href="{{ path('recipe_browseByCategory', {'slug': recipe.type.subCategory.category.slug})}}">{{recipe.type.subCategory.category.name}}</a> -
+              <a href="{{ path('recipe_browseBySubCategory', {'slug': recipe.type.subCategory.slug})}}">{{recipe.type.subCategory.name}}</a> -
+              <a href="{{ path('recipe_browseByType', {'slug': recipe.type.slug})}}">{{recipe.type.name}}</a>
+            </p> 
+          </div>
+          <div class="row pl-3 ml-md-2 mr-md-1 main-title">
             <h2>{{type.name}}</h2>
           </div>
           <div class="row justify-content-center">

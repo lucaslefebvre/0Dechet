@@ -13,8 +13,16 @@
     </div>
     {% endfor %}
 
-
-      <div class="row justify-content-between text-md-right pt-3 px-3 ml-md-2 mr-md-1 main-title">
+      <div class="row fil-ariane mt-3">
+        <p>
+          <a href="{{ path('main_home')}}">0'Déchet</a> -
+          <a href="{{ path('recipe_browse')}}">Toutes les recettes</a> -
+          <a href="{{ path('recipe_browseByCategory', {'slug': recipe.type.subCategory.category.slug})}}">{{recipe.type.subCategory.category.name}}</a> -
+          <a href="{{ path('recipe_browseBySubCategory', {'slug': recipe.type.subCategory.slug})}}">{{recipe.type.subCategory.name}}</a> -
+          <a href="{{ path('recipe_browseByType', {'slug': recipe.type.slug})}}">{{recipe.type.name}}</a>
+        </p> 
+      </div>
+      <div class="row justify-content-between text-md-right px-3 ml-md-2 mr-md-1 main-title">
         <h2>{{ recipe.name }}</h2>
         <div class="d-none d-md-flex align-items-center">
           <div class="recipe-nb-opinion">
