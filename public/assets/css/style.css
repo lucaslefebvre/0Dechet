@@ -10,6 +10,23 @@ body {
     background-color: #739377;
 }
 
+.navbar-profil a, .navbar-profil p {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 0;
+}
+
+.navbar-user-img-div {
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+    margin-right: .5rem;
+}
+
+.navbar-user-img {
+    width: 100%;
+}
+
 .header-btn-connexion {
     background-color: #b7cbad !important;
     border: 2px solid #617e64; 
@@ -563,12 +580,20 @@ label > .fa-minus-subcategory {
 
 /* Recipe Details */
 
+.recipe-user {
+    font-weight: 1rem;
+    font-style: italic;
+}
+.recipe-user a {
+    color: #000000;
+}
+
 .recipe-content {
     text-align: justify;
 }
 
 .recipe-main h5 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0rem;
     font-weight: 700;
 }
 
