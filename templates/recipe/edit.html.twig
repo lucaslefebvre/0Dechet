@@ -7,64 +7,9 @@
     <h2>Modifier une recette</h2>
   </div>
 
-  {{ form_start(form) }}
-    <div class="user-form-label">{{form_label (form.name) }}</div>
-    <div>{{form_widget (form.name) }}</div>
+{{ include('recipe/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    {# Le label est en dur car sinon bug lié au JS en dessous ! #}
-    <div class="user-form-label">Liste des ingrédients</div>
-    <ul id="ingredient-fields-list" class="mt-3 form-ingredients-list"
-        data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e }}"
-        data-widget-tags="{{ '<li></li>'|e }}"
-        data-widget-counter="{{ form.ingredient|length }}">
-        {% for ingredientField in form.ingredient %}
-        <li>
-            {{ form_errors(ingredientField) }}
-            {{ form_widget(ingredientField) }}
-        </li>
-        {% endfor %}
-    </ul>
 
-    <button type="button" class="add-another-collection-widget btn form-btn-ingredients" data-list-selector="#ingredient-fields-list">Ajouter un ingrédient</button>
-
-    {# Le label est en dur car sinon bug lié au JS en dessous ! #}
-    <div class="user-form-label">Liste des ustensiles</div>
-    <ul id="equipement-fields-list" class="mt-3 form-ingredients-list"
-        data-prototype="{{ form_widget(form.equipement.vars.prototype)|e }}"
-        data-widget-tags="{{ '<li></li>'|e }}"
-        data-widget-counter="{{ form.equipement|length }}">
-        {% for equipementField in form.equipement %}
-        <li>
-            {{ form_errors(equipementField) }}
-            {{ form_widget(equipementField) }}
-        </li>
-        {% endfor %}
-    </ul>
-
-    <button type="button" class="add-another-collection-widget btn form-btn-ingredients" data-list-selector="#equipement-fields-list">Ajouter un ustensile</button>
-
-    <div class="user-form-label">{{form_label (form.content) }}</div>
-    <div>{{form_widget (form.content) }}</div>
-
-    <div class="user-form-label">{{form_label (form.duration) }}</div>
-    <div>{{form_widget (form.duration) }}</div>
-
-    <div class="user-form-label">{{form_label (form.difficulty) }}</div>
-    <div>{{form_widget (form.difficulty) }}</div>
-
-    <div class="user-form-label">{{form_label (form.conservation) }}</div>
-    <div>{{form_widget (form.conservation) }}</div>
-
-    <div class="user-form-label">{{form_label (form.image) }}</div>
-    <div>{{form_widget (form.image) }}</div>
-
-    <div class="user-form-label">{{form_label (form.type) }}</div>
-    <div>{{form_widget (form.type) }}</div>
-
-    <div class="submit-button-container">
-        <button type="submit" class="btn form-btn">{{ button_label|default('Modifier') }}</button>
-    </div>
-  {{ form_end(form) }}
     <div class="row justify-content-center">
     {{ form_start(deleteForm) }}
       {{ form_widget(deleteForm.deleteButton, {'attr': {'class': 'form-btn-delete'}, 'label': "Supprimer ma recette"}) }}
@@ -75,54 +20,4 @@
       <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
     </div>
 </main>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
-<script>
-    jQuery(document).ready(function () {
-        jQuery('.add-another-collection-widget').click(function (e) {
-            var list = jQuery(jQuery(this).attr('data-list-selector'));
-            // Try to find the counter of the list or use the length of the list
-            var counter = list.data('widget-counter') || list.children().length;
-
-            // grab the prototype template
-            var newWidget = list.attr('data-prototype');
-            // replace the "__name__" used in the id and name of the prototype
-            // with a number that's unique to your emails
-            // end name attribute looks like name="contact[emails][2]"
-            newWidget = newWidget.replace(/__name__/g, counter);
-            // Increase the counter
-            counter++;
-            // And store it, the length cannot be used if deleting widgets is allowed
-            list.data('widget-counter', counter);
-
-            // create a new list element and add it to the list
-            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-            newElem.appendTo(list);
-            addTagFormDeleteLink(newElem);
-
-        });
-    });
-
-    $ingredientsCollectionHolder = $('ul#ingredient-fields-list');
-    $ingredientsCollectionHolder.find('li').each(function() {
-        addTagFormDeleteLink($(this));
-    });
-
-    $equipmentsCollectionHolder = $('ul#equipement-fields-list');
-    $equipmentsCollectionHolder.find('li').each(function() {
-        addTagFormDeleteLink($(this));
-    });
-
-    function addTagFormDeleteLink($tagFormLi) {
-        var $removeFormButton = $('<a class="form-ingredient-delete">Supprimer</a>');
-        $tagFormLi.append($removeFormButton);
-        $removeFormButton.on('click', function(e) {
-            // remove the li for the tag form
-            $tagFormLi.remove();
-        });
-    }
-</script>
 {% endblock %}

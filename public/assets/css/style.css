@@ -253,6 +253,15 @@ ul li{
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
+/* Top banner for addFlash*/
+
+.flash-notice{
+    background-color: #b7cbad;
+    text-align: center;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
 /* FOOTER ALL PAGES */
 
 footer {
@@ -600,6 +609,7 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
 /*Pagination*/
 .page-link {
     color : #739377;
+}
 
 /* LOGIN FORM */
 /* .form-btn-connexion {
