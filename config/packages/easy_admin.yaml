@@ -1,10 +1,59 @@
 easy_admin:
-  site_name: "0'Déchet"
+  site_name: '<img src="/assets/images/logo.png" style="height: 80px" alt="0déchet"'
+  design:
+        brand_color: '#739377'
+        assets:
+          css:
+            - 'assets/css/admin.css'
+  list:
+        max_results: 30
   entities:
-      - App\Entity\Category
-      - App\Entity\SubCategory
-      - App\Entity\Type
-      - App\Entity\Recipe
-      - App\Entity\Rate
-      - App\Entity\Comment
-      - App\Entity\User
+    Category:
+            class: App\Entity\Category
+            label: 'Catégorie'
+            list:
+                fields: ['id', { property: 'name', label: 'Nom de la catégorie' }, { property: 'sub_categories', label: 'Sous-catégorie' }, { property: 'slug', label: 'Slug' }, { property: 'createdAt', label: 'Créé le' }]
+            form:
+                fields: [{ property: 'name', label: 'Nom de la catégorie' }]
+    SubCategory:
+            class: App\Entity\SubCategory
+            label: 'Sous-catégorie'
+            list:
+                fields: ['id', { property: 'name', label: 'Nom de la sous-catégorie' }, { property: 'category', label: 'Catégorie' }, { property: 'types', label: 'Type' }, { property: 'slug', label: 'Slug' }, { property: 'createdAt', label: 'Créé le' }]
+            form:
+                fields: [{ property: 'name', label: 'Nom de la sous-catégorie' }, { property: 'category', label: 'Catégorie' }]
+    Type:
+            class: App\Entity\Type
+            label: 'Type'
+            list:
+                fields: ['id', { property: 'name', label: 'Type de produit' }, { property: 'subCategory', label: 'Sous-catégorie' }, { property: 'recipes', label: 'Recette' }, { property: 'slug', label: 'Slug' }, { property: 'createdAt', label: 'Créé le' }]
+            form:
+                fields: [{ property: 'name', label: 'Type de produit' }, { property: 'subCategory', label: 'Sous-catégorie' }]
+    Recipe:
+            class: App\Entity\Recipe
+            label: 'Recette'
+            list:
+                fields: ['id', { property: 'name', label: 'Nom de la recette' }, { property: 'duration', label: 'Durée' }, { property: 'difficulty', label: 'Difficulté' }, { property: 'conservation', label: 'Conservation' }, { property: 'image', label: 'Image de la recette' }, { property: 'status', label: 'Status' }, { property: 'slug', label: 'Slug' }, { property: 'comments', label: 'Commentaire' }, { property: 'averageRate', label: 'Note' }, { property: 'createdAt', label: 'Créé le' }]
+            form:
+                fields: [{ property: 'name', label: 'Nom de la recette' }, { property: 'content', label: 'Recette' }, { property: 'duration', label: 'Durée' }, { property: 'difficulty', label: 'Difficulté' }, { property: 'conservation', label: 'Conservation' }, { property: 'image', label: 'Image de la recette' }, { property: 'status', label: 'Status' }]
+    Rate:
+            class: App\Entity\Rate
+            label: 'Note'
+            list:
+                fields: ['id', { property: 'rate', label: 'Note' }, { property: 'recipe', label: 'Recette' }, { property: 'user', label: 'Utilisateur' }]
+            form:
+                fields: [{ property: 'rate', label: 'Note' }, { property: 'recipe', label: 'Recette' }, { property: 'user', label: 'Utilisateur' }]
+    Comment:
+            class: App\Entity\Comment
+            label: 'Commentaire'
+            list:
+              fields: ['id', { property: 'title', label: 'Titre du commentaire' }, { property: 'recipe', label: 'Recette' }, { property: 'user', label: 'Utilisateur' }, { property: 'status', label: 'Status' }, { property: 'createdAt', label: 'Créé le' }]
+            form:
+              fields: [{ property: 'title', label: 'Titre du commentaire' }, { property: 'content', label: 'Commentaire' }, { property: 'recipe', label: 'Recette' }, { property: 'user', label: 'Utilisateur' }, { property: 'status', label: 'Status' }]
+    User:
+            class: App\Entity\User
+            label: 'Utilisateur'
+            list:
+              fields: ['id', { property: 'email', label: 'Email' }, { property: 'username', label: 'Pseudo' }, { property: 'roles', label: 'Rôle' }, { property: 'image', label: 'Photo de profil' }, { property: 'recipes', label: 'Recette ajouté' }, { property: 'comments', label: 'Commentaire lié' }, { property: 'createdAt', label: 'Créé le' }]
+            form:
+              fields: [{ property: 'email', label: 'Email' }, { property: 'username', label: 'Pseudo' }, { property: 'roles', label: 'Rôle' }, { property: 'image', label: 'Photo de profil' }, { property: 'recipes', label: 'Recette ajouté' }, { property: 'comments', label: 'Commentaire lié' }]
