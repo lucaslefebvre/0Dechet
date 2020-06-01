@@ -8,25 +8,18 @@ use App\Entity\Rate;
 use App\Entity\Recipe;
 use App\Entity\SubCategory;
 use App\Entity\Type;
-use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\RecipeType;
-use App\Repository\CategoryRepository;
-use App\Repository\RateRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
 use App\Services\FileUploader;
-use App\Services\Slugger;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
 * @Route("/recette", name="recipe_")
@@ -190,6 +183,11 @@ class RecipeController extends AbstractController
                 $em->persist($comment);
                 $em->flush();
 
+                $this->addFlash(
+                    'success',
+                    'Votre commentaire a été ajouté'
+                );
+
                 return $this->redirectToRoute('recipe_show', [
                 'slug' => $recipe->getSlug(),
                 ]);
@@ -206,6 +204,12 @@ class RecipeController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($rate);
                 $entityManager->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Votre note a été prise en compte'
+                );
+
                 return $this->redirectToRoute('recipe_show', [
                 'slug' => $recipe->getSlug(),
                 ]);
