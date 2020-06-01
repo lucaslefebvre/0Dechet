@@ -458,6 +458,35 @@ label > .fa-minus-subcategory {
     background-color: #f2d7cb;
 }
 
+label > .fa-minus-category {
+    display: none;
+    margin-top: 3px;
+  }
+
+label > .fa-minus-subcategory {
+    display: none;
+    margin-top: 3px;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-plus {
+    display: none;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-minus-category {
+    display: block;
+    float: right;
+    color: #ffffff;
+    background-color: #f2d7cb;
+    padding: 2px 5px;
+}
+
+.nav__list input[type=checkbox]:checked + label > .fa-minus-subcategory {
+    display: block;
+    float: right;
+    color: #ffffff;
+    background-color: #f2d7cb;
+}
+
 .left-nav {
     margin-left: -15px;
     margin-top: -8px;
