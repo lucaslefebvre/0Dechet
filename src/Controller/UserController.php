@@ -83,6 +83,8 @@ class UserController extends AbstractController
      */
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
+        $this->denyAccessUnlessGranted('EDIT', $user);
+
         $userForm = $this->createForm(CreateAccountType::class, $user);
 
         $userForm->handleRequest($request);
@@ -133,6 +135,9 @@ class UserController extends AbstractController
      */
     public function delete(EntityManagerInterface $em, Request $request, User $user)
     {
+        
+        $this->denyAccessUnlessGranted('DELETE', $user);
+
         $formDelete = $this->createForm(DeleteType::class);
         $formDelete->handleRequest($request);
 

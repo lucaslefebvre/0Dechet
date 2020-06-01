@@ -8,6 +8,7 @@ use App\Entity\Rate;
 use App\Entity\Recipe;
 use App\Entity\SubCategory;
 use App\Entity\Type;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\DeleteType;
 use App\Form\RecipeType;
@@ -130,6 +131,8 @@ class RecipeController extends AbstractController
      */
     public function edit(Recipe $recipe, Request $request, FileUploader $fileUploader)
     {
+        $this->denyAccessUnlessGranted('EDIT', $recipe);
+
         $image = $recipe->getImage();
         
         $form = $this->createForm(RecipeType::class, $recipe);
@@ -327,6 +330,8 @@ class RecipeController extends AbstractController
      */
     public function delete(EntityManagerInterface $em, Request $request, Recipe $recipe)
     {
+        $this->denyAccessUnlessGranted('DELETE', $recipe);
+
         $formDelete = $this->createForm(DeleteType::class);
         $formDelete->handleRequest($request);
 
