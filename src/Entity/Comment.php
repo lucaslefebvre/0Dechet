@@ -45,6 +45,7 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $recipe;
 

@@ -8,25 +8,19 @@ use App\Entity\Rate;
 use App\Entity\Recipe;
 use App\Entity\SubCategory;
 use App\Entity\Type;
-use App\Entity\User;
 use App\Form\CommentType;
+use App\Form\DeleteType;
 use App\Form\RecipeType;
-use App\Repository\CategoryRepository;
-use App\Repository\RateRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
 use App\Services\FileUploader;
-use App\Services\Slugger;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
 * @Route("/recette", name="recipe_")
@@ -136,14 +130,22 @@ class RecipeController extends AbstractController
      */
     public function edit(Recipe $recipe, Request $request, FileUploader $fileUploader)
     {
+        $image = $recipe->getImage();
+        
         $form = $this->createForm(RecipeType::class, $recipe);
+        
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             // We use a Services to move and rename the file
             $newName = $fileUploader->saveFile($form['image'], 'assets/images/recipes');
             $recipe->setImage($newName);
+            // If user don't edit the image we let the old image
+            if ($recipe->getImage() === null){
+                $recipe->setImage($image);
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
@@ -157,9 +159,14 @@ class RecipeController extends AbstractController
                 ]);
         }
 
+        $formDelete = $this->createForm(DeleteType::class, null, [
+            'action' => $this->generateUrl('recipe_delete', ['id' => $recipe->getId()])
+        ]);
+
         return $this->render('recipe/edit.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
+            'deleteForm' => $formDelete->createView(),
             'title' => "Modifier une recette",
         ]);
     }
@@ -168,13 +175,13 @@ class RecipeController extends AbstractController
      *  Method to display all information about a recipe in template/recipe/show.html.twig
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
-    public function show(Recipe $recipe, RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $em, UserRepository $userRepository): Response
+  
+    public function show(Recipe $recipe, RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $em): Response
     {
         // Comment Form
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->handleRequest($request);
-        
 
         if ($_POST) {
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
@@ -189,6 +196,11 @@ class RecipeController extends AbstractController
                 // Cette fois on persiste le genre car c'est un nouvel objet
                 $em->persist($comment);
                 $em->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Votre commentaire a été ajouté'
+                );
 
                 return $this->redirectToRoute('recipe_show', [
                 'slug' => $recipe->getSlug(),
@@ -206,12 +218,18 @@ class RecipeController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($rate);
                 $entityManager->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Votre note a été prise en compte'
+                );
+
                 return $this->redirectToRoute('recipe_show', [
                 'slug' => $recipe->getSlug(),
                 ]);
             }
         }
-
+        
             return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
             'title' => $recipe->getName(),
@@ -224,7 +242,7 @@ class RecipeController extends AbstractController
      *  Method to display the recipes by Categories in the template category.html.twig from the directory recipe
      * @Route("/categorie/{slug}", name="browseByCategory")
      */
-    public function browseByCategory(Category $category, RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
+    public function browseByCategory(Category $category, PaginatorInterface $paginator, Request $request)
     {
         $categoryRepository = $this->getDoctrine()->getRepository(Category::class)->findBy([],['createdAt' => 'desc']);
 
@@ -250,7 +268,7 @@ class RecipeController extends AbstractController
      * Method to display the recipes by Sub Categories in the template subCategory.html.twig from the directory recipe
      * @Route("/sous-categorie/{slug}", name="browseBySubCategory")
      */
-    public function browseBySubCategory(SubCategory $subCategory,RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
+    public function browseBySubCategory(SubCategory $subCategory, PaginatorInterface $paginator, Request $request)
     {
         $subCategoryRepository = $this->getDoctrine()->getRepository(SubCategory::class)->findBy([],['createdAt' => 'desc']);
 
@@ -302,4 +320,32 @@ class RecipeController extends AbstractController
             
     }
 
+    /**
+     * Method to allow a user to delete one of his/her recipe off the website
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Route("/recipe/suppression/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
+     */
+    public function delete(EntityManagerInterface $em, Request $request, Recipe $recipe)
+    {
+        $formDelete = $this->createForm(DeleteType::class);
+        $formDelete->handleRequest($request);
+
+        if ($formDelete->isSubmitted() && $formDelete->isValid()) {
+            $em->remove($recipe);
+            $em->flush();
+
+            $this->addFlash(
+                'success',
+                'La recette a bien été supprimé.'
+            );
+
+            return $this->redirectToRoute('user_read', [
+                'id' => $this->getUser()->getId(),
+            ]);
+        }
+
+        return $this->redirectToRoute('recipe_edit', [
+            'slug' => $recipe->getslug(),
+        ]);
+    }
 }

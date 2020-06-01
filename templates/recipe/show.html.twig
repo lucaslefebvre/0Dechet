@@ -2,16 +2,18 @@
 
 {% block body %}
 
+   <main class="container recipe-main">
+
     {% for message in app.flashes('success') %}
-        <div class="flash-notice">
-            <div class="alert alert-dismissible alert-success">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p class="mb-0">{{message}}</p>
-            </div>
+    <div class="flash-notice my-3">
+        <div class="alert alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p class="mb-0">{{message}}</p>
         </div>
+    </div>
     {% endfor %}
 
-   <main class="container recipe-main">
+
       <div class="row justify-content-between text-md-right pt-3 px-3 ml-md-2 mr-md-1 main-title">
         <h2>{{ recipe.name }}</h2>
         <div class="d-none d-md-block">
@@ -52,7 +54,7 @@
         {% if recipe.image is not empty %}
           <img src="{{ asset('assets/images/recipes/' ~ recipe.image) }}" class="img-fluid" alt="">
         {% else %}
-          <img src="{{ asset('assets/images/default-recipe.jpg') }}" class="img-fluid" alt="">
+          <img src="{{ asset('assets/images/default-recipe.png') }}" class="img-fluid" alt="">
         {% endif %}
         </div>
         <div class="col-12 col-lg-6 p-0">
@@ -122,15 +124,50 @@
                   <label for="difficulty-1">
                     <i class="fa fa-star"></i>
                   </label>
-                  <div class="row justify-content-center m-3">
-                    <button class="btn rate-btn">Envoyer la note</button>
-                  </div>
+                  {# {% if recipe.user == app.user %}
+                    <p>Vous ne pouvez pas noter votre recette</p>
+                  {% elseif recipe.rates %}
+                    {% set break = false %}
+                    {% for rate in recipe.rates %}
+                      {% if rate.user == app.user %}
+                        {% if break == false %}
+                          <p>Vous avez déjà donné une note</p>
+                          {% set break = true %}
+                        {% endif %}
+                      {% else %}
+                        {% if break == false %}
+                          <div class="row justify-content-center m-3">
+                            <button class="btn rate-btn">Envoyer la note</button>
+                          </div>
+                          {% set break = true %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  {% else %}
+                    <div class="row justify-content-center m-3">
+                      <button class="btn rate-btn">Envoyer la note</button>
+                    </div>
+                  {% endif %} #}
+                  {% if recipe.user.id == app.user.id %}
+                    <p>Vous ne pouvez pas noter votre recette</p>
+                    {% elseif recipe.rates %}
+                      {% for rate in recipe.rates|filter(rate => rate.user == app.user) %}
+                          <p>Vous avez déjà donné une note</p>
+                      {% else %}
+                          <div class="row justify-content-center m-3">
+                            <button class="btn rate-btn">Envoyer la note</button>
+                          </div>
+                      {% endfor %}
+                    {% else %}
+                    <div class="row justify-content-center m-3">
+                      <button class="btn rate-btn">Envoyer la note</button>
+                    </div>
+                  {% endif %}
                 </div>
               </form>
             </div>
           </div>
         </div>
-        
         <div class="col-12 d-md-none">
           <div class="recipe-division"></div>
         </div>

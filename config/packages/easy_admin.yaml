@@ -1,0 +1,10 @@
+easy_admin:
+  site_name: "0'Déchet"
+  entities:
+      - App\Entity\Category
+      - App\Entity\SubCategory
+      - App\Entity\Type
+      - App\Entity\Recipe
+      - App\Entity\Rate
+      - App\Entity\Comment
+      - App\Entity\User
