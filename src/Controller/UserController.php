@@ -84,14 +84,15 @@ class UserController extends AbstractController
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('EDIT', $user);
+        $imageUser = $user->getImage();
 
         $userForm = $this->createForm(CreateAccountType::class, $user);
 
         $userForm->handleRequest($request);
 
             if ($userForm->isSubmitted()) {
-
                 $em = $this->getDoctrine()->getManager();
+
 
                 if ($userForm->isValid()) {
               

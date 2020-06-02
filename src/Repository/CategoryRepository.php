@@ -23,19 +23,20 @@ class CategoryRepository extends ServiceEntityRepository
     //  * @return Category[] Returns an array of Category objects
     //  */
     /*
-    public function findRecipeByCategory($value)
+    public function findRecipeByCategory($category)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.name = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+            $qb = $this->createQueryBuilder('c')
+                    ->leftJoin('c.sub_categories', 's')
+                    ->where('sub_categories (:category)')
+                    ->setParameter('category', $category)
 
+        
+       ;
+       dump($qb);
+
+            return $qb->getQuery()->getResult();
+    }
+      */
     /*
     public function findOneBySomeField($value): ?Category
     {
@@ -47,4 +48,5 @@ class CategoryRepository extends ServiceEntityRepository
         ;
     }
     */
-}
+
+} 

@@ -29,7 +29,7 @@ class RecipeRepository extends ServiceEntityRepository
             ->orderBy('r.averageRate', 'DESC')
             ->setMaxResults(3)
         ;
-            return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
     }
 
     public function findLatestRecipes()
@@ -59,6 +59,75 @@ class RecipeRepository extends ServiceEntityRepository
         }
         return $qb
             ->orderBy('r.name', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param int|null $categoryId
+     * @return Recipe[] Returns an array of result for the term write in the search bar
+     */
+    public function findByCategory(?int $categoryId)
+    {
+        $qb = $this->createQueryBuilder('r');
+        if ($categoryId) {
+            $qb
+                ->addSelect('c, sc, t')
+                ->leftJoin('r.type', 't')
+                ->leftJoin('t.subCategory', 'sc')
+                ->leftJoin('sc.category', 'c')
+                ->where('c.id = :categoryId')
+                ->setParameter('categoryId', $categoryId)
+                ;
+        }
+        return $qb
+            ->orderBy('r.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param int|null $subCategoryId
+     * @return Recipe[] Returns an array of result for the term write in the search bar
+     */
+    public function findBySubCategory(?int $subCategoryId)
+    {
+        $qb = $this->createQueryBuilder('r');
+        if ($subCategoryId) {
+            $qb
+                ->addSelect('sc, t')
+                ->leftJoin('r.type', 't')
+                ->leftJoin('t.subCategory', 'sc')
+                ->where('sc.id = :subCategoryId')
+                ->setParameter('subCategoryId', $subCategoryId)
+                ;
+        }
+        return $qb
+            ->orderBy('r.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+        /**
+     * @param int|null $typeId
+     * @return Recipe[] Returns an array of result for the term write in the search bar
+     */
+    public function findByType (?int $typeId)
+    {
+        $qb = $this->createQueryBuilder('r');
+        if ($typeId) {
+            $qb
+                ->addSelect('t')
+                ->leftJoin('r.type', 't')
+                ->where('t.id = :typeId')
+                ->setParameter('typeId', $typeId)
+                ;
+        }
+        return $qb
+            ->orderBy('r.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
