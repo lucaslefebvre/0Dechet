@@ -12,6 +12,7 @@ use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\DeleteType;
 use App\Form\RecipeType;
+use App\Repository\CategoryRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
 use App\Services\FileUploader;
@@ -38,19 +39,18 @@ class RecipeController extends AbstractController
         $recipes = $paginator->paginate(  // add paginator
             $recipeRepository->findAll(),   // query to display all the recipes
             $request->query->getInt('page', 1), // number of the current page in the Url, if only one = 1
-            15,    // number of results in a page
+            10,    // number of results in a page
         ); 
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/browse.html.twig', [
-            'recipes' => $recipes,
-            'title' => 'Toutes les recettes',
-        ]);
-          
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }    
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/search.html.twig', [
+                'recipes' => $recipes,
+                'title' => 'Toutes les recettes',
+            ]);
+        }
       
     }
 
@@ -61,26 +61,24 @@ class RecipeController extends AbstractController
      */
     public function search(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        
         //We recuperate the data send in the url by the search form
         $q = $request->query->get('search');
         //Then put it in our customQuery
         $recipes = $paginator->paginate(   // add paginator
                 $recipeRepository->findAllWithSearch($q),  // query to display all the recipes of the search results
                 $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
-                15, // number of results in a page
+                10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/search.html.twig', [
-            'recipes' => $recipes,
-            'title' => 'Résultat pour "'.$q .'"',
-        ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }    
-       
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/search.html.twig', [
+                'recipes' => $recipes,
+                'title' => 'Résultat pour "'.$q .'"',
+            ]);
+        }
     }
 
      /**
@@ -244,53 +242,49 @@ class RecipeController extends AbstractController
      *  Method to display the recipes by Categories in the template category.html.twig from the directory recipe
      * @Route("/categorie/{slug}", name="browseByCategory")
      */
-    public function browseByCategory(Category $category, PaginatorInterface $paginator, Request $request)
+    public function browseByCategory(Category $category, PaginatorInterface $paginator, Request $request, RecipeRepository $recipeRepository)
     {
-        $categoryRepository = $this->getDoctrine()->getRepository(Category::class)->findBy([],['createdAt' => 'desc']);
-
+        dump($recipeRepository->findByCategory($category->getId()));
         $recipes = $paginator->paginate(   // add paginator
-            $categoryRepository,  // query to display all the recipes by category
+            $recipeRepository->findByCategory($category->getId()),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
-            15, // number of results in a page
+            10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
+            throw $this->createNotFoundException('Pas de recette'); 
+        } else {   // If number of pagination exist we return the view
             return $this->render('recipe/category.html.twig', [
                 'recipes' => $recipes,
                 'category' => $category,
                 'title' => $category->getName(),
-            ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
-            throw $this->createNotFoundException('Pas de recette'); 
-        }    
+                ]);
+        }
     }
           
      /**
      * Method to display the recipes by Sub Categories in the template subCategory.html.twig from the directory recipe
      * @Route("/sous-categorie/{slug}", name="browseBySubCategory")
      */
-    public function browseBySubCategory(SubCategory $subCategory, PaginatorInterface $paginator, Request $request)
+    public function browseBySubCategory(SubCategory $subCategory, PaginatorInterface $paginator, Request $request, RecipeRepository $recipeRepository)
     {
-        $subCategoryRepository = $this->getDoctrine()->getRepository(SubCategory::class)->findBy([],['createdAt' => 'desc']);
-
         $recipes = $paginator->paginate(   // add paginator
-            $subCategoryRepository,  // query to display all the recipes by subCategory
+            $recipeRepository->findBySubCategory($subCategory->getId()),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
-            15, // number of results in a page
+            10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/subCategory.html.twig', [
-            'recipes' => $recipes,
-            'subCategory' => $subCategory,
-            'title' => $subCategory->getName(),
-        ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }   
-        
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/subCategory.html.twig', [
+                'recipes' => $recipes,
+                'subCategory' => $subCategory,
+                'title' => $subCategory->getName(),
+                ]);
+        }
     }
 
     /**
@@ -299,27 +293,22 @@ class RecipeController extends AbstractController
      */
     public function browseByType(Type $type, RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
     {
-
-        $typeRepository = $this->getDoctrine()->getRepository(SubCategory::class)->findBy([],['createdAt' => 'desc']);
-
-
         $recipes = $paginator->paginate(   // add paginator
-            $typeRepository,  // query to display all the recipes by type
+            $recipeRepository->findByType($type->getId()),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
-            15, // number of results in a page
+            10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/type.html.twig', [
-            'recipes' => $recipes,
-            'type' => $type,
-            'title' => $type->getName(),
-        ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }   
-            
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/type.html.twig', [
+                'recipes' => $recipes,
+                'type' => $type,
+                'title' => $type->getName(),
+                ]);
+        }
     }
 
     /**
