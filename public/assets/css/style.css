@@ -375,7 +375,7 @@ main {
     overflow: hidden;
 }
 
-.user-profil {
+.user-profil, .user-profil:hover {
     color: #617e64;
 }
 
@@ -617,8 +617,12 @@ label > .fa-minus-subcategory {
 }
 
 .recipe-main h5 {
-    margin-bottom: 0rem;
+    margin-bottom: 1rem;
     font-weight: 700;
+}
+
+.recipe-content-title {
+    margin-bottom: 0 !important;
 }
 
 .recipe-division {
