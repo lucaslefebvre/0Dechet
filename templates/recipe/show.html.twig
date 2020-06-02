@@ -102,6 +102,9 @@
         <h5>Recette :</h5>
       </div>
       <div class="row px-3 ml-md-2 mr-md-1">
+        <p class="recipe-user">Proposée par <a href="{{ path('user_read', {'id': recipe.user.id})}}">{{recipe.user.username}}</a></p>
+      </div>
+      <div class="row px-3 ml-md-2 mr-md-1">
           <p>{{ recipe.content |nl2br }}</p>
       </div>
       <div class="row justify-content-center">
