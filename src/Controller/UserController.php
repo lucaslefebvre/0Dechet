@@ -65,6 +65,7 @@ class UserController extends AbstractController
                 $em->persist($user);
                 $em->flush();
 
+                // We create a request for send a email of confirmation
                 $email = (new Email())
                         ->from('0dechet.project@gmail.com')
                         ->to($user->getEmail())
@@ -92,7 +93,7 @@ class UserController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/profil/edition/{id}", name="user_edit", methods={"GET","POST"}, requirements={"id": "\d+"})
      */
-    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
+    public function edit(User $user, Request $request, MailerInterface $mailer, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('EDIT', $user);
         $imageUser = $user->getImage();
@@ -120,9 +121,19 @@ class UserController extends AbstractController
 
                 $em->flush();
 
+                // We create a request for send a email of confirmation
+
+                $email = (new Email())
+                ->from('0dechet.project@gmail.com')
+                ->to($user->getEmail())
+                ->subject('Modification de votre profil 0dechet')
+                ->text(''.$user->getUsername().'votre profil à été modifié !');
+        
+                $mailer->send($email);
+
                 $this->addFlash(
                     'success',
-                    'Votre compte a bien été modifié.'
+                    'Votre compte a bien été modifié, un email de confirmation a été envoyé.'
                 );
 
                 return $this->redirectToRoute('user_read', [
@@ -147,7 +158,7 @@ class UserController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/profil/suppression/{id}", name="user_delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
-    public function delete(EntityManagerInterface $em, Request $request, User $user)
+    public function delete(EntityManagerInterface $em, MailerInterface $mailer, Request $request, User $user)
     {
         
         $this->denyAccessUnlessGranted('DELETE', $user);
@@ -168,6 +179,16 @@ class UserController extends AbstractController
             //Then remove the user
             $em->remove($user);
             $em->flush();
+
+            // We create a request for send a email of confirmation
+
+            $email = (new Email())
+            ->from('0dechet.project@gmail.com')
+            ->to($user->getEmail())
+            ->subject('Confirmation de suppression de votre compte 0dechet')
+            ->text(''.$user->getUsername().'votre profil à été supprimé !');
+    
+            $mailer->send($email);
 
             $this->addFlash(
                 'success',

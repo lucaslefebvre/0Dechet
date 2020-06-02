@@ -21,6 +21,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use WhiteOctober\BreadcrumbsBundle\Model\BreadCrumbs;
 
@@ -88,7 +90,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/ajout", name="add", methods={"GET","POST"})
      */
-    public function add(Request $request, FileUploader $fileUploader)
+    public function add(Request $request, MailerInterface $mailer, FileUploader $fileUploader)
     {
 
         $recipe = new Recipe;
@@ -107,9 +109,17 @@ class RecipeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);
             $entityManager->flush();
+
+            $email = (new Email())
+            ->from('0dechet.project@gmail.com')
+            ->to($recipe->getUser()->getEmail())
+            ->subject('Bienvenue sur 0dechet')
+            ->text('Heureux de vous compter parmis nos membres '.$recipe->getUser()->getUsername().'');
+    
+            $mailer->send($email);
             $this->addFlash(
                 'success',
-                'Votre recette a été ajoutée'
+                'Votre recette a été ajoutée, un mail de confirmation vous a été envoyé'
             );
 
             return $this->redirectToRoute('recipe_show', [
