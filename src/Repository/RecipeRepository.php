@@ -29,7 +29,7 @@ class RecipeRepository extends ServiceEntityRepository
             ->orderBy('r.averageRate', 'DESC')
             ->setMaxResults(3)
         ;
-            return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
     }
 
     public function findLatestRecipes()

@@ -84,6 +84,7 @@ class UserController extends AbstractController
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('EDIT', $user);
+        $imageUser = $user->getImage();
 
         $userForm = $this->createForm(CreateAccountType::class, $user);
 
@@ -95,6 +96,9 @@ class UserController extends AbstractController
                 // We modify the password only if the user modified it
                 if ($userPassword !== null) {
                     $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
+                }
+                if ($user->getImage() === null){
+                    $user->setImage($imageUser);
                 }
 
                 // We use a Services to move and rename the file
