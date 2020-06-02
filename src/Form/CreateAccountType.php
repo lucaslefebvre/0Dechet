@@ -28,12 +28,14 @@ class CreateAccountType extends AbstractType
                     new NotBlank([
                         'message'=>'Ce champ ne doit pas être vide'
                     ]),
-                    // new UniqueEntity([
-                    //     'fields'=>'username',
-                    //     'message'=>"Ce nom d'utilisateur est déjà utilisé."
-                    // ]),
+                    new Regex([
+                        'pattern'=>"/\s/",
+                        'match' => false,
+                        'message'=>'Le nom d\'utilisateur ne peut contenir de caractère d\'espace'
+                    ]),
                 ],
             ])
+
             ->add('email', null,[
                 'label'=>'Email',
                 'constraints'=> [
