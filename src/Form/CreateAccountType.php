@@ -29,9 +29,9 @@ class CreateAccountType extends AbstractType
                         'message'=>'Ce champ ne doit pas être vide'
                     ]),
                     new Regex([
-                        'pattern'=>"/\s/",
-                        'match' => false,
-                        'message'=>'Le nom d\'utilisateur ne peut contenir de caractère d\'espace'
+                        'pattern'=>"/^[a-zA-Z0-9-_]*$/",
+                        'match' => true,
+                        'message'=>'Le nom d\'utilisateur ne peut pas contenir d\'espace ni de caractères spéciaux exceptés \'-\' et \'_\''
                     ]),
                 ],
             ])
