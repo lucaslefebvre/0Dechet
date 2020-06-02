@@ -19,7 +19,7 @@ class UserController extends AbstractController
 {
     /**
      * Method to display the account page of the connected user
-     * @Route("/profil/{id}", name="user_read", methods={"GET"}, requirements={"id": "\d+"})
+     * @Route("/profil/{username}", name="user_read", methods={"GET"})
      */
     public function read(User $user)
     {
@@ -79,45 +79,51 @@ class UserController extends AbstractController
      /**
      * Method to edit an existing account on the website
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @Route("/profil/edition/{id}", name="user_edit", methods={"GET","POST"}, requirements={"id": "\d+"})
+     * @Route("/profil/edition/{username}", name="user_edit", methods={"GET","POST"})
      */
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('EDIT', $user);
+        $imageUser = $user->getImage();
 
         $userForm = $this->createForm(CreateAccountType::class, $user);
 
         $userForm->handleRequest($request);
 
-            if ($userForm->isSubmitted() && $userForm->isValid()) {
-                $userPassword = $userForm->getData()->getPassword();
-
-                // We modify the password only if the user modified it
-                if ($userPassword !== null) {
-                    $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
-                }
-
-                // We use a Services to move and rename the file
-                $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
-                $user->setImage($newName);
-
+            if ($userForm->isSubmitted()) {
                 $em = $this->getDoctrine()->getManager();
 
-                $em->persist($user);
-                $em->flush();
 
-                $this->addFlash(
-                    'success',
-                    'Votre compte a bien été modifié.'
-                );
+                if ($userForm->isValid()) {
+              
+                    $userPassword = $userForm->get('password')->getData();
+                    // We modify the password only if the user modified it
+                    if ($userPassword !== null) {
+                        $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
+                    }
 
-                return $this->redirectToRoute('user_read', [
-                    'id' => $user->getId(),
-                ]);
+                    // We use a Services to move and rename the file
+                    $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
+                    $user->setImage($newName);
+
+                    $em->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Votre compte a bien été modifié.'
+                    );
+
+                    return $this->redirectToRoute('user_read', [
+                        'username' => $user->getUsername(),
+                    ]);
+                }
+                else {
+                    $em->refresh($user);
+                }
             }
             
         $formDelete = $this->createForm(DeleteType::class, null, [
-            'action' => $this->generateUrl('user_delete', ['id' => $user->getId()])
+            'action' => $this->generateUrl('user_delete', ['username' => $user->getUsername()])
         ]);
 
         return $this->render('user/edit.html.twig', [
@@ -131,7 +137,7 @@ class UserController extends AbstractController
     /**
      * Method to allow a user to delete his/her account on the website
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @Route("/profil/suppression/{id}", name="user_delete", methods={"DELETE"}, requirements={"id": "\d+"})
+     * @Route("/profil/suppression/{username}", name="user_delete", methods={"DELETE"})
      */
     public function delete(EntityManagerInterface $em, Request $request, User $user)
     {
@@ -164,7 +170,7 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('user_edit', [
-            'id' => $user->getId(),
+            'username' => $user->getUsername(),
         ]);
     }
 }

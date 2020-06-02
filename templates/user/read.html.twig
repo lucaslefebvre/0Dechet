@@ -37,7 +37,7 @@
       <p>Pseudo : {{user.username}}<br>
       {% if is_granted('IS_AUTHENTICATED_FULLY') %}
       Email : {{user.email}}</p>
-      <a href="{{ path('user_edit', {'id': user.id })}}"><button class="btn banner-top-btn" type="button">Modifier le profil</button></a>
+      <a href="{{ path('user_edit', {'username': user.username })}}"><button class="btn banner-top-btn" type="button">Modifier le profil</button></a>
       {% endif %}
     </div>
   </div>
