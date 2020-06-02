@@ -102,7 +102,11 @@
         <h5>Recette :</h5>
       </div>
       <div class="row px-3 ml-md-2 mr-md-1">
-        <p class="recipe-user">Proposée par <a href="{{ path('user_read', {'id': recipe.user.id})}}">{{recipe.user.username}}</a></p>
+              {% if recipe.user.id is defined %}
+                <p>Proposé par <a href="{{ path('user_read', {'id': recipe.user.id})}}"  class="user-profil">{{ recipe.user }}</a></p>
+              {% else %}
+                <p>Proposé par Anonyme</p>
+              {% endif %}
       </div>
       <div class="row px-3 ml-md-2 mr-md-1">
           <p>{{ recipe.content |nl2br }}</p>
@@ -116,7 +120,7 @@
           <h5>Noter la recette :</h5>
           <div class="col-12 form-rate">
             <div class="row justify-content-center m-3">
-              {% if recipe.user.id == app.user.id %}
+              {% if recipe.user == app.user %}
               <div>
                 <p>Vous ne pouvez pas noter votre recette</p>
               {% elseif recipe.rates %}
@@ -158,6 +162,7 @@
                 </div>
               </form>
             </div>
+
           </div>
         </div>
         <div class="col-12 d-md-none">
