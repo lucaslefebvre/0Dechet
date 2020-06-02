@@ -20,7 +20,7 @@ class ResponseListener
 
     private function disableThisPageCache($currentPath)
     {
-        $paths = array('/profile', '/admin');
+        $paths = array('/profil', '/admin');
 
         foreach ($paths as $path) {
             if ($this->checkPathBegins($currentPath, $path)) {

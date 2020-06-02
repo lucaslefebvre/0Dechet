@@ -90,7 +90,7 @@ class UserController extends AbstractController
         $userForm->handleRequest($request);
 
             if ($userForm->isSubmitted() && $userForm->isValid()) {
-                $userPassword = $userForm->getData()->getPassword();
+                $userPassword = $userForm->get('password')->getData();
 
                 // We modify the password only if the user modified it
                 if ($userPassword !== null) {
@@ -103,7 +103,6 @@ class UserController extends AbstractController
 
                 $em = $this->getDoctrine()->getManager();
 
-                $em->persist($user);
                 $em->flush();
 
                 $this->addFlash(
