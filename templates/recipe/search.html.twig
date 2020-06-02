@@ -1,35 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <main class="container-fluid">
+<main class="container-fluid">
+  <div class="row justify-content-center main-content">
 
-      <div class="row justify-content-center main-content">
+    {{ include('partials/left-nav.html.twig') }}
 
-      {{ include('partials/left-nav.html.twig') }}
-
-         <div class="col-12 col-lg-8 mx-auto mb-5">
-          <div class="row px-3 mt-2 fil-ariane">
-            <p>
-              <a href="{{ path('main_home')}}">0'Déchet</a> -
-              <a href="{{ path('recipe_browse')}}">Toutes les recettes</a> -
-              {{title}}
-            </p> 
-          </div>
-          <div class="row pt-3 pl-3 ml-md-2 mr-md-1 main-title">
-            <h2>Résultats de la recherche</h2>
-          </div>
-          <div class="row justify-content-center">
-          {% for recipe in recipes %}
-            {{ include('partials/card.html.twig') }}
-          {% endfor %}
-          </div>
-        </div>
+    <div class="col-12 col-lg-8 mx-auto mb-3">
+      <div class="row px-3 mt-2 fil-ariane">
+        <p>
+          <a href="{{ path('main_home')}}">0'Déchet</a> -
+          <a href="{{ path('recipe_browse')}}">Toutes les recettes</a> -
+          {{title}}
+        </p> 
+      </div>
+      <div class="row pt-3 pl-3 ml-md-2 mr-md-1 main-title">
+        <h2>Résultats de la recherche</h2>
+      </div>
+      <div class="row justify-content-center">
+      {% for recipe in recipes %}
+        {{ include('partials/card.html.twig') }}
+      {% endfor %}
       </div>
       {# pagination #}
-      <div class="row justify-content-center">
+      <div class="row justify-content-center mt-5">
         <div id="navigation">
         {{ knp_pagination_render(recipes) }}
         </div>
       </div>
-    </main>
+    </div>
+  </div>
+</main>
 {% endblock %}

@@ -760,9 +760,26 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
 }
 
 /*Pagination*/
+
 .page-link {
     color : #739377;
 }
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #617e64;
+    border-color: #617e64;
+}
+
+.page-link:hover {
+    color: #617e64;
+}
+
+.page-link:focus {
+    box-shadow: 0px 0px 4px 0px #617e64;
+}
+
 /* LOGIN FORM */
 
 .form-btn-connexion {
@@ -784,5 +801,4 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
 .form-btn-connexion:focus {
     border: 2px solid #617e64; 
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
-
 }
