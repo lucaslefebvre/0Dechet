@@ -42,16 +42,15 @@ class RecipeController extends AbstractController
             10,    // number of results in a page
         ); 
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/browse.html.twig', [
-            'recipes' => $recipes,
-            'title' => 'Toutes les recettes',
-        ]);
-          
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }    
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/search.html.twig', [
+                'recipes' => $recipes,
+                'title' => 'Toutes les recettes',
+            ]);
+        }
       
     }
 
@@ -71,16 +70,15 @@ class RecipeController extends AbstractController
                 10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/search.html.twig', [
-            'recipes' => $recipes,
-            'title' => 'Résultat pour "'.$q .'"',
-        ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }    
-       
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/search.html.twig', [
+                'recipes' => $recipes,
+                'title' => 'Résultat pour "'.$q .'"',
+            ]);
+        }
     }
 
      /**
@@ -253,16 +251,16 @@ class RecipeController extends AbstractController
             10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
+            throw $this->createNotFoundException('Pas de recette'); 
+        } else {   // If number of pagination exist we return the view
             return $this->render('recipe/category.html.twig', [
                 'recipes' => $recipes,
                 'category' => $category,
                 'title' => $category->getName(),
-            ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
-            throw $this->createNotFoundException('Pas de recette'); 
-        }    
+                ]);
+        }
     }
           
      /**
@@ -277,17 +275,16 @@ class RecipeController extends AbstractController
             10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/subCategory.html.twig', [
-            'recipes' => $recipes,
-            'subCategory' => $subCategory,
-            'title' => $subCategory->getName(),
-        ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }   
-        
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/subCategory.html.twig', [
+                'recipes' => $recipes,
+                'subCategory' => $subCategory,
+                'title' => $subCategory->getName(),
+                ]);
+        }
     }
 
     /**
@@ -302,17 +299,16 @@ class RecipeController extends AbstractController
             10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/type.html.twig', [
-            'recipes' => $recipes,
-            'type' => $type,
-            'title' => $type->getName(),
-        ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }   
-            
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/type.html.twig', [
+                'recipes' => $recipes,
+                'type' => $type,
+                'title' => $type->getName(),
+                ]);
+        }
     }
 
     /**
