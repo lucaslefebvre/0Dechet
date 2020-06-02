@@ -27,7 +27,7 @@
   <div class="d-flex justify-content-center">
     <div class="card-profil-img">
     {% if recipe.user is not empty %}
-      <a href="{{ path('user_read', {'id': recipe.user.id})}}">
+      <a href="{{ path('user_read', {'username': recipe.user.username})}}">
         {% if recipe.user.image is not empty %}
           <img src="{{ asset('assets/images/users/' ~ recipe.user.image) }}" class="card-img-user" alt="{{recipe.user.image}}">
         {% else %}
@@ -40,7 +40,7 @@
     </div>
     <div class="card-profil">
       {% if recipe.user != null %}
-        <p>Proposé par <a href="{{ path('user_read', {'id': recipe.user.id})}}"  class="user-profil">{{ recipe.user }}</a></p>
+        <p>Proposé par <a href="{{ path('user_read', {'username': recipe.user.username})}}"  class="user-profil">{{ recipe.user }}</a></p>
       {% else %}
         <p>Proposé par Anonyme</p>
       {% endif %}

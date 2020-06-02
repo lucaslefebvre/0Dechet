@@ -108,7 +108,7 @@
       </div>
       <div class="row px-3 ml-md-2 mr-md-1">
         {% if recipe.user != null %}
-        <p>Proposé par <a href="{{ path('user_read', {'id': recipe.user.id})}}"  class="user-profil">{{ recipe.user }}</a></p>
+        <p>Proposé par <a href="{{ path('user_read', {'username': recipe.user.username})}}"  class="user-profil">{{ recipe.user }}</a></p>
         {% else %}
         <p>Proposé par Anonyme</p>
         {% endif %}
