@@ -6,10 +6,10 @@
 
     {% for message in app.flashes('success') %}
     <div class="flash-notice my-3">
-        <div class="alert alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p class="mb-0">{{message}}</p>
-        </div>
+      <div class="alert alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p class="mb-0">{{message}}</p>
+      </div>
     </div>
     {% endfor %}
 
@@ -22,7 +22,7 @@
   </div>
   {% endif %}
   {% if app.user == user %}
-   <div class="row justify-content-between pt-3 px-3 mb-3 ml-md-2 mr-md-1 main-title">
+  <div class="row justify-content-between pt-3 px-3 mb-3 ml-md-2 mr-md-1 main-title">
     <h2>Mon profil</h2>
   </div>
   <div class="row justify-content-center align-items-center mb-3">

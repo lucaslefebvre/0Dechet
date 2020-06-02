@@ -4,7 +4,7 @@
             {% for category in allCategory %}
             <li>
                 <input id="group-{{ loop.index }}" type="checkbox" hidden />
-                <label class="left-nav-label left-nav-label-category" data-category="{{category.slug}}" for="group-{{ loop.index }}" >{{category.name}} <i class="fa fa-plus fa-plus-category" aria-hidden="true"></i><i class="fa fa-minus fa-minus-category" aria-hidden="true"></i></label>
+                <label class="left-nav-label left-nav-label-category" data-category="{{category.slug}}" for="group-{{ loop.index }}" ><a class="left-nav-link" href="{{path ('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}</a><i class="fa fa-plus fa-plus-category" aria-hidden="true"></i><i class="fa fa-minus fa-minus-category" aria-hidden="true"></i></label>
                 <ul class="group-list px-3">
                 {% for subCategory in category.subCategories %}
                 <li>
