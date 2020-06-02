@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -59,23 +60,9 @@ class RecipeType extends AbstractType
                 'minMessage' => 'La recette doit contenir au moins 30 caractères',
                 ])],
             ])
-            ->add('duration', ChoiceType::class,  [
-                'placeholder' => 'Sélectionner la durée',
-                'choices' => [
-                    '0 mn' => '0',
-                    '15 mn' => '15',
-                    '30 mn' => '30',
-                    '45 mn' => '45',
-                    '1 h 00' => '60',
-                    '1 h 15' => '75',
-                    '1 h 30' => '90',
-                    '1 h 45' => '105',
-                    '2 h 00' => '120',
-                ],
-                'multiple' => false,
-                'expanded' => false,
+            ->add('duration', IntegerType::class, [
                 'required' => true,
-                'label' => 'Durée',
+                'label' => 'Durée (en minutes)',
             ])
             ->add('difficulty', ChoiceType::class, [
                 'label' => 'Difficulté',
