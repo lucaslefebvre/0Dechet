@@ -10,6 +10,23 @@ body {
     background-color: #739377;
 }
 
+.navbar-profil a, .navbar-profil p {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 0;
+}
+
+.navbar-user-img-div {
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+    margin-right: .5rem;
+}
+
+.navbar-user-img {
+    width: 100%;
+}
+
 .header-btn-connexion {
     background-color: #b7cbad !important;
     border: 2px solid #617e64; 
@@ -316,8 +333,15 @@ main {
 
 .card-rate {
     text-align: center;
-    margin-bottom: 2rem;
     font-size: 1.2rem;
+    margin-bottom: 0;
+
+}
+
+.card-nb-opinion {
+    text-align: center;
+    padding: 0;
+    font-size: 0.7rem;
 }
 
 .card-btn {
@@ -344,12 +368,29 @@ main {
     line-height: 0.3;
 }
 
-.card-profil-image {
+.card-profil-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+    overflow: hidden;
+}
+
+.user-profil {
+    color: #617e64;
+}
+
+.card-img-user {
     width: 50px;
     margin-right: 1rem;
 }
 
 /* RECIPES LIST */
+
+.fil-ariane, .fil-ariane a{
+    color: grey;
+    font-size: 0.8rem;
+}
+
 /* Left Navigation*/
 
 a {
@@ -409,7 +450,7 @@ a {
 }
 
 .group-list {
-    margin-top: -2px;
+    margin-top: -1px;
 }
  
 .nav__list input[type=checkbox]:checked + label + ul {
@@ -563,12 +604,20 @@ label > .fa-minus-subcategory {
 
 /* Recipe Details */
 
+.recipe-user {
+    font-weight: 1rem;
+    font-style: italic;
+}
+.recipe-user a {
+    color: #000000;
+}
+
 .recipe-content {
     text-align: justify;
 }
 
 .recipe-main h5 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0rem;
     font-weight: 700;
 }
 
@@ -590,10 +639,30 @@ ul.recipe-list li {
     font-size: 1.1rem;
 }
 
+.recipe-nb-opinion {
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+/* Commentaires */
+
+.recipe-comment-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+.recipe-comment-user {
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-bottom: 0.2rem;
+}
+
 /* FORMS */
 
 .user-form-label,
-.user-form-input{
+.user-form-input {
     margin-top: 2rem;
 }
 

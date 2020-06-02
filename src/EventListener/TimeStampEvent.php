@@ -16,7 +16,7 @@ class TimeStampEvent
         //If it's an entity with a createdAt property
         if(property_exists($entity, 'createdAt')){
 
-            //Associate the new slug to the entity
+            //Associate the new date time to the entity
             $entity->setCreatedAt(new \DateTime('now'));
 
         }
@@ -31,7 +31,7 @@ class TimeStampEvent
         //If it's an entity with a updatedAt property
         if(property_exists($entity, 'updatedAt')){
 
-            //Associate the new slug to the entity
+            //Associate the new date time to the entity
             $entity->setUpdatedAt(new \DateTime('now'));
 
         }

@@ -13,28 +13,43 @@
     </div>
     {% endfor %}
 
-
-      <div class="row justify-content-between text-md-right pt-3 px-3 ml-md-2 mr-md-1 main-title">
+          <div class="row px-3 mt-2 fil-ariane">
+        <p>
+          <a href="{{ path('main_home')}}">0'Déchet</a> -
+          <a href="{{ path('recipe_browse')}}">Toutes les recettes</a> -
+          <a href="{{ path('recipe_browseByCategory', {'slug': recipe.type.subCategory.category.slug})}}">{{recipe.type.subCategory.category.name}}</a> -
+          <a href="{{ path('recipe_browseBySubCategory', {'slug': recipe.type.subCategory.slug})}}">{{recipe.type.subCategory.name}}</a> -
+          <a href="{{ path('recipe_browseByType', {'slug': recipe.type.slug})}}">{{recipe.type.name}}</a>
+        </p> 
+      </div>
+      <div class="row justify-content-between text-md-right px-3 ml-md-2 mr-md-1 main-title">
         <h2>{{ recipe.name }}</h2>
-        <div class="d-none d-md-block">
-        Nombre d'avis : {{ recipe.rates|length }}
-            {% for i in 1..5 %}
-                {% if recipe.averageRate >= i %}
-                <i class="fa fa-star" aria-hidden="true"></i>
-                {% else %}
-                <i class="fa fa-star-o" aria-hidden="true"></i>
-                {% endif %}
-            {% endfor %} 
+        <div class="d-none d-md-flex align-items-center">
+          <div class="recipe-nb-opinion">
+            (Nombre d'avis : {{ recipe.rates|length }})
+          </div>
+          {% for i in 1..5 %}
+            {% if recipe.averageRate >= i %}
+            <i class="fa fa-star" aria-hidden="true"></i>
+            {% else %}
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            {% endif %}
+          {% endfor %} 
         </div>
       </div>
-      <div class="row d-block d-md-none pt-2 px-3">
-            {% for i in 1..5 %}
-                {% if recipe.averageRate >= i %}
-                <i class="fa fa-star" aria-hidden="true"></i>
-                {% else %}
-                <i class="fa fa-star-o" aria-hidden="true"></i>
-                {% endif %}
-            {% endfor %} 
+      <div class="row d-flex d-md-none pt-2 px-3 align-items-center">
+        <div class="">
+        {% for i in 1..5 %}
+          {% if recipe.averageRate >= i %}
+          <i class="fa fa-star" aria-hidden="true"></i>
+          {% else %}
+          <i class="fa fa-star-o" aria-hidden="true"></i>
+          {% endif %}
+        {% endfor %}
+        </div>
+        <div class="recipe-nb-opinion">
+          (Nombre d'avis : {{ recipe.rates|length }})
+        </div> 
       </div>
       <div class="row pt-0 pt-md-3 px-3 ml-md-2 mr-md-1 recipe-time-difficulty">
         <p>Temps : environ {{ recipe.duration }} minutes<br>
@@ -87,6 +102,9 @@
         <h5>Recette :</h5>
       </div>
       <div class="row px-3 ml-md-2 mr-md-1">
+        <p class="recipe-user">Proposée par <a href="{{ path('user_read', {'id': recipe.user.id})}}">{{recipe.user.username}}</a></p>
+      </div>
+      <div class="row px-3 ml-md-2 mr-md-1">
           <p>{{ recipe.content |nl2br }}</p>
       </div>
       <div class="row justify-content-center">
@@ -98,6 +116,14 @@
           <h5>Noter la recette :</h5>
           <div class="col-12 form-rate">
             <div class="row justify-content-center m-3">
+              {% if recipe.user.id == app.user.id %}
+              <div>
+                <p>Vous ne pouvez pas noter votre recette</p>
+              {% elseif recipe.rates %}
+                {% for rate in recipe.rates|filter(rate => rate.user == app.user) %}
+                  <div>
+                    <p>Vous avez déjà donné une note</p>
+                  {% else %}
               <form action="" method="post">
                 <div class="stars">
                   <input type="radio" name="difficulty" id="difficulty-5" value="5" hidden>
@@ -124,20 +150,10 @@
                   <label for="difficulty-1">
                     <i class="fa fa-star"></i>
                   </label>
-                  {% if recipe.user.id == app.user.id %}
-                    <p>Vous ne pouvez pas noter votre recette</p>
-                  {% elseif recipe.rates %}
-                    {% for rate in recipe.rates|filter(rate => rate.user == app.user) %}
-                          <p>Vous avez déjà donné une note</p>
-                      {% else %}
-                          <div class="row justify-content-center m-3">
-                            <button class="btn rate-btn">Envoyer la note</button>
-                          </div>
-                    {% endfor %}
-                  {% else %}
                     <div class="row justify-content-center m-3">
                       <button class="btn rate-btn">Envoyer la note</button>
                     </div>
+                    {% endfor %}
                   {% endif %}
                 </div>
               </form>
@@ -180,9 +196,9 @@
           {% for comment in recipe.comments %}
             {% if comment.status == true %}
               <div class="comment">
-                <p>{{ comment.title }}</p>
-                <p>par {{ comment.user }} le {{ comment.createdAt|date("d/m/Y") }}</p>
-                <p>{{ comment.content }}</p><hr>
+              <p class="recipe-comment-title">{{ comment.title }}</p>
+              <p class="recipe-comment-user">par {{ comment.user }} le {{ comment.createdAt|date("d/m/Y") }}</p>
+              <p class="recipe-comment-content">{{ comment.content |nl2br }}</p><hr>
               </div>
             {% endif %}
           {% endfor %}
