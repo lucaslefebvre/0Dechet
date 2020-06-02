@@ -11,8 +11,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 
 class UserController extends AbstractController
@@ -33,7 +36,7 @@ class UserController extends AbstractController
      * Method to create a new account on the website
      * @Route("/inscription", name="user_add", methods={"GET","POST"})
      */
-    public function add(Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
+    public function add(Request $request, MailerInterface $mailer, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('main_home');
@@ -62,9 +65,17 @@ class UserController extends AbstractController
                 $em->persist($user);
                 $em->flush();
 
+                $email = (new Email())
+                        ->from('0dechet.project@gmail.com')
+                        ->to($user->getEmail())
+                        ->subject('Bienvenue sur 0dechet')
+                        ->text('Heureux de vous compter parmis nos membres '.$user->getUsername().'');
+                
+                $mailer->send($email);
+
                 $this->addFlash(
                     'success',
-                    'Votre compte a été créé. Vous pouvez dès à présent vous y connecter pour ajouter des recettes et des commentaires.'
+                    'Votre compte a été créé, un email de confirmation a été envoyé sur votre boîte mail. Vous pouvez dès à présent vous y connecter pour ajouter des recettes et des commentaires.'
                 );
 
                 return $this->redirectToRoute('main_home');
@@ -170,4 +181,5 @@ class UserController extends AbstractController
             'id' => $user->getId(),
         ]);
     }
+
 }

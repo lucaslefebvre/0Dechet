@@ -90,7 +90,7 @@ class RecipeController extends AbstractController
      */
     public function add(Request $request, FileUploader $fileUploader)
     {
-        
+
         $recipe = new Recipe;
 
         $form = $this->createForm(RecipeType::class, $recipe);
@@ -210,7 +210,7 @@ class RecipeController extends AbstractController
                 ]);
             }
       
-            //Homemade RateForm
+            //Homemadeadmin/?entity=User&action=list&menuIndex=6&submenuIndex=-1 RateForm
             else {
                 $rate = new Rate();
                 $rating = $_POST['difficulty'];
