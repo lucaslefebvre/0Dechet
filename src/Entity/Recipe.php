@@ -111,6 +111,7 @@ class Recipe
     {
         $this->comments = new ArrayCollection();
         $this->rates = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function __toString()

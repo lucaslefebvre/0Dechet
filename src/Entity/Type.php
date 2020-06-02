@@ -53,7 +53,9 @@ class Type
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
+
     public function __toString() 
     {
         return $this->name;

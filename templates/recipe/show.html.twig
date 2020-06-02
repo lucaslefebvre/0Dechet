@@ -194,11 +194,13 @@
         {% else %}
         <div class="comments col-12 overflow-auto">
           {% for comment in recipe.comments %}
-            <div class="comment">
+            {% if comment.status == true %}
+              <div class="comment">
               <p class="recipe-comment-title">{{ comment.title }}</p>
               <p class="recipe-comment-user">par {{ comment.user }} le {{ comment.createdAt|date("d/m/Y") }}</p>
               <p class="recipe-comment-content">{{ comment.content |nl2br }}</p><hr>
-            </div>
+              </div>
+            {% endif %}
           {% endfor %}
         {% endif %}
         </div>
