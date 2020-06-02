@@ -83,36 +83,85 @@ class UserController extends AbstractController
      */
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
+        // $this->denyAccessUnlessGranted('EDIT', $user);
+
+        // $userForm = $this->createForm(CreateAccountType::class, $user);
+
+        // $userForm->handleRequest($request);
+
+        //     if ($userForm->isSubmitted() && $userForm->isValid()) {
+        //         $userPassword = $userForm->get('password')->getData();
+
+        //         // We modify the password only if the user modified it
+        //         if ($userPassword !== null) {
+        //             $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
+        //         }
+
+        //         // We use a Services to move and rename the file
+        //         $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
+        //         $user->setImage($newName);
+
+        //         $em = $this->getDoctrine()->getManager();
+
+        //         $em->flush();
+
+        //         $this->addFlash(
+        //             'success',
+        //             'Votre compte a bien été modifié.'
+        //         );
+
+        //         return $this->redirectToRoute('user_read', [
+        //             'id' => $user->getId(),
+        //         ]);
+        //     }
+            
+        // $formDelete = $this->createForm(DeleteType::class, null, [
+        //     'action' => $this->generateUrl('user_delete', ['id' => $user->getId()])
+        // ]);
+
+        // return $this->render('user/edit.html.twig', [
+        //     'userForm' => $userForm->createView(),
+        //     'deleteForm' => $formDelete->createView(),
+        //     'title'=>'Modifier son profil',
+        //     'user' => $this->getUser(),
+        // ]);
+
         $this->denyAccessUnlessGranted('EDIT', $user);
 
         $userForm = $this->createForm(CreateAccountType::class, $user);
 
         $userForm->handleRequest($request);
 
-            if ($userForm->isSubmitted() && $userForm->isValid()) {
-                $userPassword = $userForm->get('password')->getData();
-
-                // We modify the password only if the user modified it
-                if ($userPassword !== null) {
-                    $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
-                }
-
-                // We use a Services to move and rename the file
-                $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
-                $user->setImage($newName);
+            if ($userForm->isSubmitted()) {
 
                 $em = $this->getDoctrine()->getManager();
 
-                $em->flush();
+                if ($userForm->isValid()) {
+              
+                    $userPassword = $userForm->get('password')->getData();
+                    // We modify the password only if the user modified it
+                    if ($userPassword !== null) {
+                        $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
+                    }
 
-                $this->addFlash(
-                    'success',
-                    'Votre compte a bien été modifié.'
-                );
+                    // We use a Services to move and rename the file
+                    $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
+                    $user->setImage($newName);
 
-                return $this->redirectToRoute('user_read', [
-                    'id' => $user->getId(),
-                ]);
+                    $em->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Votre compte a bien été modifié.'
+                    );
+
+                    return $this->redirectToRoute('user_read', [
+                        'id' => $user->getId(),
+                    ]);
+                }
+                else {
+                    $em->refresh($user);
+                }
             }
             
         $formDelete = $this->createForm(DeleteType::class, null, [
