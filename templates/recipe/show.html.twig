@@ -125,7 +125,7 @@
           <h5>Noter la recette :</h5>
           <div class="col-12 form-rate">
             <div class="row justify-content-center m-3">
-              {% if recipe.user.id == app.user.id %}
+              {% if recipe.user == app.user %}
               <div>
                 <p>Vous ne pouvez pas noter votre recette</p>
               {% elseif recipe.rates %}
@@ -167,6 +167,7 @@
                 </div>
               </form>
             </div>
+
           </div>
         </div>
         <div class="col-12 d-md-none">

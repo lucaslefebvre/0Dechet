@@ -1,7 +1,18 @@
+
+
 {% if recipe.status == true %}
 <div class="card col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
   <div class="pt-3">
     <div class="card-recipe-img">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+{% for favorite in app.user.favorites %}
+     {% if recipe.id == favorite.recipes.id %}
+      <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon-link"><i class="fa fa-heart fa-lg card-fav-icon" aria-hidden="true"></i></a>
+     {% else %}
+     <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon-link"><i class="fa fa-heart-o fa-lg card-fav-icon" aria-hidden="true"></i></a>
+     {% endif %}
+{% endfor %}
+    {% endif %}
     {% if recipe.image is not empty %}
       <a href="{{ path('recipe_show', {'slug': recipe.slug})}}"><img src="{{ asset('assets/images/recipes/' ~ recipe.image) }}" class="card-img-top" alt="{{recipe.name}}"></a>
     {% else %}

@@ -334,6 +334,21 @@ main {
 .card-recipe-img {
     height: 180px;
     overflow: hidden;
+    position: relative;
+}
+
+.card-fav-icon{
+    position: absolute;
+    top: 0.75rem;
+    left: 14.25rem;
+}
+
+.card-fav-icon-link{
+    color: black;
+}
+
+.card-fav-icon-link:hover{
+    color: #f4bca6;
 }
 
 .card-rate {

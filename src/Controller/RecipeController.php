@@ -8,13 +8,11 @@ use App\Entity\Rate;
 use App\Entity\Recipe;
 use App\Entity\SubCategory;
 use App\Entity\Type;
-use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\DeleteType;
 use App\Form\RecipeType;
 use App\Repository\CategoryRepository;
 use App\Repository\RecipeRepository;
-use App\Repository\UserRepository;
 use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -23,7 +21,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use WhiteOctober\BreadcrumbsBundle\Model\BreadCrumbs;
 
 /**
 * @Route("/recette", name="recipe_")
@@ -177,7 +174,7 @@ class RecipeController extends AbstractController
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
   
-    public function show(Recipe $recipe, RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $em): Response
+    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em): Response
     {
         // Comment Form
         $comment = new Comment();
