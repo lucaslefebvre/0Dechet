@@ -19,12 +19,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use WhiteOctober\BreadcrumbsBundle\Model\BreadCrumbs;
+
 
 /**
 * @Route("/recette", name="recipe_")
@@ -114,6 +116,7 @@ class RecipeController extends AbstractController
             ->from('0dechet.project@gmail.com')
             ->to($recipe->getUser()->getEmail())
             ->subject('Bienvenue sur 0dechet')
+            
             ->text('Heureux de vous compter parmis nos membres '.$recipe->getUser()->getUsername().'');
     
             $mailer->send($email);

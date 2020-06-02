@@ -1,0 +1,10 @@
+{% extends 'mail/base.html.twig' %}
+
+<h1>Bienvenue {{ email.toName }}! </h1>
+
+
+<p>
+    Vous êtes inscrit avec le nom d'utilisateur {{ username }} et l'email suivant:
+</p>
+<p><code>{{ email.to[0].address }}</code></p>
+
