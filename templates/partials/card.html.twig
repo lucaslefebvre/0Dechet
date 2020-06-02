@@ -34,9 +34,13 @@
       {% endif %}
       </a>
     <div class="card-profil">
+      {% if recipe.user != null %}
       <a href="{{ path('user_read', {'id': recipe.user.id})}}">
-        <p>Proposé par {{ recipe.user ? recipe.user : "Anonyme" }}</p>
+        <p>Proposé par {{ recipe.user }}</p>
       </a>
+      {% else %}
+        <p>Proposé par Anonyme</p>
+      {% endif %}
       <a href="{{ path('recipe_show', {'slug': recipe.slug})}}" class="btn card-btn">Voir la recette</a>
     </div>
   </div>
