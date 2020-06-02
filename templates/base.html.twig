@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block stylesheets %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
-    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
-    {% endblock %}
-    <title>{% block title %}{{title}} - 0Déchet{% endblock %}</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block stylesheets %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
+        <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
+        {% endblock %}
+        <title>{% block title %}{{title}} - 0Déchet{% endblock %}</title>
+    </head>
     <body>
         {% block nav %}
         <header class="sticky-top">
@@ -19,7 +19,21 @@
                 <img src="{{ asset('assets/images/logo.png') }}" height="60px" alt="logo" loading="lazy" class="d-sm-none">
             </a>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a class="mr-md-4 btn header-btn-deconnexion" href="{{ path('app_logout') }}">Déconnexion</a>
+            <div class="d-flex justify-content-between align-items-center navbar-profil mr-md-4">
+              <div class="d-none d-sm-flex navbar-user-img-div">
+                <a href="{{ path('user_read', {'id': app.user.id})}}">
+                  {% if app.user.image is not empty %}
+                    <img src="{{ asset('assets/images/users/' ~ app.user.image) }}" class="navbar-user-img" alt="{{app.user.image}}">
+                  {% else %}
+                    <img src="{{ asset('assets/images/default-user.png') }}" class="navbar-user-img" alt="">
+                  {% endif %}
+                </a>
+              </div>
+              <div>
+                <p><a href="{{ path('user_read', {'id': app.user.id})}}">{{app.user.username}}</a></p>
+                <a class="btn header-btn-deconnexion" href="{{ path('app_logout') }}">Déconnexion</a>
+              </div>
+            </div>
             {% else %}
             <a class="mr-md-4 btn header-btn-connexion" href="{{ path('app_login') }}">Connexion</a>
             {% endif %}
@@ -93,11 +107,6 @@
               </li>
               {% endfor %}
               <li><a class="nav-link" href="#">Contact</a></li>
-              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-              <li>
-                <a class="nav-link" href="{{ path('user_read', {'id': app.user.id}) }}">Profil</a>
-              </li>
-              {% endif %}
               <li><form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
                 <input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Rechercher">
                 <button class="btn my-sm-0 btn-search" type="submit" formaction="{{ path('recipe_search') }}"><i class="fa fa-search" aria-hidden="true"></i></button>

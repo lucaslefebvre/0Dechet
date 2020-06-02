@@ -6,10 +6,10 @@
 
     {% for message in app.flashes('success') %}
     <div class="flash-notice my-3">
-        <div class="alert alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p class="mb-0">{{message}}</p>
-        </div>
+      <div class="alert alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p class="mb-0">{{message}}</p>
+      </div>
     </div>
     {% endfor %}
 
@@ -22,7 +22,7 @@
   </div>
   {% endif %}
   {% if app.user == user %}
-   <div class="row justify-content-between pt-3 px-3 mb-3 ml-md-2 mr-md-1 main-title">
+  <div class="row justify-content-between pt-3 px-3 mb-3 ml-md-2 mr-md-1 main-title">
     <h2>Mon profil</h2>
   </div>
   <div class="row justify-content-center align-items-center mb-3">
@@ -84,18 +84,20 @@
     {% endfor %}
   </div>
     {% endif %}
-
   {% if app.user != user %}
   <div class="row justify-content-between pt-3 px-3 mb-3 ml-md-2 mr-md-1 main-title">
-    <h2>Profil de {{ user.username }}</h2>
+    <h2>Profil de {{user.username}}</h2>
   </div>
   <div class="row justify-content-center align-items-center mb-3">
-    <div class="col-12 col-sm-6 mb-3 mb-sm-0 text-center">
+    <div class="col-12 col-sm-6 mb-3 mb-sm-0 text-center text-sm-right">
     {% if user.image is not empty %}
       <img src="{{ asset('assets/images/users/' ~ user.image) }}" class="img-fluid user-profil-img ml-auto" alt="Photo de profil de {{user.username}}">
     {% else %}
       <img src="{{ asset('assets/images/default-user.png') }}" class="img-fluid user-profil-img ml-auto" alt="">
     {% endif %}
+    </div>
+    <div class="col-12 col-sm-6 text-center text-sm-left">
+      <p>Pseudo : {{user.username}}<br>
     </div>
   </div>
   <div class="row justify-content-between pt-3 px-3 ml-md-2 mr-md-1 main-title">
