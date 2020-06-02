@@ -5,6 +5,10 @@ easy_admin:
         assets:
           css:
             - 'assets/css/admin.css'
+          favicon: '/assets/images/logo-mobile.png'
+  user:
+        avatar_property_path: 'logo'
+ 
   list:
         max_results: 30
   entities:
@@ -53,6 +57,7 @@ easy_admin:
                     - { property: 'subCategory', label: 'Sous-catégorie' }
     Recipe:
             class: App\Entity\Recipe
+            image_base_path: '/assets/images/'
             label: 'Recette'
             list:
                 fields: 
@@ -76,7 +81,7 @@ easy_admin:
                     - { property: 'duration', label: 'Durée', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'0 mn': '0', '15 mn': '15', '30 mn': '30', '45 mn': '45', '1 h 00': '60', '1 h 15': '75',  '1 h 30': '90', '1 h 45': '105',  '2 h 00': '120'}} }
                     - { property: 'difficulty', label: 'Difficulté', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'Débutant': '1', 'Intermédiaire': '2', 'Expert': '3'}} }
                     - { property: 'conservation', label: 'Conservation', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'1 semaine': '7', '2 semaines': '14', '1 mois':'30', '2 mois': '60', '3 mois': '90', '6 mois': '180'}} }
-                    - { property: 'image', label: 'Image de la recette', type: 'file' }
+                    - { property: 'image', type: 'file_upload', type_options: { upload_dir: 'public/assets/images/recipes/' }}
                     - { property: 'type', label: 'Type' }
                     - { property: 'status', label: 'Status' }
                     - { property: 'user', label: 'Utilisateur' }
@@ -91,7 +96,7 @@ easy_admin:
                     - { property: 'user', label: 'Utilisateur' }
             form:
                 fields: 
-                    - { property: 'rate', label: 'Note' }
+                    - { property: 'rate', label: 'Note', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'1 étoile': '1', '2 étoiles': '2', '3 étoiles': '3', '4 étoiles': '4', '5 étoiles': '5' }}  }
                     - { property: 'recipe', label: 'Recette' }
                     - { property: 'user', label: 'Utilisateur' }
     Comment:
@@ -130,7 +135,7 @@ easy_admin:
                   - { property: 'email', label: 'Email', type: 'email' }
                   - { property: 'username', label: 'Pseudo' }
                   - { property: 'password', label: 'Mot de passe', type: 'password' }
-                  - { property: 'image', label: 'Photo de profil', type: 'file' }
+                  - { property: 'image', type: 'file_upload', type_options: { upload_dir: 'public/assets/images/users/' }}
                   - { property: 'recipes', label: 'Recette ajouté' }
                   - { property: 'comments', label: 'Commentaire lié' }
                   - { property: 'roles', label: 'Rôles', type: choice, 
