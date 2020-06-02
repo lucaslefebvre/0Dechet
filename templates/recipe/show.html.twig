@@ -116,6 +116,14 @@
           <h5>Noter la recette :</h5>
           <div class="col-12 form-rate">
             <div class="row justify-content-center m-3">
+              {% if recipe.user.id == app.user.id %}
+              <div>
+                <p>Vous ne pouvez pas noter votre recette</p>
+              {% elseif recipe.rates %}
+                {% for rate in recipe.rates|filter(rate => rate.user == app.user) %}
+                  <div>
+                    <p>Vous avez déjà donné une note</p>
+                  {% else %}
               <form action="" method="post">
                 <div class="stars">
                   <input type="radio" name="difficulty" id="difficulty-5" value="5" hidden>
@@ -142,20 +150,10 @@
                   <label for="difficulty-1">
                     <i class="fa fa-star"></i>
                   </label>
-                  {% if recipe.user.id == app.user.id %}
-                    <p>Vous ne pouvez pas noter votre recette</p>
-                  {% elseif recipe.rates %}
-                    {% for rate in recipe.rates|filter(rate => rate.user == app.user) %}
-                          <p>Vous avez déjà donné une note</p>
-                      {% else %}
-                          <div class="row justify-content-center m-3">
-                            <button class="btn rate-btn">Envoyer la note</button>
-                          </div>
-                    {% endfor %}
-                  {% else %}
                     <div class="row justify-content-center m-3">
                       <button class="btn rate-btn">Envoyer la note</button>
                     </div>
+                    {% endfor %}
                   {% endif %}
                 </div>
               </form>

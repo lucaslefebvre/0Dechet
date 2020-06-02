@@ -375,11 +375,14 @@ main {
     overflow: hidden;
 }
 
+.user-profil {
+    color: #617e64;
+}
+
 .card-img-user {
     width: 50px;
     margin-right: 1rem;
 }
-
 
 /* RECIPES LIST */
 
