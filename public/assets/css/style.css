@@ -344,10 +344,6 @@ main {
 }
 
 .card-fav-icon-link{
-    color: black;
-}
-
-.card-fav-icon-link:hover{
     color: #f4bca6;
 }
 
