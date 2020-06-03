@@ -126,7 +126,7 @@ easy_admin:
                   - { property: 'email', label: 'Email' }
                   - { property: 'username', label: 'Pseudo' }
                   - { property: 'roles', label: 'Rôle' }
-                  -  { property: 'image', label: 'Photo de profil' }
+                  - { property: 'image', label: 'Photo de profil' }
                   - { property: 'recipes', label: 'Recette ajouté' }
                   - { property: 'comments', label: 'Commentaire lié' }
                   - { property: 'createdAt', label: 'Créé le' }
