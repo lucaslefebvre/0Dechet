@@ -43,7 +43,7 @@ class RecipeController extends AbstractController
         if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
         } else {   // If number of pagination exist we return the view
-            return $this->render('recipe/search.html.twig', [
+            return $this->render('recipe/browse.html.twig', [
                 'recipes' => $recipes,
                 'title' => 'Toutes les recettes',
             ]);
@@ -331,7 +331,7 @@ class RecipeController extends AbstractController
             );
 
             return $this->redirectToRoute('user_read', [
-                'id' => $this->getUser()->getId(),
+                'username' => $this->getUser()->getUsername(),
             ]);
         }
 
