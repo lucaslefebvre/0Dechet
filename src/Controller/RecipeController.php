@@ -19,6 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -110,13 +111,19 @@ class RecipeController extends AbstractController
             $entityManager->persist($recipe);
             $entityManager->flush();
 
-            $email = (new Email())
-            ->from('0dechet.project@gmail.com')
+            // We create a templated email for confirmation 
+            $email = (new TemplatedEmail())
+            ->from('equipe0dechet@gmail.com')
             ->to($recipe->getUser()->getEmail())
-            ->subject('Bienvenue sur 0dechet')
-            ->text('Heureux de vous compter parmis nos membres '.$recipe->getUser()->getUsername().'');
+            ->subject('Ajout de votre recette')
+            ->htmlTemplate('email/recipe/add.html.twig')
+            ->context([
+                'username' => $recipe->getUser()->getUsername(),
+                'name' => $recipe->getName(),
+            ]);
     
             $mailer->send($email);
+
             $this->addFlash(
                 'success',
                 'Votre recette a été ajoutée, un mail de confirmation vous a été envoyé'
@@ -139,7 +146,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/edition/{slug}", name="edit", methods={"GET","POST"})
      */
-    public function edit(Recipe $recipe, Request $request, FileUploader $fileUploader)
+    public function edit(Recipe $recipe, MailerInterface $mailer, Request $request, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('EDIT', $recipe);
 
@@ -162,6 +169,21 @@ class RecipeController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
+
+            // We create a templated email for confirmation 
+            $email = (new TemplatedEmail())
+            ->from('equipe0dechet@gmail.com')
+            ->to($recipe->getUser()->getEmail())
+            ->subject('Modification de votre recette')
+            ->htmlTemplate('email/recipe/edit.html.twig')
+            ->context([
+                'username' => $recipe->getUser()->getUsername(),
+                'name' => $recipe->getName(),
+            ]);
+
+            $mailer->send($email);
+
+
             $this->addFlash(
                 'success',
                 'Votre recette a été modifié'
@@ -338,7 +360,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/recipe/suppression/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
-    public function delete(EntityManagerInterface $em, Request $request, Recipe $recipe)
+    public function delete(EntityManagerInterface $em, MailerInterface $mailer, Request $request, Recipe $recipe)
     {
         $this->denyAccessUnlessGranted('DELETE', $recipe);
 
@@ -346,6 +368,20 @@ class RecipeController extends AbstractController
         $formDelete->handleRequest($request);
 
         if ($formDelete->isSubmitted() && $formDelete->isValid()) {
+            
+            // We create a templated email for confirmation 
+            $email = (new TemplatedEmail())
+             ->from('equipe0dechet@gmail.com')
+             ->to($recipe->getUser()->getEmail())
+             ->subject('Suppression de votre recette')
+             ->htmlTemplate('email/recipe/delete.html.twig')
+             ->context([
+                 'username' => $recipe->getUser()->getUsername(),
+                 'name' => $recipe->getName(),
+             ]);
+ 
+            $mailer->send($email);           
+
             $em->remove($recipe);
             $em->flush();
 

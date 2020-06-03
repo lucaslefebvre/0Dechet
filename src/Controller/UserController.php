@@ -9,6 +9,7 @@ use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Mailer\MailerInterface;
@@ -66,11 +67,14 @@ class UserController extends AbstractController
                 $em->flush();
 
                 // We create a request for send a email of confirmation
-                $email = (new Email())
-                        ->from('0dechet.project@gmail.com')
+                $email = (new TemplatedEmail())
+                        ->from('equipe0dechet@gmail.com')
                         ->to($user->getEmail())
                         ->subject('Bienvenue sur 0dechet')
-                        ->text('Heureux de vous compter parmis nos membres '.$user->getUsername().'');
+                        ->htmlTemplate('email/user/add.html.twig')
+                        ->context([
+                            'username' => $user->getUsername(),
+                        ]);
                 
                 $mailer->send($email);
 
@@ -97,7 +101,6 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('EDIT', $user);
         $imageUser = $user->getImage();
-        dump($user);
 
         $userForm = $this->createForm(CreateAccountType::class, $user);
 
@@ -126,11 +129,15 @@ class UserController extends AbstractController
 
                 // We create a request for send a email of confirmation
 
-                $email = (new Email())
-                ->from('0dechet.project@gmail.com')
+                $email = (new TemplatedEmail())
+                ->from('equipe0dechet@gmail.com')
                 ->to($user->getEmail())
                 ->subject('Modification de votre profil 0dechet')
-                ->text(''.$user->getUsername().'votre profil à été modifié !');
+                ->htmlTemplate('email/user/edit.html.twig')
+                ->context([
+                            'username' => $user->getUsername(),
+                        ]);
+                
         
                 $mailer->send($email);
 
@@ -185,11 +192,14 @@ class UserController extends AbstractController
 
             // We create a request for send a email of confirmation
 
-            $email = (new Email())
-            ->from('0dechet.project@gmail.com')
+            $email = (new TemplatedEmail())
+            ->from('equipe0dechet@gmail.com')
             ->to($user->getEmail())
             ->subject('Confirmation de suppression de votre compte 0dechet')
-            ->text(''.$user->getUsername().'votre profil à été supprimé !');
+            ->htmlTemplate('email/user/delete.html.twig')
+            ->context([
+                        'username' => $user->getUsername(),
+                    ]);
     
             $mailer->send($email);
 

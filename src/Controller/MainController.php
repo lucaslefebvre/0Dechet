@@ -23,4 +23,14 @@ class MainController extends AbstractController
             'title'=>'Accueil',
         ]);
     }
+
+    /**
+     * Method for the homepage to show the 3 lastest and the 3 gradest recipes
+     * @Route("/mailpage", name="mailpage")
+     */
+    public function mail()
+    {
+        return $this->render('email/deleteProfile.html.twig', [
+        ]);
+    }
 }
