@@ -11,15 +11,42 @@
         <p>
           <a href="{{ path('main_home')}}">0'Déchet</a> -
           <a href="{{ path('recipe_browse')}}">Toutes les recettes</a>
-        </p> 
+        </p>
       </div>
-      <div class="row pl-3 ml-md-2 mr-md-1 main-title">
+      <div class="row justify-content-between px-3 ml-md-2 mr-md-1 main-title">
         <h2>Toutes les recettes</h2>
+        <form class="main-sort" method="get">
+          <select class="main-sort-select" name="tri" onChange="this.form.submit();">
+            <option value="">Trier par</option>
+            <option value="rate" {{ app.request.query.get('tri') == "rate" ? "selected" }}>Meilleures notes</option>
+            <option value="date" {{ app.request.query.get('tri') == "date" ? "selected" }}>Plus récentes</option>
+            <option value="difficultyDesc" {{ app.request.query.get('tri') == "difficultyDesc" ? "selected" }}>Plus difficiles</option>
+            <option value="difficultyAsc" {{ app.request.query.get('tri') == "difficultyAsc" ? "selected" }}>Plus simples</option>
+          </select>
+        </form>
       </div>
       <div class="row justify-content-center">
-      {% for recipe in recipes %}
-        {{ include('partials/card.html.twig') }}
-      {% endfor %}
+      {% if app.request.query.get('tri') == "rate" %}
+        {% for recipe in recipes|sort((a, b) => b.averageRate	 <=> a.averageRate ) %}
+          {{ include('partials/card.html.twig') }}
+        {% endfor %}
+      {% elseif app.request.query.get('tri') == "date" %}
+        {% for recipe in recipes|sort((a, b) => b.createdAt	 <=> a.createdAt ) %}
+          {{ include('partials/card.html.twig') }}
+        {% endfor %}
+      {% elseif app.request.query.get('tri') == "difficultyDesc" %}
+        {% for recipe in recipes|sort((a, b) => b.difficulty	 <=> a.difficulty ) %}
+          {{ include('partials/card.html.twig') }}
+        {% endfor %}
+      {% elseif app.request.query.get('tri') == "difficultyAsc" %}
+        {% for recipe in recipes|sort((a, b) => a.difficulty	 <=> b.difficulty ) %}
+          {{ include('partials/card.html.twig') }}
+        {% endfor %}
+      {% else %}
+        {% for recipe in recipes|sort((a, b) => b.createdAt	 <=> a.createdAt ) %}
+          {{ include('partials/card.html.twig') }}
+        {% endfor %}
+      {% endif %}
       </div>
       {# pagination #}
       <div class="row justify-content-center mt-5">
