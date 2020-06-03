@@ -209,6 +209,18 @@ class RecipeController extends AbstractController
   
     public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, NumberToAlpha $numToAlpha): Response
     {
+        //===========================//
+        //ATTENTION ROUTE EN CHANTIER//
+        //===========================//
+
+        //===========================//
+        //ATTENTION ROUTE EN CHANTIER//
+        //===========================//
+
+        //===========================//
+        //ATTENTION ROUTE EN CHANTIER//
+        //===========================//
+        
         // Comment Form
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
