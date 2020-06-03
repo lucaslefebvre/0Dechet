@@ -354,8 +354,17 @@ main {
     left: 14.25rem;
 }
 
-.card-fav-icon-link{
+.card-fav-icon-link-full{
     color: #f4bca6;
+}
+
+.card-fav-icon-link-empty{
+    color: black;
+}
+
+.card-fav-icon-link-full:hover,
+.card-fav-icon-link-empty:hover{
+    color:#f4bca6;
 }
 
 .card-rate {

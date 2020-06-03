@@ -4,13 +4,13 @@
     <div class="card-recipe-img">
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
       {% if app.user.favorites is empty %}
-      <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon-link"><i class="fa fa-heart-o fa-lg card-fav-icon" aria-hidden="true"></i></a>
+      <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon-link-empty"><i class="fa fa-heart-o fa-lg card-fav-icon" aria-hidden="true"></i></a>
       {% endif %}
       {% for favorite in app.user.favorites %}
         {% if recipe.id == favorite.recipes.id %}
-          <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon-link"><i class="fa fa-heart fa-lg card-fav-icon" aria-hidden="true"></i></a>
+          <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon-link-full"><i class="fa fa-heart fa-lg card-fav-icon" aria-hidden="true"></i></a>
         {% else %}
-        <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon-link"><i class="fa fa-heart-o fa-lg card-fav-icon" aria-hidden="true"></i></a>
+        <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon-link-empty"><i class="fa fa-heart-o fa-lg card-fav-icon" aria-hidden="true"></i></a>
         {% endif %}
       {% endfor %}
     {% endif %}
