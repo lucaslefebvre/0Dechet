@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Webmozart\Assert\Assert as AssertAssert;
 
 class RecipeType extends AbstractType
 {
@@ -63,6 +64,7 @@ class RecipeType extends AbstractType
             ->add('duration', IntegerType::class, [
                 'required' => true,
                 'label' => 'Durée (en minutes)',
+                'constraints' => new Assert\Positive(),
             ])
             ->add('difficulty', ChoiceType::class, [
                 'label' => 'Difficulté',

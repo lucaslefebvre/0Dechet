@@ -4,5 +4,5 @@
 
 {% block body %}
     <p>Un email pour modifier votre mot de passe a été envoyé. Le lien expire dans {{ tokenLifetime|date('g') }} heures.</p>
-    <p>Si vous n'avez pas reçu de mail vérifiez dans vos email indésirable ou <a href="{{ path('app_forgot_password_request') }}">renvoyer le mail</a>.</p>
+    <p>Si vous n'avez pas reçu de mail vérifiez dans vos emails indésirables ou <a href="{{ path('app_forgot_password_request') }}">renvoyer le mail</a>.</p>
 {% endblock %}
