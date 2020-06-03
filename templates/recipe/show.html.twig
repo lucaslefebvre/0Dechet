@@ -2,6 +2,9 @@
 
 {% block body %}
 
+<pre>
+  {{ dump(formContainer) }}
+</pre>
    <main class="container recipe-main">
 
     {% for message in app.flashes('success') %}

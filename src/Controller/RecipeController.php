@@ -247,27 +247,35 @@ class RecipeController extends AbstractController
                 $formVar = $numToAlpha->toAlpha($modifiableComment->getId()).'form';
                 
                 $$formVar = $this->createForm(CommentType::class, $$var);
-                $$formVar->handleRequest($request);
+                //$$formVar->handleRequest($request);
     
                 // dump($var);
                 // dump(${$var});
                 // dump($j);
                 // dump($formVar);
-                $formContainer[$formVar] = $$formVar;
+                $formContainer[] = array($formVar, $$formVar, $$formVar->createView(), $$var);
             }
-            // dump($jform);
-            //dump($formContainer);
+            //dump($kform);// = $$formVar
+            dump($formContainer);
         }
-        
-
 
         if ($_POST) {
-
-            if ($formContainer) {
-                
-                foreach ($formContainer as $formVar => $$formVar) {
-                    
-                    //TODO
+            if (!empty($formContainer)) {
+                foreach ($formContainer as $key => $array) {
+                    if ($array[1]->isSubmitted() && $array[1]->isValid()) {
+                        // Recipe linked to the comment
+                        $em = $this->getDoctrine()->getManager();
+                        $em->flush();
+    
+                        $this->addFlash(
+                            'success',
+                            'Votre commentaire a été modifié'
+                        );
+    
+                        return $this->redirectToRoute('recipe_show', [
+                        'slug' => $recipe->getSlug(),
+                    ]);
+                    }
                 }
             }
             
@@ -317,10 +325,16 @@ class RecipeController extends AbstractController
             }
         }
         
+
+
+
+
             return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
             'title' => $recipe->getName(),
             'commentForm' => $commentForm->createView(),
+            'formContainer' => $formContainer,
+           
         ]);
 
     }
