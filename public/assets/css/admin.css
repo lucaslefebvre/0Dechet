@@ -1,3 +1,43 @@
+html {
+    background-color: #f0f6e8;
+    
+}
+
 body {
+    background-image: url('../images/background.png')!important;
+    background-repeat: no-repeat!important;
+    background-position: center!important;
+    background-attachment: fixed!important;
+    height: 100vh;
+    background: 100vh;
+
+}
+
+.wrapper {
+    opacity: 0.8;
+}
+
+.main-sidebar {
     background-color: #b7cbad;
+}
+
+thead {
+    background-color: #f0f6e8!important;
+}
+
+.active {
+    font-weight: bold!important;
+    background-color: #f0f6e8!important;
+}
+
+.content {
+    background-color: #ffffff!important;
+}
+
+.action-edit {
+    color: #739377!important;
+}
+
+.action-delete {
+    color: #F1AF96!important;
 }

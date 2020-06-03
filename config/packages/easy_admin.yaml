@@ -14,10 +14,10 @@ easy_admin:
             - { entity: 'Rate', label: 'Note', icon: 'star' }
             - { entity: 'Comment', label: 'Commentaire', icon: 'file-text' }
             - { entity: 'User', label: 'Utilisateur', icon: 'user' }
-            - { label: 'Retour sur le site', url: '/', icon: 'leaf' }
+            - { label: 'Retour sur le site', route: 'main_home', icon: 'leaf' }
   user:
-        avatar_property_path: 'image'
-        # avatar_property_path: '%app.path.user_images%'
+        # avatar_property_path: 'image'
+        # base_path: '%app.path.user_images%/'
       
   list:
         max_results: 30
