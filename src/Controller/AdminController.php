@@ -12,7 +12,7 @@ class AdminController extends EasyAdminController
 {
     private function setUserPassword(User $user): void
     {
-        if ($user->getPassword()) {
+        if ($user->getPassword() !== null) {
             $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
         }
     }
