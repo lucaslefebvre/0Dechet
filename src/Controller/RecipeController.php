@@ -14,6 +14,7 @@ use App\Form\RecipeType;
 use App\Repository\CategoryRepository;
 use App\Repository\RecipeRepository;
 use App\Services\FileUploader;
+use App\Services\NumberToAlpha;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -174,14 +175,58 @@ class RecipeController extends AbstractController
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
   
-    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em): Response
+    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, NumberToAlpha $numToAlpha): Response
     {
         // Comment Form
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->handleRequest($request);
 
+
+        if ($this->getUser()) {
+            
+            $userCommentsForCurrentRecipe = [];
+            $currentUser = $this->getUser();
+            $currentUserComments = $currentUser->getComments();
+            foreach ($currentUserComments as $userComment) {
+                if ($userComment->getRecipe()->getId() == $recipe->getId()) {
+                    $userCommentsForCurrentRecipe[] = $userComment;
+                }
+            }
+            // dump($userCommentsForCurrentRecipe);
+            $formContainer = [];
+            foreach ($userCommentsForCurrentRecipe as $modifiableComment) {
+    
+                $var = $numToAlpha->toAlpha($modifiableComment->getId());
+                $$var = $modifiableComment;
+    
+                $formVar = $numToAlpha->toAlpha($modifiableComment->getId()).'form';
+                
+                $$formVar = $this->createForm(CommentType::class, $$var);
+                $$formVar->handleRequest($request);
+    
+                // dump($var);
+                // dump(${$var});
+                // dump($j);
+                // dump($formVar);
+                $formContainer[$formVar] = $$formVar;
+            }
+            // dump($jform);
+            //dump($formContainer);
+        }
+        
+
+
         if ($_POST) {
+
+            if ($formContainer) {
+                
+                foreach ($formContainer as $formVar => $$formVar) {
+                    
+                    //TODO
+                }
+            }
+            
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
                 // Recipe linked to the comment
                 $comment->setRecipe($recipe);
