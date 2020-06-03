@@ -17,7 +17,8 @@
       <div class="row justify-content-between px-3 ml-md-2 mr-md-1 main-title">
         <h2>Résultats de la recherche</h2>
         <form class="main-sort" method="get">
-          <select class="main-sort-select" name="tri" onChange="document.location.href=this.form.submit();">
+        <input type="hidden" name="search" value="{{ app.request.query.get('search') }}">
+          <select class="main-sort-select" name="tri" onChange="this.form.submit();">
             <option value="">Trier par</option>
             <option value="rate" {{ app.request.query.get('tri') == "rate" ? "selected" }}>Meilleures notes</option>
             <option value="date" {{ app.request.query.get('tri') == "date" ? "selected" }}>Plus récentes</option>
