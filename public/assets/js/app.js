@@ -8,7 +8,11 @@ let app = {
         let newCurrentUrl = currentUrl.replace(/\/$/, "");
 
         // We get the slug behind the last / in the new current Url
-        slugUrl = newCurrentUrl.substring (newCurrentUrl.lastIndexOf( "/" )+1);
+        if (newCurrentUrl.indexOf( "?" ) == -1) {
+            slugUrl = newCurrentUrl.substring(newCurrentUrl.lastIndexOf( "/" )+1);
+        } else {
+            slugUrl = newCurrentUrl.substring(newCurrentUrl.lastIndexOf( "/" )+1, newCurrentUrl.indexOf( "?" ));
+        }
 
         // If the length of the node list is different of 0 we can lunch the method to have the filter on the left menu 
         // or the selector is not find in the DOM
