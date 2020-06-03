@@ -6,16 +6,25 @@ easy_admin:
           css:
             - 'assets/css/admin.css'
           favicon: '/assets/images/logo-mobile.png'
+        menu:
+            - { entity: 'Category', label: 'Catégorie' }
+            - { entity: 'SubCategory', label: 'Sous-catégorie', icon: 'list' }
+            - { entity: 'Type', label: 'Type', icon: 'list-ol' }
+            - { entity: 'Recipe', label: 'Recette', icon: 'file-image' }
+            - { entity: 'Rate', label: 'Note', icon: 'star' }
+            - { entity: 'Comment', label: 'Commentaire', icon: 'file-text' }
+            - { entity: 'User', label: 'Utilisateur', icon: 'user' }
+            - { label: 'Retour sur le site', url: '/', icon: 'leaf' }
   user:
+        avatar_property_path: 'image'
         # avatar_property_path: '%app.path.user_images%'
-        # avatar_uri_path: '%app.path.user_images%'
- 
+      
   list:
         max_results: 30
   entities:
     Category:
             class: App\Entity\Category
-            label: 'Catégorie'
+            label: 'Catégories'
             list:
                 fields:
                     - 'id'
@@ -28,7 +37,7 @@ easy_admin:
                     - { property: 'name', label: 'Nom de la catégorie', type_options: { required: true } }
     SubCategory:
             class: App\Entity\SubCategory
-            label: 'Sous-catégorie'
+            label: 'Sous-catégories'
             list:
                 fields: 
                     - 'id'
@@ -43,7 +52,7 @@ easy_admin:
                     - { property: 'category', label: 'Catégorie' }
     Type:
             class: App\Entity\Type
-            label: 'Type'
+            label: 'Types'
             list:
                 fields: 
                     - 'id'
@@ -59,7 +68,7 @@ easy_admin:
     Recipe:
             class: App\Entity\Recipe
             image_base_path: '/assets/images/'
-            label: 'Recette'
+            label: 'Recettes'
             list:
                 fields: 
                     - 'id'
@@ -92,7 +101,7 @@ easy_admin:
                 title: 'Modifier une recette'
     Rate:
             class: App\Entity\Rate
-            label: 'Note'
+            label: 'Notes'
             list:
                 fields: 
                     - 'id'
@@ -106,7 +115,7 @@ easy_admin:
                     - { property: 'user', label: 'Utilisateur' }
     Comment:
             class: App\Entity\Comment
-            label: 'Commentaire'
+            label: 'Commentaires'
             list:
               fields: 
                   - 'id'
@@ -124,7 +133,8 @@ easy_admin:
                   - { property: 'status', label: 'Status' }
     User:
             class: App\Entity\User
-            label: 'Utilisateur'
+            label: 'Utilisateurs'
+            icon: 'user'
             list:
               fields: 
                   - 'id'
