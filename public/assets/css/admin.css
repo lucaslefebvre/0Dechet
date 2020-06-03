@@ -1,3 +1,9 @@
+:root {
+    --body-max-width: 100%;
+    --font-size-base: 0.8rem;
+    --border-radius: 10px;
+}
+
 html {
     background-color: #f0f6e8;
     
@@ -13,16 +19,33 @@ body {
 
 }
 
+.user-name {
+    color: #739377!important;
+}
+
+.association > a {
+    color: #739377!important;
+}
+
 .wrapper {
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .main-sidebar {
     background-color: #b7cbad;
+    border-radius: 10px;
+}
+
+.sidebar {
+    margin: 10px;
 }
 
 thead {
     background-color: #f0f6e8!important;
+}
+
+.badge {
+    background-color: #f0f6e8;
 }
 
 .active {
