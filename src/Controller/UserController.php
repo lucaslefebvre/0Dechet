@@ -9,10 +9,14 @@ use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 
 class UserController extends AbstractController
@@ -33,7 +37,7 @@ class UserController extends AbstractController
      * Method to create a new account on the website
      * @Route("/inscription", name="user_add", methods={"GET","POST"})
      */
-    public function add(Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
+    public function add(Request $request, MailerInterface $mailer, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('main_home');
@@ -62,9 +66,21 @@ class UserController extends AbstractController
                 $em->persist($user);
                 $em->flush();
 
+                // We create a request for send a email of confirmation
+                $email = (new TemplatedEmail())
+                        ->from('equipe0dechet@gmail.com')
+                        ->to($user->getEmail())
+                        ->subject('Bienvenue sur 0dechet')
+                        ->htmlTemplate('email/user/add.html.twig')
+                        ->context([
+                            'username' => $user->getUsername(),
+                        ]);
+                
+                $mailer->send($email);
+
                 $this->addFlash(
                     'success',
-                    'Votre compte a été créé. Vous pouvez dès à présent vous y connecter pour ajouter des recettes et des commentaires.'
+                    'Votre compte a été créé, un email de confirmation a été envoyé sur votre boîte mail. Vous pouvez dès à présent vous y connecter pour ajouter des recettes et des commentaires.'
                 );
 
                 return $this->redirectToRoute('main_home');
@@ -81,7 +97,7 @@ class UserController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/profil/edition/{username}", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
+    public function edit(User $user, Request $request, MailerInterface $mailer, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('EDIT', $user);
         $imageUser = $user->getImage();
@@ -92,26 +108,43 @@ class UserController extends AbstractController
 
             if ($userForm->isSubmitted()) {
                 $em = $this->getDoctrine()->getManager();
-
-
-                if ($userForm->isValid()) {
               
+                if ($userForm->isValid()){
                     $userPassword = $userForm->get('password')->getData();
                     // We modify the password only if the user modified it
                     if ($userPassword !== null) {
                         $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
                     }
 
+                    if ($user->getImage() === null){
+                        $user->setImage($imageUser);
+                    }
+                  
                     // We use a Services to move and rename the file
                     $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
                     $user->setImage($newName);
 
                     $em->flush();
 
-                    $this->addFlash(
-                        'success',
-                        'Votre compte a bien été modifié.'
-                    );
+
+                // We create a request for send a email of confirmation
+
+                $email = (new TemplatedEmail())
+                ->from('equipe0dechet@gmail.com')
+                ->to($user->getEmail())
+                ->subject('Modification de votre profil 0dechet')
+                ->htmlTemplate('email/user/edit.html.twig')
+                ->context([
+                            'username' => $user->getUsername(),
+                        ]);
+                
+        
+                $mailer->send($email);
+
+                $this->addFlash(
+                    'success',
+                    'Votre compte a bien été modifié, un email de confirmation a été envoyé.'
+                );
 
                     return $this->redirectToRoute('user_read', [
                         'username' => $user->getUsername(),
@@ -139,7 +172,7 @@ class UserController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/profil/suppression/{username}", name="user_delete", methods={"DELETE"})
      */
-    public function delete(EntityManagerInterface $em, Request $request, User $user)
+    public function delete(EntityManagerInterface $em, MailerInterface $mailer, Request $request, User $user)
     {
         
         $this->denyAccessUnlessGranted('DELETE', $user);
@@ -161,6 +194,19 @@ class UserController extends AbstractController
             $em->remove($user);
             $em->flush();
 
+            // We create a request for send a email of confirmation
+
+            $email = (new TemplatedEmail())
+            ->from('equipe0dechet@gmail.com')
+            ->to($user->getEmail())
+            ->subject('Confirmation de suppression de votre compte 0dechet')
+            ->htmlTemplate('email/user/delete.html.twig')
+            ->context([
+                        'username' => $user->getUsername(),
+                    ]);
+    
+            $mailer->send($email);
+
             $this->addFlash(
                 'success',
                 'Votre compte a bien été supprimé.'
@@ -173,4 +219,5 @@ class UserController extends AbstractController
             'username' => $user->getUsername(),
         ]);
     }
+
 }
