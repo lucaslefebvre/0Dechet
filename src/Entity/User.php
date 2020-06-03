@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -75,12 +76,18 @@ class User implements UserInterface
      */
     private $rates;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Favorite::class, mappedBy="users")
+     */
+    private $favorites;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->rates = new ArrayCollection();
         $this->createdAt = new \DateTime();
+        $this->favorites = new ArrayCollection();
     }
 
     public function __toString()
@@ -294,6 +301,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($rate->getUser() === $this) {
                 $rate->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Favorite[]
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Favorite $favorite): self
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites[] = $favorite;
+            $favorite->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Favorite $favorite): self
+    {
+        if ($this->favorites->contains($favorite)) {
+            $this->favorites->removeElement($favorite);
+            // set the owning side to null (unless already changed)
+            if ($favorite->getUsers() === $this) {
+                $favorite->setUsers(null);
             }
         }
 
