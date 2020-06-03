@@ -97,6 +97,7 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('EDIT', $user);
         $imageUser = $user->getImage();
+        dump($user);
 
         $userForm = $this->createForm(CreateAccountType::class, $user);
 
@@ -109,13 +110,15 @@ class UserController extends AbstractController
                 if ($userPassword !== null) {
                     $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
                 }
-                if ($user->getImage() === null){
-                    $user->setImage($imageUser);
-                }
 
                 // We use a Services to move and rename the file
                 $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
                 $user->setImage($newName);
+
+                if ($user->getImage() === null){
+                    $user->setImage($imageUser);
+                }
+
 
                 $em = $this->getDoctrine()->getManager();
 
