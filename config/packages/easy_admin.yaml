@@ -1,5 +1,5 @@
 easy_admin:
-  site_name: '<img src="/assets/images/logo.png" style="height: 80px" alt="0déchet">'
+  site_name: '<a href="/"><img src="/assets/images/logo.png" style="height: 80px" alt="0déchet"></a>'
   design:
         brand_color: '#739377'
         assets:
@@ -173,7 +173,7 @@ easy_admin:
               fields: 
                   - { property: 'username', label: "Nom d'utilisateur", type_options: { required: true } }
                   - { property: 'email', label: 'Email', type: 'email', type_options: { required: true } }
-                  - { property: 'password', type: 'repeated', type_options: { required: false, first_options: { label: 'Mot de passe' }, second_options: { label: 'Retaper le mot de passe' } } }
+                  - { property: 'password', type: 'repeated', type_options: { type: password, required: false, first_options: { label: 'Mot de passe' }, second_options: { label: 'Retaper le mot de passe' } } }
                   - { property: 'imageFile', type: 'vich_image', label: 'Ajouter une photo de profil' }
                   - { property: 'recipes', label: 'Recette ajouté' }
                   - { property: 'comments', label: 'Commentaire lié' }

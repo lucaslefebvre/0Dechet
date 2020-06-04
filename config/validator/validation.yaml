@@ -1,0 +1,57 @@
+App\Entity\Category:
+    properties:
+        name:
+            - NotBlank: ~
+App\Entity\SubCategory:
+    properties:
+        name:
+            - NotBlank: ~
+App\Entity\Type:
+    properties:
+        name:
+            - NotBlank: ~
+App\Entity\Recipe:
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                min: 5
+                max: 35
+                minMessage: 'Le nom de la recette doit contenir au moins 5 caractères'
+                maxMessage: 'Le nom de la recette ne doit pas contenir plus de 35 caractères'
+        content:
+            - NotBlank: ~
+            - Length:
+                min: 30
+                minMessage: 'La recette doit contenir au moins 30 caractères'
+        duration:
+            - Positive: ~
+App\Entity\User:
+    properties:
+        username:
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
+            - Regex:
+                pattern: "/^[a-zA-Z0-9-_]*$/"
+                match: true
+                message: "Le nom d'utilisateur ne peut pas contenir d'espace ni de caractères spéciaux exceptés '-' et '_'"
+        email:
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
+            - Email: 
+                message: "L'email n'est pas valide"
+        password:
+            # - Regex:
+            #     pattern: "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/"
+            #     message: "Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle, une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !"
+            - NotBlank: 
+                normalizer: 'trim'
+                message: 'Ce champ ne doit pas être vide'
+App\Entity\Comment:
+    properties:
+        title:
+            - NotBlank:
+                message: 'Ce champ ne doit pas être vide'
+        content:
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
