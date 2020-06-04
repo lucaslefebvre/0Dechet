@@ -6,9 +6,12 @@ use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=RecipeRepository::class)
+ * @Vich\Uploadable
  */
 class Recipe
 {
@@ -58,6 +61,11 @@ class Recipe
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
+
+     /**
+     * @Vich\UploadableField(mapping="recipe_images", fileNameProperty="image")
+     */
+    private $imageFile;
 
     /**
      * @ORM\Column(type="boolean", options={"default":1}))
@@ -218,6 +226,20 @@ class Recipe
         $this->image = $image;
 
         return $this;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 
     public function getStatus(): ?bool
