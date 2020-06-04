@@ -851,3 +851,25 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     border: 2px solid #617e64; 
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
+
+/* Error 403/404 */
+
+.message-error, .title-error {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.message-error {
+    color: #739377;
+}
+
+.title-error {
+    color: #F1AF96;
+    font-weight: 700;
+}
+
+@media only screen and (min-width: 992px) {
+    .message-error, .title-error {
+        font-size: 3rem;
+    }
+}
