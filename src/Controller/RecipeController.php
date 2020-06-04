@@ -137,7 +137,7 @@ class RecipeController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * Method to edit an existing recipe. Send a form, receive the response and flush to the Database
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/edition/{slug}", name="edit", methods={"GET","POST"})
@@ -149,7 +149,6 @@ class RecipeController extends AbstractController
         $image = $recipe->getImage();
         
         $form = $this->createForm(RecipeType::class, $recipe);
-        
         $form->handleRequest($request);
 
 
@@ -187,7 +186,7 @@ class RecipeController extends AbstractController
 
             return $this->redirectToRoute('recipe_show', [
                 'slug' => $recipe->getSlug(),
-                ]);
+            ]);
         }
 
         $formDelete = $this->createForm(DeleteType::class, null, [
