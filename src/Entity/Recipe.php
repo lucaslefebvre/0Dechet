@@ -115,6 +115,11 @@ class Recipe
      */
     private $averageRate;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $video;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -384,6 +389,18 @@ class Recipe
     public function setAverageRate(?float $averageRate): self
     {
         $this->averageRate = $averageRate;
+
+        return $this;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(?string $video): self
+    {
+        $this->video = $video;
 
         return $this;
     }
