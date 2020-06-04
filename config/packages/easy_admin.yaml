@@ -1,5 +1,5 @@
 easy_admin:
-  site_name: '<img src="/assets/images/logo.png" style="height: 80px" alt="0déchet"'
+  site_name: '<img src="/assets/images/logo.png" style="height: 80px" alt="0déchet">'
   design:
         brand_color: '#739377'
         assets:
