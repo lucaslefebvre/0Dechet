@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialiser votre mot de passe{% endblock %}
+
+{% block body %}
+<main class="container">
+  <div class="row justify-content-center px-3 mt-5">
+    <p>Un email pour modifier votre mot de passe a été envoyé. Le lien expire dans {{ tokenLifetime|date('g') }} heures.</p>
+    <p>Si vous n'avez pas reçu d'email, merci de vérifier dans vos email indésirables ou <a href="{{ path('app_forgot_password_request') }}">cliquez ici pour renvoyer le mail</a>.</p>
+  </div>
+</main>
+
+
+{% endblock %}

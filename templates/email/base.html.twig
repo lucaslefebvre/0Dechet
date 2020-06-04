@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+    {% apply inline_css(source('@css/email.css')) %}
+    <body>
+        <header class="sticky-top">
+        <nav class="navbar">
+            <a class="navbar-brand" href="{{ path('main_home') }}">
+                <img src="{{ email.image('@images/logo.png') }}" height="80px" alt="logo" loading="lazy" class="d-none d-sm-block">
+            </a>
+        </nav>
+        </header>
+
+        {% block body %}
+        
+        
+        {% endblock %}
+
+        {% block footer %}
+        <footer>
+            <p>Tous droits réservés © 2020 0'Déchet</p>
+        </footer>
+        {% endblock %}
+    {% endapply %}
+    </body>
+</html>

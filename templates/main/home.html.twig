@@ -2,16 +2,17 @@
 
 {% block body %}
 
+    <main class="container">
+
     {% for message in app.flashes('success') %}
-    <div class="flash-notice">
-        <div class="alert alert-dismissible alert-success">
+    <div class="flash-notice my-3">
+        <div class="alert alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <p class="mb-0">{{message}}</p>
         </div>
     </div>
     {% endfor %}
 
-    <main class="container">
       <div class="row justify-content-center">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="col-12 col-md-8 px-4 py-3 mt-md-2 banner-top">
@@ -27,23 +28,240 @@
         {% endif %}
       </div>
 
-      <div class="row justify-content-center best-recipes">
-        <div class="col-12 pt-3 main-title">
-          <h2>Les recettes les mieux notées</h2>
-        </div>
-      {% for recipe in bestRecipes %}
-        {{ include('partials/card.html.twig') }}
-      {% endfor %}
+      <div class="row pt-3 px-3 main-title">
+        <h2>Les recettes les mieux notées</h2>
       </div>
 
-      <div class="row justify-content-center last-recipes mb-5">
-        <div class="col-12 pt-3 main-title">
-          <h2>Les dernières recettes</h2>
+      <!--MOBILE-->
+      <!--Carousel Wrapper-->
+      <div id="carousel-best-recipes-mobile" class="carousel slide carousel-multi-item d-block d-md-none" data-ride="carousel">
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+          <!--First slide-->
+          <div class="carousel-item active">
+            <div class="row justify-content-center best-recipe">
+            {% for recipe in bestRecipes|slice(0,1) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.First slide-->
+          <!--Other slides-->
+          {% for recipe in bestRecipes|slice(1) %}
+          <div class="carousel-item">
+            <div class="row justify-content-center best-recipe">
+              {{ include('partials/card.html.twig') }}
+            </div>
+          </div>
+          {% endfor %}
+          <!--/.Other slides-->
         </div>
-        {% for recipe in latestRecipes %}
-          {{ include('partials/card.html.twig') }}
-        {% endfor %}
+        <!--/.Slides-->
+        <!--Controls-->
+        <div class="controls-top row justify-content-center">
+          <a class="btn-floating" href="#carousel-best-recipes-mobile" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+          <a class="btn-floating" href="#carousel-best-recipes-mobile" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+        </div>
+        <!--/.Controls-->
+      <!--/.Carousel Wrapper-->
       </div>
+      <!--/.MOBILE-->
+
+      <!--MEDIUM SCREEN-->
+      <!--Carousel Wrapper-->
+      <div id="carousel-best-recipes-medium" class="carousel slide carousel-multi-item d-none d-md-block d-lg-none" data-ride="carousel">
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+          <!--First slide-->
+          <div class="carousel-item active">
+            <div class="row justify-content-center best-recipe">
+            {% for recipe in bestRecipes|slice(0,2) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.First slide-->
+          <!--Second slide-->
+          <div class="carousel-item">
+            <div class="row justify-content-center best-recipe">
+            {% for recipe in bestRecipes|slice(2,2) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.Second slide-->
+          <!--Second slide-->
+          <div class="carousel-item">
+            <div class="row justify-content-center best-recipe">
+            {% for recipe in bestRecipes|slice(4,2) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.Second slide-->
+        </div>
+        <!--/.Slides-->
+        <!--Controls-->
+        <div class="controls-top row justify-content-center">
+          <a class="btn-floating" href="#carousel-best-recipes-medium" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+          <a class="btn-floating" href="#carousel-best-recipes-medium" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+        </div>
+        <!--/.Controls-->
+      <!--/.Carousel Wrapper-->
+      </div>
+      <!--/.MEDIUM SCREEN-->
+
+      <!--LARGE SCREEN-->
+      <!--Carousel Wrapper-->
+      <div id="carousel-best-recipes-large" class="carousel slide carousel-multi-item d-none d-lg-block" data-ride="carousel">
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+          <!--First slide-->
+          <div class="carousel-item active">
+            <div class="row justify-content-center best-recipe">
+            {% for recipe in bestRecipes|slice(0,3) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.First slide-->
+          <!--Second slide-->
+          <div class="carousel-item">
+            <div class="row justify-content-center best-recipe">
+            {% for recipe in bestRecipes|slice(3,3) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.Second slide-->
+        </div>
+        <!--/.Slides-->
+        <!--Controls-->
+        <div class="controls-top row justify-content-center">
+          <a class="btn-floating" href="#carousel-best-recipes-large" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+          <a class="btn-floating" href="#carousel-best-recipes-large" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+        </div>
+        <!--/.Controls-->
+      <!--/.Carousel Wrapper-->
+      </div>
+      <!--/.LARGE SCREEN-->
+
+      <div class="row pt-3 px-3 main-title">
+        <h2>Les dernières recettes</h2>
+      </div>
+      <!--MOBILE-->
+      <!--Carousel Wrapper-->
+      <div id="carousel-latest-recipes-mobile" class="carousel slide carousel-multi-item d-block d-md-none" data-ride="carousel">
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+          <!--First slide-->
+          <div class="carousel-item active">
+            <div class="row justify-content-center latest-recipe">
+            {% for recipe in latestRecipes|slice(0,1) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.First slide-->
+          <!--Other slides-->
+          {% for recipe in latestRecipes|slice(1) %}
+          <div class="carousel-item">
+            <div class="row justify-content-center latest-recipe">
+              {{ include('partials/card.html.twig') }}
+            </div>
+          </div>
+          {% endfor %}
+          <!--/.Other slides-->
+        </div>
+        <!--/.Slides-->
+        <!--Controls-->
+        <div class="controls-top row justify-content-center">
+          <a class="btn-floating" href="#carousel-latest-recipes-mobile" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+          <a class="btn-floating" href="#carousel-latest-recipes-mobile" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+        </div>
+        <!--/.Controls-->
+      <!--/.Carousel Wrapper-->
+      </div>
+      <!--/.MOBILE-->
+
+      <!--MEDIUM SCREEN-->
+      <!--Carousel Wrapper-->
+      <div id="carousel-latest-recipes-medium" class="carousel slide carousel-multi-item d-none d-md-block d-lg-none" data-ride="carousel">
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+          <!--First slide-->
+          <div class="carousel-item active">
+            <div class="row justify-content-center latest-recipe">
+            {% for recipe in latestRecipes|slice(0,2) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.First slide-->
+          <!--Second slide-->
+          <div class="carousel-item">
+            <div class="row justify-content-center latest-recipe">
+            {% for recipe in latestRecipes|slice(2,2) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.Second slide-->
+          <!--Second slide-->
+          <div class="carousel-item">
+            <div class="row justify-content-center latest-recipe">
+            {% for recipe in latestRecipes|slice(4,2) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.Second slide-->
+        </div>
+        <!--/.Slides-->
+        <!--Controls-->
+        <div class="controls-top row justify-content-center">
+          <a class="btn-floating" href="#carousel-latest-recipes-medium" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+          <a class="btn-floating" href="#carousel-latest-recipes-medium" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+        </div>
+        <!--/.Controls-->
+      <!--/.Carousel Wrapper-->
+      </div>
+      <!--/.MEDIUM SCREEN-->
+
+      <!--LARGE SCREEN-->
+      <!--Carousel Wrapper-->
+      <div id="carousel-latest-recipes-large" class="carousel slide carousel-multi-item d-none d-lg-block" data-ride="carousel">
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+          <!--First slide-->
+          <div class="carousel-item active">
+            <div class="row justify-content-center latest-recipe">
+            {% for recipe in latestRecipes|slice(0,3) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.First slide-->
+          <!--Second slide-->
+          <div class="carousel-item">
+            <div class="row justify-content-center latest-recipe">
+            {% for recipe in latestRecipes|slice(3,3) %}
+              {{ include('partials/card.html.twig') }}
+            {% endfor %}
+            </div>
+          </div>
+          <!--/.Second slide-->
+        </div>
+        <!--/.Slides-->
+        <!--Controls-->
+        <div class="controls-top row justify-content-center">
+          <a class="btn-floating" href="#carousel-latest-recipes-large" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
+          <a class="btn-floating" href="#carousel-latest-recipes-large" data-slide="next"><i class="fa fa-chevron-right"></i></a>
+        </div>
+        <!--/.Controls-->
+      <!--/.Carousel Wrapper-->
+      </div>
+      <!--/.LARGE SCREEN-->
     </main>
 
 {% endblock %}

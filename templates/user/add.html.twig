@@ -2,11 +2,14 @@
 
 {% block body %}
 <main class="container">
-  <div class="row justify-content-center">
-    <div class="col-12 pt-3 main-title">
+  <div class="row px-3 pt-3 main-title">
     <h2>Inscription</h2>
-    </div>
-  {{ include('user/_form.html.twig') }}
-  <div>
+  </div>
+  <div class="row px-3 justify-content-center">
+    {{ include('user/_form.html.twig') }}
+  </div>
+  <div class="row mt-4">
+    <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
+  </div>
 </main>
 {% endblock %}

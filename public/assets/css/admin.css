@@ -1,0 +1,74 @@
+:root {
+    --body-max-width: 100%;
+    --font-size-base: 0.8rem;
+    --border-radius: 10px;
+}
+
+html {
+    background-color: #f0f6e8;
+    
+}
+
+body {
+    background-image: url('../images/background.png')!important;
+    background-repeat: no-repeat!important;
+    background-position: center!important;
+    background-attachment: fixed!important;
+    height: 100vh;
+    background: 100vh;
+
+}
+
+.user-name {
+    color: #739377!important;
+}
+
+.association > a {
+    color: #739377!important;
+}
+
+.wrapper {
+    opacity: 0.95;
+}
+
+.main-sidebar {
+    background-color: #b7cbad;
+    border-radius: 10px;
+}
+
+.sidebar {
+    margin: 10px;
+}
+
+thead {
+    background-color: #f0f6e8!important;
+}
+
+.badge-secondary {
+    background-color: #f0f6e8;
+}
+
+.active {
+    font-weight: bold!important;
+    background-color: #f0f6e8!important;
+}
+
+.content {
+    background-color: #ffffff!important;
+}
+
+.action-edit {
+    color: #739377!important;
+}
+
+.action-delete {
+    color: #F1AF96!important;
+}
+
+.modal-backdrop {
+    display: none;
+}
+
+.user-action {
+    color: #739377!important;
+}

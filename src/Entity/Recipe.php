@@ -6,9 +6,12 @@ use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=RecipeRepository::class)
+ * @Vich\Uploadable
  */
 class Recipe
 {
@@ -59,6 +62,11 @@ class Recipe
      */
     private $image;
 
+     /**
+     * @Vich\UploadableField(mapping="recipe_images", fileNameProperty="image")
+     */
+    private $imageFile;
+
     /**
      * @ORM\Column(type="boolean", options={"default":1}))
      */
@@ -87,6 +95,7 @@ class Recipe
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="recipe", orphanRemoval=true)
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;
 
@@ -106,10 +115,16 @@ class Recipe
      */
     private $averageRate;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $video;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->rates = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function __toString()
@@ -216,6 +231,20 @@ class Recipe
         $this->image = $image;
 
         return $this;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
     }
 
     public function getStatus(): ?bool
@@ -360,6 +389,18 @@ class Recipe
     public function setAverageRate(?float $averageRate): self
     {
         $this->averageRate = $averageRate;
+
+        return $this;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(?string $video): self
+    {
+        $this->video = $video;
 
         return $this;
     }

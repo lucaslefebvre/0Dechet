@@ -45,6 +45,7 @@ class Comment
     /**
      * @ORM\ManyToOne(targetEntity=Recipe::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $recipe;
 
@@ -53,6 +54,16 @@ class Comment
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 
     public function getId(): ?int
     {

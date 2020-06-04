@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -27,8 +28,14 @@ class CreateAccountType extends AbstractType
                     new NotBlank([
                         'message'=>'Ce champ ne doit pas être vide'
                     ]),
+                    new Regex([
+                        'pattern'=>"/^[a-zA-Z0-9-_]*$/",
+                        'match' => true,
+                        'message'=>'Le nom d\'utilisateur ne peut pas contenir d\'espace ni de caractères spéciaux exceptés \'-\' et \'_\''
+                    ]),
                 ],
             ])
+
             ->add('email', null,[
                 'label'=>'Email',
                 'constraints'=> [
@@ -58,8 +65,8 @@ class CreateAccountType extends AbstractType
                 'constraints'=> [
                     new NotBlank([
                     'allowNull'=>true,
-                    'normalizer'=>'trim',
-                    'message'=>'Ce champ ne doit pas être vide',
+                    // 'normalizer'=>'trim',
+                    // 'message'=>'Ce champ ne doit pas être vide',
                     ]),
                     /*new Regex([
                         'pattern'=>'/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/',
@@ -101,12 +108,12 @@ class CreateAccountType extends AbstractType
                             'label'=>'Retapez le mot de passe'
                         ],
                         'invalid_message' => 'Les deux mots de passe ne correspondent pas',
-                        'required'=>'true',
+                        'required'=> true,
                         'constraints'=> [
-                            new NotBlank([
-                            'normalizer'=>'trim',
-                            'message'=>'Ce champ ne doit pas être vide',
-                            ]),
+                            // new NotBlank([
+                            // 'normalizer'=>'trim',
+                            // 'message'=>'Ce champ ne doit pas être vide',
+                            // ]),
                             /*new Regex([
                                 'pattern'=>'/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/',
                                 'message' => 'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,

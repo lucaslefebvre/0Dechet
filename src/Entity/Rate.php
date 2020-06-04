@@ -30,13 +30,13 @@ class Rate
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="rates")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        //$this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int

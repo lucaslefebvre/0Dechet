@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    app.path.user_images: /assets/images/users
+    app.path.recipe_images: /assets/images/recipes
 
 services:
     # default configuration for services in *this* file
@@ -31,3 +33,18 @@ services:
             - 
                 name: 'doctrine.event_listener'
                 event: 'prePersist'
+
+    App\EventListener\SlugifyEvent:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    App\EventListener\TimeStampEvent:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    app.filter_response_listener:
+        class: App\EventListener\ResponseListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response }

@@ -3,16 +3,21 @@
 {% block body %}
 
 <main class="container">
+  <div class="row px-3 pt-3 main-title">
+    <h2>Mettre à jour son profil</h2>
+  </div>
+  <div class="row px-3 justify-content-center">
+    {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
+  </div>
   <div class="row justify-content-center">
-    <div class="col-12 pt-3 main-title">
-      <h2>Mettre à jour son profil</h2>
-    </div>
-  {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
-  <div>
-  
     {{ form_start(deleteForm) }}
-      {{ form_widget(deleteForm.deleteButton, {'attr': {'class': 'form-btn-delete'}}) }}
+      {{ form_widget(deleteForm.deleteButton, {'attr': {'class': 'form-btn-delete'}, 'label': "Supprimer mon profil"}) }}
     {{ form_end(deleteForm) }}
+  </div>
+  <div class="row mt-4">
+    <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
+  </div>
 </main>
+
 
 {% endblock %}

@@ -15,4 +15,6 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-/public/assets/users
+/public/assets/images/users
+/public/assets/images/recipes
+
