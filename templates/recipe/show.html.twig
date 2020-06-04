@@ -206,7 +206,13 @@
           {% for comment in recipe.comments %}
             {% if comment.status == true %}
               <div class="comment">
-              <p class="recipe-comment-title">{{ comment.title }}</p>
+                <div class="d-flex">
+                <p class="recipe-comment-title">{{ comment.title }}</p>
+                {% if comment.user == app.user %}
+                <a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn card-btn ml-3"><i class="fa fa-pencil-square fa-2x" aria-hidden="true"></i></a>
+                {# <a data-target="{{ path('comment_edit', {'id': comment.id}) }}" data-tooltip="voir" class="tooltipped modal-trigger btn right-align" href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a> #}
+                {% endif %}
+                </div>
               <p class="recipe-comment-user">par {{ comment.user }} le {{ comment.createdAt|date("d/m/Y") }}</p>
               <p class="recipe-comment-content">{{ comment.content |nl2br }}</p><hr>
               </div>
@@ -219,9 +225,13 @@
 {% endblock %}
 
 {% block javascript %}
-  <script type="text/javascript">
+<script type="text/javascript">
 let rating = document.querySelector('input:checked').value;
 $.post("{{ path('recipe_show') }}", {variable : rating},function data(reply){});
+</script>
+<script type="text/javascript">
+let modalBtn = document.querySelector('.modal-trigger');
+console.log(modalBtn)
 </script>
 {% endblock %}
 
