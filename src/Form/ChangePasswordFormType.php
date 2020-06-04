@@ -15,29 +15,32 @@ class ChangePasswordFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'first_options' => [
-                    'constraints' => [
-                        new NotBlank([
-                            'message' => 'Please enter a password',
-                        ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
-                        ]),
-                    ],
-                    'label' => 'New password',
+            // This is for set a new password
+            ->add('password', RepeatedType::class,[
+                'type'=>PasswordType::class,
+                'required'=>false,
+                'help'=>'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,
+                une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !',
+                'mapped'=>false,
+                'first_options'=>[
+                    'label'=>'Mot de passe',
                 ],
-                'second_options' => [
-                    'label' => 'Repeat Password',
+                'second_options'=>[
+                    'label'=>'Retaper le mot de passe',
                 ],
-                'invalid_message' => 'The password fields must match.',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
+                'invalid_message' => 'Les deux mots de passe ne correspondent pas',
+                'constraints'=> [
+                    new NotBlank([
+                    'allowNull'=>true,
+                    'normalizer'=>'trim',
+                    'message'=>'Ce champ ne doit pas être vide',
+                    ]),
+                    /*new Regex([
+                        'pattern'=>'/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/',
+                        'message' => 'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,
+                         une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !',
+                    ])*/
+                ],
             ])
         ;
     }
