@@ -13,6 +13,7 @@ use App\Form\DeleteType;
 use App\Form\RecipeType;
 use App\Repository\CategoryRepository;
 use App\Repository\RecipeRepository;
+use App\Services\EmbedVideo;
 use App\Services\FileUploader;
 use App\Services\NumberToAlpha;
 use Doctrine\ORM\EntityManagerInterface;
@@ -96,17 +97,20 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/ajout", name="add", methods={"GET","POST"})
      */
-    public function add(Request $request, MailerInterface $mailer, FileUploader $fileUploader)
+    public function add(Request $request, MailerInterface $mailer, FileUploader $fileUploader, EmbedVideo $embedVideo)
     {
-
         $recipe = new Recipe;
 
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //($form['video']->getData());
+
             $recipe->setStatus(1);
             $recipe->setUser($this->getUser());
+            $videoFrame = $embedVideo->videoPlayer($form['video']->getData());
+            $recipe->setVideo($videoFrame);
 
             // We use a Services to move and rename the file
             $newName = $fileUploader->saveFile($form['image'], 'assets/images/recipes');
@@ -151,15 +155,15 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/edition/{slug}", name="edit", methods={"GET","POST"})
      */
-    public function edit(Recipe $recipe, MailerInterface $mailer, Request $request, FileUploader $fileUploader)
+    public function edit(Recipe $recipe, MailerInterface $mailer, Request $request, FileUploader $fileUploader, EmbedVideo $embedVideo)
     {
         $this->denyAccessUnlessGranted('EDIT', $recipe);
 
         $image = $recipe->getImage();
+        $video = $recipe->getVideo();
         
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -169,6 +173,13 @@ class RecipeController extends AbstractController
             // If user don't edit the image we let the old image
             if ($recipe->getImage() === null){
                 $recipe->setImage($image);
+            }
+
+            $videoFrame = $embedVideo->videoPlayer($form['video']->getData());
+            $recipe->setVideo($videoFrame);
+
+            if ($recipe->getVideo() === null){
+                $recipe->setVideo($video);
             }
 
             $entityManager = $this->getDoctrine()->getManager();

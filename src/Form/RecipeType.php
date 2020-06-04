@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -97,6 +98,12 @@ class RecipeType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'attr' => ['placeholder' => 'Sélectionner votre fichier']
+            ])
+            ->add('video', UrlType::class, [
+                'label' => 'Vidéo',
+                'required' => false,
+                'mapped' => false,
+                'help' => 'Copier le lien où se situe votre vidéo'
             ])
 
             ->add('type', EntityType::class, [

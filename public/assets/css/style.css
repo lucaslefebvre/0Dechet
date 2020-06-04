@@ -711,6 +711,7 @@ ul.recipe-list li {
 
 /* FORMS */
 
+.recipe-form-label,
 .user-form-label,
 .user-form-input {
     margin-top: 2rem;
