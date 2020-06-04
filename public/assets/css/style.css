@@ -878,3 +878,32 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
         font-size: 3rem;
     }
 }
+
+/* PAGE CONTACT */
+
+.card-team {
+    background-color: #f0f6e8;
+    border: 0px solid #739377;
+    border-radius: 0.25rem;
+    min-width: 200px;
+    max-width: 200px;
+}
+
+.card-team-title {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.card-team-role {
+    color: #000000;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.card-team-img {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}

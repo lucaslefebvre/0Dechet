@@ -26,16 +26,17 @@ class RecipeType extends AbstractType
             [   
                 'label' => 'Nom de la recette',
                 'required' => true,
-                'constraints' => new Assert\NotBlank(),
-                'constraints' => [
-                new Assert\Length
-                ([
-                'min' => 5,
-                'max' => 35,
-                'minMessage' => 'Le nom de la recette doit contenir au moins 5 caractères',
-                'maxMessage' => 'Le nom de la recette ne doit pas contenir plus de 35 caractères',
-                ]),
-            ]])
+                // 'constraints' => new Assert\NotBlank(),
+                // 'constraints' => [
+                // new Assert\Length
+                // ([
+                // 'min' => 5,
+                // 'max' => 35,
+                // 'minMessage' => 'Le nom de la recette doit contenir au moins 5 caractères',
+                // 'maxMessage' => 'Le nom de la recette ne doit pas contenir plus de 35 caractères',
+                // ]),
+                // ]
+            ])
 
             ->add('ingredient', CollectionType::class, [
                 'required' => true,
@@ -54,16 +55,18 @@ class RecipeType extends AbstractType
             ->add('content', TextareaType::class, [
                 'required' => true,
                 'label' => 'Détail de la préparation',
-                'constraints' => [
-                new Assert\Length
-                ([
-                'min' => 30,
-                'minMessage' => 'La recette doit contenir au moins 30 caractères',
-                ])],
-            ])
+                // 'constraints' => [
+                // new Assert\Length
+                // ([
+                // 'min' => 30,
+                // 'minMessage' => 'La recette doit contenir au moins 30 caractères',
+                // ])],
+                ]
+            )
             ->add('duration', IntegerType::class, [
                 'required' => true,
                 'label' => 'Durée (en minutes)',
+                // 'constraints' => new Assert\Positive(),
             ])
             ->add('difficulty', ChoiceType::class, [
                 'label' => 'Difficulté',

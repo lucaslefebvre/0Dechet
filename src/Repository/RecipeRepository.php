@@ -20,6 +20,32 @@ class RecipeRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Recipe[] Returns an array of all the recipes objects
+     */
+    public function findAllRecipes($sortBy)
+    {
+        $qb =  $this->createQueryBuilder('r');
+        if ($sortBy == "rate") {
+            $qb
+            ->orderBy('r.averageRate', 'DESC')
+            ;
+        } else if ($sortBy == "difficultyDesc") {
+            $qb
+            ->orderBy('r.difficulty', 'DESC')
+            ;
+        } else if ($sortBy == "difficultyAsc") {
+            $qb
+            ->orderBy('r.difficulty', 'ASC')
+            ;
+        } else {
+            $qb
+            ->orderBy('r.createdAt', 'DESC')
+            ;
+        }
+            return $qb->getQuery()->getResult();
+    }
+
+    /**
      * @return Recipe[] Returns an array of the 3 best recipes objects order by the best average_rate
      */
     public function findBestRecipes()
@@ -46,7 +72,7 @@ class RecipeRepository extends ServiceEntityRepository
      * @param string|null $term
      * @return Recipe[] Returns an array of result for the term write in the search bar
      */
-    public function findAllWithSearch(?string $term)
+    public function findAllWithSearch(?string $term, $sortBy)
     {
         $qb = $this->createQueryBuilder('r');
         if ($term) {
@@ -57,18 +83,38 @@ class RecipeRepository extends ServiceEntityRepository
                 ->setParameter('term', '%' . $term . '%')
                 ;
         }
-        return $qb
-            ->orderBy('r.name', 'DESC')
+        if ($sortBy == "rate") {
+            return $qb
+            ->orderBy('r.averageRate', 'DESC')
             ->getQuery()
             ->getResult()
-        ;
+            ;
+        } else if ($sortBy == "difficultyDesc") {
+            return $qb
+            ->orderBy('r.difficulty', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else if ($sortBy == "difficultyAsc") {
+            return $qb
+            ->orderBy('r.difficulty', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else {
+            return $qb
+            ->orderBy('r.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+        }
     }
 
     /**
      * @param int|null $categoryId
      * @return Recipe[] Returns an array of result for the term write in the search bar
      */
-    public function findByCategory(?int $categoryId)
+    public function findByCategory(?int $categoryId, $sortBy)
     {
         $qb = $this->createQueryBuilder('r');
         if ($categoryId) {
@@ -81,18 +127,38 @@ class RecipeRepository extends ServiceEntityRepository
                 ->setParameter('categoryId', $categoryId)
                 ;
         }
-        return $qb
+        if ($sortBy == "rate") {
+            return $qb
+            ->orderBy('r.averageRate', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else if ($sortBy == "difficultyDesc") {
+            return $qb
+            ->orderBy('r.difficulty', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else if ($sortBy == "difficultyAsc") {
+            return $qb
+            ->orderBy('r.difficulty', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else {
+            return $qb
             ->orderBy('r.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
-        ;
+            ;
+        }
     }
 
     /**
      * @param int|null $subCategoryId
      * @return Recipe[] Returns an array of result for the term write in the search bar
      */
-    public function findBySubCategory(?int $subCategoryId)
+    public function findBySubCategory(?int $subCategoryId, $sortBy)
     {
         $qb = $this->createQueryBuilder('r');
         if ($subCategoryId) {
@@ -104,18 +170,38 @@ class RecipeRepository extends ServiceEntityRepository
                 ->setParameter('subCategoryId', $subCategoryId)
                 ;
         }
-        return $qb
+        if ($sortBy == "rate") {
+            return $qb
+            ->orderBy('r.averageRate', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else if ($sortBy == "difficultyDesc") {
+            return $qb
+            ->orderBy('r.difficulty', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else if ($sortBy == "difficultyAsc") {
+            return $qb
+            ->orderBy('r.difficulty', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else {
+            return $qb
             ->orderBy('r.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
-        ;
+            ;
+        }
     }
 
         /**
      * @param int|null $typeId
      * @return Recipe[] Returns an array of result for the term write in the search bar
      */
-    public function findByType (?int $typeId)
+    public function findByType (?int $typeId, $sortBy)
     {
         $qb = $this->createQueryBuilder('r');
         if ($typeId) {
@@ -126,10 +212,30 @@ class RecipeRepository extends ServiceEntityRepository
                 ->setParameter('typeId', $typeId)
                 ;
         }
-        return $qb
+        if ($sortBy == "rate") {
+            return $qb
+            ->orderBy('r.averageRate', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else if ($sortBy == "difficultyDesc") {
+            return $qb
+            ->orderBy('r.difficulty', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else if ($sortBy == "difficultyAsc") {
+            return $qb
+            ->orderBy('r.difficulty', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+        } else {
+            return $qb
             ->orderBy('r.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
-        ;
+            ;
+        }
     }
 }

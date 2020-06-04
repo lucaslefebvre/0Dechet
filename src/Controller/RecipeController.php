@@ -23,6 +23,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,11 +40,14 @@ class RecipeController extends AbstractController
      */
     public function browse(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        //We recuperate the data send in the url by the sorting form
+        $sortBy = $request->query->get('sortBy');
+
         $recipes = $paginator->paginate(  // add paginator
-            $recipeRepository->findAll(),   // query to display all the recipes
-            $request->query->getInt('page', 1), // number of the current page in the Url, if only one = 1
-            10,    // number of results in a page
-        ); 
+        $recipeRepository->findAllRecipes($sortBy),   // query to display all the recipes
+        $request->query->getInt('page', 1), // number of the current page in the Url, if only one = 1
+        10,    // number of results in a page
+        );
 
         // If number of pagination does not exist in URL we throw a 404
         if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
@@ -65,9 +70,13 @@ class RecipeController extends AbstractController
     {
         //We recuperate the data send in the url by the search form
         $q = $request->query->get('search');
+
+        //We recuperate the data send in the url by the sorting form
+        $sortBy = $request->query->get('sortBy');
+
         //Then put it in our customQuery
         $recipes = $paginator->paginate(   // add paginator
-                $recipeRepository->findAllWithSearch($q),  // query to display all the recipes of the search results
+                $recipeRepository->findAllWithSearch($q, $sortBy),  // query to display all the recipes of the search results
                 $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
                 10, // number of results in a page
         );
@@ -141,7 +150,7 @@ class RecipeController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * Method to edit an existing recipe. Send a form, receive the response and flush to the Database
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/edition/{slug}", name="edit", methods={"GET","POST"})
@@ -154,7 +163,6 @@ class RecipeController extends AbstractController
         $video = $recipe->getVideo();
         
         $form = $this->createForm(RecipeType::class, $recipe);
-        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -198,7 +206,7 @@ class RecipeController extends AbstractController
 
             return $this->redirectToRoute('recipe_show', [
                 'slug' => $recipe->getSlug(),
-                ]);
+            ]);
         }
 
         $formDelete = $this->createForm(DeleteType::class, null, [
@@ -218,8 +226,9 @@ class RecipeController extends AbstractController
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
   
-    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, NumberToAlpha $numToAlpha): Response
+    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, SessionInterface $session): Response
     {
+
         // Comment Form
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
@@ -287,9 +296,12 @@ class RecipeController extends AbstractController
      */
     public function browseByCategory(Category $category, PaginatorInterface $paginator, Request $request, RecipeRepository $recipeRepository)
     {
-        dump($recipeRepository->findByCategory($category->getId()));
+
+        //We recuperate the data send in the url by the sorting form
+        $sortBy = $request->query->get('sortBy');
+
         $recipes = $paginator->paginate(   // add paginator
-            $recipeRepository->findByCategory($category->getId()),   // query to display all the recipes by category
+            $recipeRepository->findByCategory($category->getId(), $sortBy),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
             10, // number of results in a page
         );
@@ -312,8 +324,11 @@ class RecipeController extends AbstractController
      */
     public function browseBySubCategory(SubCategory $subCategory, PaginatorInterface $paginator, Request $request, RecipeRepository $recipeRepository)
     {
+        //We recuperate the data send in the url by the sorting form
+        $sortBy = $request->query->get('sortBy');
+
         $recipes = $paginator->paginate(   // add paginator
-            $recipeRepository->findBySubCategory($subCategory->getId()),   // query to display all the recipes by category
+            $recipeRepository->findBySubCategory($subCategory->getId(), $sortBy),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
             10, // number of results in a page
         );
@@ -336,8 +351,11 @@ class RecipeController extends AbstractController
      */
     public function browseByType(Type $type, RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
     {
+        //We recuperate the data send in the url by the sorting form
+        $sortBy = $request->query->get('sortBy');
+
         $recipes = $paginator->paginate(   // add paginator
-            $recipeRepository->findByType($type->getId()),   // query to display all the recipes by category
+            $recipeRepository->findByType($type->getId(), $sortBy),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
             10, // number of results in a page
         );

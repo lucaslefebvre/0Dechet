@@ -23,4 +23,15 @@ class MainController extends AbstractController
             'title'=>'Accueil',
         ]);
     }
+
+    /**
+     * Method for the contact page
+     * @Route("/contact", name="contact")
+     */
+    public function contact()
+    {
+        return $this->render('main/contact.html.twig', [
+            'title'=>'Contact',
+        ]);
+    }
 }

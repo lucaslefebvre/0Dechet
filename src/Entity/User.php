@@ -80,12 +80,12 @@ class User implements UserInterface
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Rate::class, mappedBy="user")
      */
     private $rates;
 
     /**
-     * @ORM\OneToMany(targetEntity=Favorite::class, mappedBy="users")
+     * @ORM\OneToMany(targetEntity=Favorite::class, mappedBy="users", orphanRemoval=true)
      */
     private $favorites;
 
