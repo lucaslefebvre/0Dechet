@@ -24,6 +24,9 @@ App\Entity\Recipe:
             - Length:
                 min: 30
                 minMessage: 'La recette doit contenir au moins 30 caractères'
+        ingredient:
+            - NotBlank: 
+                  message: 'Ce champ ne doit pas être vide'
         duration:
             - Positive: ~
 App\Entity\User:
