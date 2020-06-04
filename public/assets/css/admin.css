@@ -28,7 +28,7 @@ body {
 }
 
 .wrapper {
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
 .main-sidebar {
@@ -44,7 +44,7 @@ thead {
     background-color: #f0f6e8!important;
 }
 
-.badge {
+.badge-secondary {
     background-color: #f0f6e8;
 }
 
@@ -63,4 +63,12 @@ thead {
 
 .action-delete {
     color: #F1AF96!important;
+}
+
+.modal-backdrop {
+    display: none;
+}
+
+.user-action {
+    color: #739377!important;
 }

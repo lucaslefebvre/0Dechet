@@ -18,18 +18,18 @@ class CommentType extends AbstractType
             ->add('title', TextType::class, [
                 'required'=>true,
                 'label' => 'Titre du commentaire',
-                'constraints'=> [
-                    new NotBlank([
-                    'message'=>'Ce champ ne doit pas être vide',
-                ])],
+                // 'constraints'=> [
+                //     new NotBlank([
+                //     'message'=>'Ce champ ne doit pas être vide',
+                // ])],
             ])
             ->add('content', TextareaType::class, [
                 'required'=>true,
                 'label' => 'Commentaire',
-                'constraints'=> [
-                    new NotBlank([
-                    'message'=>'Ce champ ne doit pas être vide',
-                ])],
+                // 'constraints'=> [
+                //     new NotBlank([
+                //     'message'=>'Ce champ ne doit pas être vide',
+                // ])],
             ])
         ;
     }
