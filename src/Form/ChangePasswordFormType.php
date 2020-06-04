@@ -16,7 +16,7 @@ class ChangePasswordFormType extends AbstractType
     {
         $builder
             // This is for set a new password
-            ->add('password', RepeatedType::class,[
+            ->add('plainPassword', RepeatedType::class,[
                 'type'=>PasswordType::class,
                 'required'=>false,
                 'help'=>'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,

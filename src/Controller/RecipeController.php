@@ -22,6 +22,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
@@ -213,8 +215,9 @@ class RecipeController extends AbstractController
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
   
-    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, NumberToAlpha $numToAlpha): Response
+    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, SessionInterface $session): Response
     {
+
         // Comment Form
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
