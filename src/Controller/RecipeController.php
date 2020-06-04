@@ -37,11 +37,14 @@ class RecipeController extends AbstractController
      */
     public function browse(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        //We recuperate the data send in the url by the sorting form
+        $sortBy = $request->query->get('sortBy');
+
         $recipes = $paginator->paginate(  // add paginator
-            $recipeRepository->findAll(),   // query to display all the recipes
-            $request->query->getInt('page', 1), // number of the current page in the Url, if only one = 1
-            10,    // number of results in a page
-        ); 
+        $recipeRepository->findAllRecipes($sortBy),   // query to display all the recipes
+        $request->query->getInt('page', 1), // number of the current page in the Url, if only one = 1
+        10,    // number of results in a page
+        );
 
         // If number of pagination does not exist in URL we throw a 404
         if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
@@ -64,9 +67,13 @@ class RecipeController extends AbstractController
     {
         //We recuperate the data send in the url by the search form
         $q = $request->query->get('search');
+
+        //We recuperate the data send in the url by the sorting form
+        $sortBy = $request->query->get('sortBy');
+
         //Then put it in our customQuery
         $recipes = $paginator->paginate(   // add paginator
-                $recipeRepository->findAllWithSearch($q),  // query to display all the recipes of the search results
+                $recipeRepository->findAllWithSearch($q, $sortBy),  // query to display all the recipes of the search results
                 $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
                 10, // number of results in a page
         );
@@ -276,9 +283,12 @@ class RecipeController extends AbstractController
      */
     public function browseByCategory(Category $category, PaginatorInterface $paginator, Request $request, RecipeRepository $recipeRepository)
     {
-        dump($recipeRepository->findByCategory($category->getId()));
+
+        //We recuperate the data send in the url by the sorting form
+        $sortBy = $request->query->get('sortBy');
+
         $recipes = $paginator->paginate(   // add paginator
-            $recipeRepository->findByCategory($category->getId()),   // query to display all the recipes by category
+            $recipeRepository->findByCategory($category->getId(), $sortBy),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
             10, // number of results in a page
         );
@@ -301,8 +311,11 @@ class RecipeController extends AbstractController
      */
     public function browseBySubCategory(SubCategory $subCategory, PaginatorInterface $paginator, Request $request, RecipeRepository $recipeRepository)
     {
+        //We recuperate the data send in the url by the sorting form
+        $sortBy = $request->query->get('sortBy');
+
         $recipes = $paginator->paginate(   // add paginator
-            $recipeRepository->findBySubCategory($subCategory->getId()),   // query to display all the recipes by category
+            $recipeRepository->findBySubCategory($subCategory->getId(), $sortBy),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
             10, // number of results in a page
         );
@@ -325,8 +338,11 @@ class RecipeController extends AbstractController
      */
     public function browseByType(Type $type, RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
     {
+        //We recuperate the data send in the url by the sorting form
+        $sortBy = $request->query->get('sortBy');
+
         $recipes = $paginator->paginate(   // add paginator
-            $recipeRepository->findByType($type->getId()),   // query to display all the recipes by category
+            $recipeRepository->findByType($type->getId(), $sortBy),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
             10, // number of results in a page
         );
