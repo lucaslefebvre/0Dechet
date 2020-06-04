@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<main class="container">
+  <div class="row mt-3 justify-content-center">
+    <p class="col-12 title-error">Erreur 403</p>
+    <p class="col-12 message-error">Oups, je n'ai pas les accès nécessaires...</p>
+    <img class="img-fluid" src="{{ asset('assets/images/403.png') }}"  alt="erreur 403">
+  </div>
+</main>
+{% endblock %}

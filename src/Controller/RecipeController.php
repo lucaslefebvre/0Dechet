@@ -8,21 +8,23 @@ use App\Entity\Rate;
 use App\Entity\Recipe;
 use App\Entity\SubCategory;
 use App\Entity\Type;
-use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\DeleteType;
 use App\Form\RecipeType;
+use App\Repository\CategoryRepository;
 use App\Repository\RecipeRepository;
-use App\Repository\UserRepository;
 use App\Services\FileUploader;
+use App\Services\NumberToAlpha;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
-use WhiteOctober\BreadcrumbsBundle\Model\BreadCrumbs;
 
 /**
 * @Route("/recette", name="recipe_")
@@ -38,19 +40,18 @@ class RecipeController extends AbstractController
         $recipes = $paginator->paginate(  // add paginator
             $recipeRepository->findAll(),   // query to display all the recipes
             $request->query->getInt('page', 1), // number of the current page in the Url, if only one = 1
-            15,    // number of results in a page
+            10,    // number of results in a page
         ); 
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/browse.html.twig', [
-            'recipes' => $recipes,
-            'title' => 'Toutes les recettes',
-        ]);
-          
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }    
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/browse.html.twig', [
+                'recipes' => $recipes,
+                'title' => 'Toutes les recettes',
+            ]);
+        }
       
     }
 
@@ -61,26 +62,24 @@ class RecipeController extends AbstractController
      */
     public function search(RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        
         //We recuperate the data send in the url by the search form
         $q = $request->query->get('search');
         //Then put it in our customQuery
         $recipes = $paginator->paginate(   // add paginator
                 $recipeRepository->findAllWithSearch($q),  // query to display all the recipes of the search results
                 $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
-                15, // number of results in a page
+                10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/search.html.twig', [
-            'recipes' => $recipes,
-            'title' => 'Résultat pour "'.$q .'"',
-        ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }    
-       
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/search.html.twig', [
+                'recipes' => $recipes,
+                'title' => 'Résultat pour "'.$q .'"',
+            ]);
+        }
     }
 
      /**
@@ -88,8 +87,9 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/ajout", name="add", methods={"GET","POST"})
      */
-    public function add(Request $request, FileUploader $fileUploader)
+    public function add(Request $request, MailerInterface $mailer, FileUploader $fileUploader)
     {
+
         $recipe = new Recipe;
 
         $form = $this->createForm(RecipeType::class, $recipe);
@@ -106,9 +106,23 @@ class RecipeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);
             $entityManager->flush();
+
+            // We create a templated email for confirmation 
+            $email = (new TemplatedEmail())
+            ->from('equipe0dechet@gmail.com')
+            ->to($recipe->getUser()->getEmail())
+            ->subject('Ajout de votre recette')
+            ->htmlTemplate('email/recipe/add.html.twig')
+            ->context([
+                'username' => $recipe->getUser()->getUsername(),
+                'name' => $recipe->getName(),
+            ]);
+    
+            $mailer->send($email);
+
             $this->addFlash(
                 'success',
-                'Votre recette a été ajoutée'
+                'Votre recette a été ajoutée, un mail de confirmation vous a été envoyé'
             );
 
             return $this->redirectToRoute('recipe_show', [
@@ -128,7 +142,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/edition/{slug}", name="edit", methods={"GET","POST"})
      */
-    public function edit(Recipe $recipe, Request $request, FileUploader $fileUploader)
+    public function edit(Recipe $recipe, MailerInterface $mailer, Request $request, FileUploader $fileUploader)
     {
         $this->denyAccessUnlessGranted('EDIT', $recipe);
 
@@ -151,6 +165,21 @@ class RecipeController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
+
+            // We create a templated email for confirmation 
+            $email = (new TemplatedEmail())
+            ->from('equipe0dechet@gmail.com')
+            ->to($recipe->getUser()->getEmail())
+            ->subject('Modification de votre recette')
+            ->htmlTemplate('email/recipe/edit.html.twig')
+            ->context([
+                'username' => $recipe->getUser()->getUsername(),
+                'name' => $recipe->getName(),
+            ]);
+
+            $mailer->send($email);
+
+
             $this->addFlash(
                 'success',
                 'Votre recette a été modifié'
@@ -178,7 +207,7 @@ class RecipeController extends AbstractController
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
   
-    public function show(Recipe $recipe, RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $em): Response
+    public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, NumberToAlpha $numToAlpha): Response
     {
         // Comment Form
         $comment = new Comment();
@@ -186,6 +215,7 @@ class RecipeController extends AbstractController
         $commentForm->handleRequest($request);
 
         if ($_POST) {
+
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
                 // Recipe linked to the comment
                 $comment->setRecipe($recipe);
@@ -209,7 +239,7 @@ class RecipeController extends AbstractController
                 ]);
             }
       
-            //Homemade RateForm
+            //Homemadeadmin/?entity=User&action=list&menuIndex=6&submenuIndex=-1 RateForm
             else {
                 $rate = new Rate();
                 $rating = $_POST['difficulty'];
@@ -244,53 +274,49 @@ class RecipeController extends AbstractController
      *  Method to display the recipes by Categories in the template category.html.twig from the directory recipe
      * @Route("/categorie/{slug}", name="browseByCategory")
      */
-    public function browseByCategory(Category $category, PaginatorInterface $paginator, Request $request)
+    public function browseByCategory(Category $category, PaginatorInterface $paginator, Request $request, RecipeRepository $recipeRepository)
     {
-        $categoryRepository = $this->getDoctrine()->getRepository(Category::class)->findBy([],['createdAt' => 'desc']);
-
+        dump($recipeRepository->findByCategory($category->getId()));
         $recipes = $paginator->paginate(   // add paginator
-            $categoryRepository,  // query to display all the recipes by category
+            $recipeRepository->findByCategory($category->getId()),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
-            15, // number of results in a page
+            10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
+            throw $this->createNotFoundException('Pas de recette'); 
+        } else {   // If number of pagination exist we return the view
             return $this->render('recipe/category.html.twig', [
                 'recipes' => $recipes,
                 'category' => $category,
                 'title' => $category->getName(),
-            ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
-            throw $this->createNotFoundException('Pas de recette'); 
-        }    
+                ]);
+        }
     }
           
      /**
      * Method to display the recipes by Sub Categories in the template subCategory.html.twig from the directory recipe
      * @Route("/sous-categorie/{slug}", name="browseBySubCategory")
      */
-    public function browseBySubCategory(SubCategory $subCategory, PaginatorInterface $paginator, Request $request)
+    public function browseBySubCategory(SubCategory $subCategory, PaginatorInterface $paginator, Request $request, RecipeRepository $recipeRepository)
     {
-        $subCategoryRepository = $this->getDoctrine()->getRepository(SubCategory::class)->findBy([],['createdAt' => 'desc']);
-
         $recipes = $paginator->paginate(   // add paginator
-            $subCategoryRepository,  // query to display all the recipes by subCategory
+            $recipeRepository->findBySubCategory($subCategory->getId()),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
-            15, // number of results in a page
+            10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/subCategory.html.twig', [
-            'recipes' => $recipes,
-            'subCategory' => $subCategory,
-            'title' => $subCategory->getName(),
-        ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }   
-        
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/subCategory.html.twig', [
+                'recipes' => $recipes,
+                'subCategory' => $subCategory,
+                'title' => $subCategory->getName(),
+                ]);
+        }
     }
 
     /**
@@ -299,27 +325,22 @@ class RecipeController extends AbstractController
      */
     public function browseByType(Type $type, RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request)
     {
-
-        $typeRepository = $this->getDoctrine()->getRepository(SubCategory::class)->findBy([],['createdAt' => 'desc']);
-
-
         $recipes = $paginator->paginate(   // add paginator
-            $typeRepository,  // query to display all the recipes by type
+            $recipeRepository->findByType($type->getId()),   // query to display all the recipes by category
             $request->query->getInt('page', 1),   // number of the current page in the Url, if only one = 1
-            15, // number of results in a page
+            10, // number of results in a page
         );
 
-        // If number of pagination exist we return the view
-        if (!empty($recipes->getItems())) {
-        return $this->render('recipe/type.html.twig', [
-            'recipes' => $recipes,
-            'type' => $type,
-            'title' => $type->getName(),
-        ]);
-        } else { // if number of pagination does not exist in URL we throw a 404
+        // If number of pagination does not exist in URL we throw a 404
+        if (empty($recipes->getItems()) && $recipes->getCurrentPageNumber() !== 1) {
             throw $this->createNotFoundException('Pas de recette'); 
-        }   
-            
+        } else {   // If number of pagination exist we return the view
+            return $this->render('recipe/type.html.twig', [
+                'recipes' => $recipes,
+                'type' => $type,
+                'title' => $type->getName(),
+                ]);
+        }
     }
 
     /**
@@ -327,7 +348,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/recipe/suppression/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
-    public function delete(EntityManagerInterface $em, Request $request, Recipe $recipe)
+    public function delete(EntityManagerInterface $em, MailerInterface $mailer, Request $request, Recipe $recipe)
     {
         $this->denyAccessUnlessGranted('DELETE', $recipe);
 
@@ -335,6 +356,20 @@ class RecipeController extends AbstractController
         $formDelete->handleRequest($request);
 
         if ($formDelete->isSubmitted() && $formDelete->isValid()) {
+            
+            // We create a templated email for confirmation 
+            $email = (new TemplatedEmail())
+             ->from('equipe0dechet@gmail.com')
+             ->to($recipe->getUser()->getEmail())
+             ->subject('Suppression de votre recette')
+             ->htmlTemplate('email/recipe/delete.html.twig')
+             ->context([
+                 'username' => $recipe->getUser()->getUsername(),
+                 'name' => $recipe->getName(),
+             ]);
+ 
+            $mailer->send($email);           
+
             $em->remove($recipe);
             $em->flush();
 
@@ -344,7 +379,7 @@ class RecipeController extends AbstractController
             );
 
             return $this->redirectToRoute('user_read', [
-                'id' => $this->getUser()->getId(),
+                'username' => $this->getUser()->getUsername(),
             ]);
         }
 

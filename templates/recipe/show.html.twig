@@ -13,7 +13,7 @@
     </div>
     {% endfor %}
 
-          <div class="row px-3 mt-2 fil-ariane">
+      <div class="row px-3 mt-2 fil-ariane">
         <p>
           <a href="{{ path('main_home')}}">0'Déchet</a> -
           <a href="{{ path('recipe_browse')}}">Toutes les recettes</a> -
@@ -52,7 +52,12 @@
         </div> 
       </div>
       <div class="row pt-0 pt-md-3 px-3 ml-md-2 mr-md-1 recipe-time-difficulty">
-        <p>Temps : environ {{ recipe.duration }} minutes<br>
+        {% if recipe.duration >= 60 %}
+        <p>Temps de préparation : {{ recipe.duration // 60 }}h {{ recipe.duration % 60 != 0 ? recipe.duration % 60 ~ "min" }}<br>
+        {% else %}
+        <p>Temps de préparation : {{ recipe.duration }} {{ recipe.duration > 1 ? "minutes" :  "minute"}}<br>
+        {% endif %}
+        
         {% if recipe.difficulty == 1 %}
           {% set difficulty = 'Débutant' %}
         {% endif %}
@@ -99,11 +104,11 @@
       </div>
 
       <div class="row pt-3 px-3 ml-md-2 mr-md-1 recipe-content">
-        <h5>Recette :</h5>
+        <h5 class="recipe-content-title">Recette :</h5>
       </div>
       <div class="row px-3 ml-md-2 mr-md-1">
         {% if recipe.user != null %}
-        <p>Proposé par <a href="{{ path('user_read', {'id': recipe.user.id})}}"  class="user-profil">{{ recipe.user }}</a></p>
+        <p>Proposé par <a href="{{ path('user_read', {'username': recipe.user.username})}}"  class="user-profil">{{ recipe.user }}</a></p>
         {% else %}
         <p>Proposé par Anonyme</p>
         {% endif %}
@@ -120,7 +125,7 @@
           <h5>Noter la recette :</h5>
           <div class="col-12 form-rate">
             <div class="row justify-content-center m-3">
-              {% if recipe.user.id == app.user.id %}
+              {% if recipe.user == app.user %}
               <div>
                 <p>Vous ne pouvez pas noter votre recette</p>
               {% elseif recipe.rates %}
@@ -162,6 +167,7 @@
                 </div>
               </form>
             </div>
+
           </div>
         </div>
         <div class="col-12 d-md-none">
