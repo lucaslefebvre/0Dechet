@@ -55,13 +55,14 @@ class RecipeType extends AbstractType
             ->add('content', TextareaType::class, [
                 'required' => true,
                 'label' => 'Détail de la préparation',
-                'constraints' => [
+                // 'constraints' => [
                 // new Assert\Length
                 // ([
                 // 'min' => 30,
                 // 'minMessage' => 'La recette doit contenir au moins 30 caractères',
                 // ])],
-            ])
+                ]
+            )
             ->add('duration', IntegerType::class, [
                 'required' => true,
                 'label' => 'Durée (en minutes)',
