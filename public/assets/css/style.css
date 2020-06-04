@@ -776,6 +776,10 @@ ul.recipe-list li {
     color: #F1AF96 !important;
 }
 
+.form-link-password {
+    color: #000000 !important;
+}
+
 /* Rating star */
 .stars {
 	direction: rtl;
