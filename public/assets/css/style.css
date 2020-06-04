@@ -115,12 +115,12 @@ ul li{
   
   #menu li, 
   #toggle-menu, 
-  #menu a{
+  #menu a {
     position: relative;
     display: block;
   }
 
-  .active {
+  #menu .active {
     color: black;
     text-decoration: underline !important;
   }
@@ -293,6 +293,16 @@ footer {
     color: #ffffff;
 }
 
+/* HOMEPAGE */
+
+.btn-floating, .btn-floating:focus, .btn-floating:hover {
+    color: #ffffff;
+    margin: 1rem 1rem;
+    background-color: #739377;
+    border-radius: 2rem;
+    padding: .5rem 1rem;
+}
+
 /* ALL PAGES - MAIN */
 
 main {
@@ -354,16 +364,16 @@ main {
     left: 14.25rem;
 }
 
-.card-fav-icon-link-full{
+.card-fav-icon-full{
     color: #f4bca6;
 }
 
-.card-fav-icon-link-empty{
+.card-fav-icon-empty{
     color: black;
 }
 
-.card-fav-icon-link-full:hover,
-.card-fav-icon-link-empty:hover{
+.card-fav-icon-full:hover,
+.card-fav-icon-empty:hover{
     color:#f4bca6;
 }
 
@@ -766,6 +776,10 @@ ul.recipe-list li {
     color: #F1AF96 !important;
 }
 
+.form-link-password {
+    color: #000000 !important;
+}
+
 /* Rating star */
 .stars {
 	direction: rtl;
@@ -840,4 +854,26 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
 .form-btn-connexion:focus {
     border: 2px solid #617e64; 
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
+}
+
+/* Error 403/404 */
+
+.message-error, .title-error {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.message-error {
+    color: #739377;
+}
+
+.title-error {
+    color: #F1AF96;
+    font-weight: 700;
+}
+
+@media only screen and (min-width: 992px) {
+    .message-error, .title-error {
+        font-size: 3rem;
+    }
 }

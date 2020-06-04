@@ -1,16 +1,30 @@
 easy_admin:
-  site_name: '<img src="/assets/images/logo.png" style="height: 80px" alt="0déchet"'
+  site_name: '<img src="/assets/images/logo.png" style="height: 80px" alt="0déchet">'
   design:
         brand_color: '#739377'
         assets:
           css:
             - 'assets/css/admin.css'
+          favicon: '/assets/images/logo-mobile.png'
+        menu:
+            - { entity: 'Category', label: 'Catégorie' }
+            - { entity: 'SubCategory', label: 'Sous-catégorie', icon: 'list' }
+            - { entity: 'Type', label: 'Type', icon: 'list-ol' }
+            - { entity: 'Recipe', label: 'Recette', icon: 'file-image' }
+            - { entity: 'Rate', label: 'Note', icon: 'star' }
+            - { entity: 'Comment', label: 'Commentaire', icon: 'file-text' }
+            - { entity: 'User', label: 'Utilisateur', icon: 'user' }
+            - { label: 'Retour sur le site', route: 'main_home', icon: 'leaf' }
+  user:
+        # avatar_property_path: 'image'
+        # base_path: '%app.path.user_images%/'
+      
   list:
         max_results: 30
   entities:
     Category:
             class: App\Entity\Category
-            label: 'Catégorie'
+            label: 'Catégories'
             list:
                 fields:
                     - 'id'
@@ -20,10 +34,10 @@ easy_admin:
                     - { property: 'createdAt', label: 'Créé le' }
             form:
                 fields: 
-                    - { property: 'name', label: 'Nom de la catégorie' }
+                    - { property: 'name', label: 'Nom de la catégorie', type_options: { required: true } }
     SubCategory:
             class: App\Entity\SubCategory
-            label: 'Sous-catégorie'
+            label: 'Sous-catégories'
             list:
                 fields: 
                     - 'id'
@@ -34,11 +48,11 @@ easy_admin:
                     - { property: 'createdAt', label: 'Créé le' }
             form:
                 fields: 
-                    - { property: 'name', label: 'Nom de la sous-catégorie' }
+                    - { property: 'name', label: 'Nom de la sous-catégorie', type_options: { required: true } }
                     - { property: 'category', label: 'Catégorie' }
     Type:
             class: App\Entity\Type
-            label: 'Type'
+            label: 'Types'
             list:
                 fields: 
                     - 'id'
@@ -49,11 +63,12 @@ easy_admin:
                     - { property: 'createdAt', label: 'Créé le' }
             form:
                 fields: 
-                    - { property: 'name', label: 'Type de produit' }
+                    - { property: 'name', label: 'Type de produit', type_options: { required: true } }
                     - { property: 'subCategory', label: 'Sous-catégorie' }
     Recipe:
             class: App\Entity\Recipe
-            label: 'Recette'
+            image_base_path: '/assets/images/'
+            label: 'Recettes'
             list:
                 fields: 
                     - 'id'
@@ -69,20 +84,24 @@ easy_admin:
                     - { property: 'createdAt', label: 'Créé le' }
             form:
                 fields: 
-                    - { property: 'name', label: 'Nom de la recette' }
-                    - { property: 'ingredient', label: 'Ingrédient' }
-                    - { property: 'equipement', label: 'Matériel' }
-                    - { property: 'content', label: 'Recette' }
-                    - { property: 'duration', label: 'Durée', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'0 mn': '0', '15 mn': '15', '30 mn': '30', '45 mn': '45', '1 h 00': '60', '1 h 15': '75',  '1 h 30': '90', '1 h 45': '105',  '2 h 00': '120'}} }
-                    - { property: 'difficulty', label: 'Difficulté', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'Débutant': '1', 'Intermédiaire': '2', 'Expert': '3'}} }
-                    - { property: 'conservation', label: 'Conservation', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'1 semaine': '7', '2 semaines': '14', '1 mois':'30', '2 mois': '60', '3 mois': '90', '6 mois': '180'}} }
-                    - { property: 'image', label: 'Image de la recette', type: 'file' }
-                    - { property: 'type', label: 'Type' }
+                    - { property: 'name', label: 'Nom de la recette', type_options: { required: true } }
+                    - { property: 'ingredient', label: 'Ingrédients', type_options: { required: true } }
+                    - { property: 'equipement', label: 'Matériels' }
+                    - { property: 'content', label: 'Détail de la préparation', type_options: { required: true } }
+                    - { property: 'duration', label: 'Durée', type: 'choice', type_options: {expanded: false, multiple: false, required: true, choices: {'0 mn': '0', '15 mn': '15', '30 mn': '30', '45 mn': '45', '1 h 00': '60', '1 h 15': '75',  '1 h 30': '90', '1 h 45': '105',  '2 h 00': '120'}} }
+                    - { property: 'difficulty', label: 'Difficulté', type: 'choice', type_options: {expanded: false, multiple: false, required: true, choices: {'Débutant': '1', 'Intermédiaire': '2', 'Expert': '3'}} }
+                    - { property: 'conservation', label: 'Temps le conservation', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'1 semaine': '7', '2 semaines': '14', '1 mois':'30', '2 mois': '60', '3 mois': '90', '6 mois': '180'}} }
+                    - { property: 'imageFile', type: 'vich_image', label: 'Photo de la recette' }
+                    - { property: 'type', label: 'Type de recette', type_options: { required: true } }
                     - { property: 'status', label: 'Status' }
                     - { property: 'user', label: 'Utilisateur' }
+            new:
+                title: 'Ajouter une recette'
+            edit:
+                title: 'Modifier une recette'
     Rate:
             class: App\Entity\Rate
-            label: 'Note'
+            label: 'Notes'
             list:
                 fields: 
                     - 'id'
@@ -91,12 +110,12 @@ easy_admin:
                     - { property: 'user', label: 'Utilisateur' }
             form:
                 fields: 
-                    - { property: 'rate', label: 'Note' }
+                    - { property: 'rate', label: 'Note', type: 'choice', type_options: {expanded: false, multiple: false, choices: {'1 étoile': '1', '2 étoiles': '2', '3 étoiles': '3', '4 étoiles': '4', '5 étoiles': '5' }}  }
                     - { property: 'recipe', label: 'Recette' }
                     - { property: 'user', label: 'Utilisateur' }
     Comment:
             class: App\Entity\Comment
-            label: 'Commentaire'
+            label: 'Commentaires'
             list:
               fields: 
                   - 'id'
@@ -114,23 +133,48 @@ easy_admin:
                   - { property: 'status', label: 'Status' }
     User:
             class: App\Entity\User
-            label: 'Utilisateur'
+            label: 'Utilisateurs'
+            icon: 'user'
             list:
               fields: 
                   - 'id'
                   - { property: 'email', label: 'Email' }
                   - { property: 'username', label: 'Pseudo' }
                   - { property: 'roles', label: 'Rôle' }
-                  -  { property: 'image', label: 'Photo de profil' }
+                  - { property: 'image', label: 'Photo de profil' }
                   - { property: 'recipes', label: 'Recette ajouté' }
                   - { property: 'comments', label: 'Commentaire lié' }
                   - { property: 'createdAt', label: 'Créé le' }
             form:
               fields: 
-                  - { property: 'email', label: 'Email', type: 'email' }
-                  - { property: 'username', label: 'Pseudo' }
-                  - { property: 'password', label: 'Mot de passe', type: 'password' }
-                  - { property: 'image', label: 'Photo de profil', type: 'file' }
+                  - { property: 'username', label: "Nom d'utilisateur", type_options: { required: true } }
+                  - { property: 'email', label: 'Email', type: 'email',  type_options: { required: true } }
+                  - { property: 'password', type: 'repeated', type_options: { required: true, first_options: { label: 'Mot de passe', help: "Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle, une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !", mapped: false }, second_options: { label: 'Retaper le mot de passe' } } }
+                  - { property: 'imageFile', type: 'vich_image', label: 'Ajouter une photo de profil' }
+                  - { property: 'recipes', label: 'Recette ajouté' }
+                  - { property: 'comments', label: 'Commentaire lié' }
+                  - { property: 'roles', label: 'Rôles', type: choice, 
+                        type_options: {expanded: true, multiple: true, 
+                          choices: {'Utilisateur':'ROLE_USER', 
+                                    'Administrateur':'ROLE_ADMIN'}}}
+            new:
+              title: 'Ajouter un utilisateur'
+              fields: 
+                  - { property: 'username', label: "Nom d'utilisateur", type_options: { required: true } }
+                  - { property: 'email', label: 'Email', type: 'email', type_options: { required: true } }
+                  - { property: 'password', type: 'repeated', type_options: { required: true, first_options: { label: 'Mot de passe' }, second_options: { label: 'Retaper le mot de passe' } } }
+                  - { property: 'imageFile', type: 'vich_image', label: 'Ajouter une photo de profil' }
+                  - { property: 'roles', label: 'Rôles', type: choice, 
+                        type_options: {expanded: true, multiple: true, 
+                          choices: {'Utilisateur':'ROLE_USER', 
+                                    'Administrateur':'ROLE_ADMIN'}}}
+            edit:
+              title: 'Modifier un utilisateur'
+              fields: 
+                  - { property: 'username', label: "Nom d'utilisateur", type_options: { required: true } }
+                  - { property: 'email', label: 'Email', type: 'email', type_options: { required: true } }
+                  - { property: 'password', type: 'repeated', type_options: { required: false, first_options: { label: 'Mot de passe' }, second_options: { label: 'Retaper le mot de passe' } } }
+                  - { property: 'imageFile', type: 'vich_image', label: 'Ajouter une photo de profil' }
                   - { property: 'recipes', label: 'Recette ajouté' }
                   - { property: 'comments', label: 'Commentaire lié' }
                   - { property: 'roles', label: 'Rôles', type: choice, 
