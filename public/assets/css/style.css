@@ -354,16 +354,16 @@ main {
     left: 14.25rem;
 }
 
-.card-fav-icon-link-full{
+.card-fav-icon-full{
     color: #f4bca6;
 }
 
-.card-fav-icon-link-empty{
+.card-fav-icon-empty{
     color: black;
 }
 
-.card-fav-icon-link-full:hover,
-.card-fav-icon-link-empty:hover{
+.card-fav-icon-full:hover,
+.card-fav-icon-empty:hover{
     color:#f4bca6;
 }
 
