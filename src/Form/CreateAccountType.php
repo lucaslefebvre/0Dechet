@@ -24,6 +24,7 @@ class CreateAccountType extends AbstractType
         $builder
             ->add('username', null, [
                 'label'=>'Nom d\'utilisateur',
+                'help'=>'Le nom d\'utilisateur ne peut pas contenir d\'espace ni de caractères spéciaux à l\'exception de \'-\' et \'_\'',
                 'constraints'=> [
                     new NotBlank([
                         'message'=>'Ce champ ne doit pas être vide'
