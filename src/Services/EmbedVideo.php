@@ -4,7 +4,7 @@ namespace App\Services;
 
 class EmbedVideo
 {
-    // renvoi un lecteur d'après l'url
+	// Return a video diplay depending of where came form the url
     public function videoPlayer($urlAdress, $aAutoplay = true)
     {
         $video = $this->searchVideoId($urlAdress);
@@ -13,33 +13,34 @@ class EmbedVideo
         }
         $h = $urlAdress;
         switch ($video['type']) {
-    case'youtube':
-        $h = 'https://www.youtube.com/embed/'.$video['videoId'].($aAutoplay ? '?autoplay=1' : '') . 'frameborder="0" allowfullscreen autoplay="1"';
-        break;
-    case 'vimeo':
-        $h = 'https://player.vimeo.com/video/'.$video['videoId'].($aAutoplay ? '?autoplay=1' : '') . 'frameborder="0"  webkitallowfullscreen mozallowfullscreen allowfullscreen';
-        break;
-    case 'dailymotion':
-        $h = 'https://www.dailymotion.com/embed/video/'.$video['videoId'].($aAutoplay ? '?autoplay=1' : '');
-        break;
-    }
+        case'youtube':
+            $h = 'https://www.youtube.com/embed/'.$video['videoId'].($aAutoplay ? '?autoplay=1' : '') . 'frameborder="0" allowfullscreen autoplay="1"';
+            break;
+        case 'vimeo':
+            $h = 'https://player.vimeo.com/video/'.$video['videoId'].($aAutoplay ? '?autoplay=1' : '') . 'frameborder="0"  webkitallowfullscreen mozallowfullscreen allowfullscreen';
+            break;
+        case 'dailymotion':
+            $h = 'https://www.dailymotion.com/embed/video/'.$video['videoId'].($aAutoplay ? '?autoplay=1' : '');
+            break;
+        }
         return $h;
     }
 
-    // renvoi l'id et le type de vidéo d'après une URL
-    public function searchVideoId($urlAdress){
+    // catch and return the id of the video
+    public function searchVideoId($urlAdress)
+    {
 	$vid = '';
 	$type = 0;
 	if(strpos($urlAdress, 'youtube') !== false){
 		// youtube
 		if(preg_match('/(.+)youtube\.com\/watch\?v=([\w-]+)/', $urlAdress, $vid)){
+			// we keep the id of the video extract by preg_match and put in an array
 			$vid = $vid[2];
 			$type = 'youtube';
 		}
 
 	}elseif(strpos($urlAdress, 'youtu.be') !== false){
 		// youtu.be
-		$d = strpos($urlAdress, 'youtu.be/');
 		if(preg_match('/(.+)youtu.be\/([\w-]+)/', $urlAdress, $vid)){
 			$vid = $vid[2];
 			$type = 'youtube';
@@ -65,7 +66,7 @@ class EmbedVideo
 			$vid = $vid[2];
 			$type = 'dailymotion';
 		}
-	}
-	return empty($type) ? 0 : ['type'=>$type, 'videoId'=>$vid];
-}
+    }
+    return empty($type) ? 0 : ['type'=>$type, 'videoId'=>$vid];
+    }
 }

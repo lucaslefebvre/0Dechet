@@ -103,7 +103,7 @@ class RecipeType extends AbstractType
                 'label' => 'Vidéo',
                 'required' => false,
                 'mapped' => false,
-                'help' => 'Copier le lien où se situe votre vidéo'
+                'help' => 'Copier le lien Youtube, Dailymotion ou Vimeo de votre vidéo'
             ])
 
             ->add('type', EntityType::class, [
