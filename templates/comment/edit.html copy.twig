@@ -1,0 +1,17 @@
+{# {% extends 'base.html.twig' %} #}
+
+{# {% block body %} #}
+<main class="container">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+     <div class="submit-button-container">
+        <button type="submit" class="btn form-btn">{{ button_label|default('Modifier') }}</button>
+    </div>
+    {{ form_end(form) }}
+       <div class="row justify-content-center">
+    {{ form_start(deleteForm) }}
+      {{ form_widget(deleteForm.deleteButton, {'attr': {'class': 'form-btn-delete'}, 'label': "Supprimer le commentaire"}) }}
+    {{ form_end(deleteForm) }}
+    </div>
+</main>
+{# {% endblock %} #}

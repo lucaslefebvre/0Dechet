@@ -54,6 +54,44 @@ class CommentController extends AbstractController
         ]);
        
     }
+    /**
+     * Method to edit an existing comment. Send a form, receive the response and flush to the Database
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Route("/edition/modal/{id}", name="editModal", requirements={"id"="\d+"}, methods={"GET", "POST"})
+     */
+    public function editModal(Comment $comment, Request $request)
+    {
+        $this->denyAccessUnlessGranted('EDIT', $comment);
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Votre commentaire a été modifié'
+            );
+
+            return $this->redirectToRoute('recipe_show', [
+                'slug' => $comment->getRecipe()->getSlug(),
+            ]);
+        }
+
+        $formDelete = $this->createForm(DeleteType::class, null, [
+            'action' => $this->generateUrl('comment_delete', ['id' => $comment->getId()])
+        ]);
+        
+        return $this->render('comment/edit.html copy.twig', [
+            'comment' => $comment,
+            'form' => $form->createView(),
+            'deleteForm' => $formDelete->createView(),
+            'title' => "Modifier un commentaire",
+        ]);
+       
+    }
 
         /**
      * Method to allow a user to delete one of his comment off the website
