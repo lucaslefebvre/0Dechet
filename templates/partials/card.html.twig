@@ -44,7 +44,7 @@
     </div>
   </div>
   <div class="d-flex justify-content-center">
-    <div class="card-profil-img">
+    <div class="card-profil-img d-flex align-items-center">
     {% if recipe.user is not empty %}
       <a href="{{ path('user_read', {'username': recipe.user.username})}}">
         {% if recipe.user.image is not empty %}
