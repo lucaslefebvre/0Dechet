@@ -45,7 +45,7 @@ App\Entity\User:
                 message: "L'email n'est pas valide"
         password:
             - Regex:
-                pattern: "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/"
+                pattern: '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/'
                 message: "Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle, une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !"
             - NotBlank: 
                 normalizer: 'trim'
