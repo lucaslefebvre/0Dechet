@@ -23,15 +23,16 @@ security:
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
-                #path:     /
+                path:     /
                 always_remember_me: true
             logout:
                 path: app_logout
                 # where to redirect after logout
                 target: main_home
                 invalidate_session: true
-            #form_login:
-            #   use_referer: true
+            form_login:
+                use_referer: true
+                csrf_token_generator: security.csrf.token_manager
 
 
             # activate different ways to authenticate

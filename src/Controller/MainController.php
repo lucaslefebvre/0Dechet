@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\ContactType;
 use App\Repository\RecipeRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -38,7 +39,6 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         
-
         if ($form->isSubmitted() && $form->isValid()) {
             
             $email = $form->get('email')->getData(); 

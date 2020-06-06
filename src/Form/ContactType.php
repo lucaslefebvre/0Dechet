@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
@@ -17,20 +17,20 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
             ->add('email', EmailType::class, [
-                'label'=>'Email',
+                'label'=>'Entrer votre adresse email',
                 'constraints'=> [
-                    new NotBlank([
-                    'message'=>'Ce champ ne doit pas être vide',
+                new NotBlank([
+                'message'=>'Ce champ ne doit pas être vide',
                 ]),
-                    new Email([
-                    'message'=>'L\'email n\'est pas valide'
+                new Email([
+                'message'=>'L\'email n\'est pas valide'
                 ]),
-                ]
-            ])
-            ->add('subject', TextareaType::class, [
+                ]])
+            ->add('subject', TextType::class, [
                 'required'=>true,
-                'label' => 'Objet du message',
+                'label' => 'Objet de votre message (entre 5 et 50 caractères)',
                 'constraints'=> [
                 new NotBlank([
                 'message'=>'Ce champ ne doit pas être vide',
@@ -45,7 +45,7 @@ class ContactType extends AbstractType
             ]])
             ->add('message', TextareaType::class, [
                 'required'=>true,
-                'label' => 'Message',
+                'label' => 'Votre message (1000 caractères maximum)',
                 'constraints'=> [
                 new NotBlank([
                 'message'=>'Ce champ ne doit pas être vide',
@@ -57,14 +57,15 @@ class ContactType extends AbstractType
                 'minMessage' => 'L\'objet du message doit contenir au moins 5 caractères',
                 'maxMessage' => 'L\'objet du message ne doit pas contenir plus de 1000 caractères',
                 ])
-            ]])
-        ;
+            ]]);
+            
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
+
         ]);
     }
 }
