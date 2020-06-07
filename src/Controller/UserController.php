@@ -58,8 +58,13 @@ class UserController extends AbstractController
                 $user->setRoles(['ROLE_USER']);
 
                 // We use a Services to move and rename the file
-                $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
-                $user->setImage($newName);
+                // $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
+                $base64 = $request->request->get('photocoupee');
+                list(, $data)      = explode(',', $base64);
+                $data = base64_decode($data);
+                $filename = 'test.jpg';
+                file_put_contents('assets/images/users/test.jpg', $data);
+                $user->setImage($filename);
 
                 $em = $this->getDoctrine()->getManager();
 

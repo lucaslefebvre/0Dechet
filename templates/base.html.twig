@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
         <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/css/croppie.css') }}" rel="stylesheet"/>
         {% endblock %}
         <title>{% block title %}{{title}} - 0Déchet{% endblock %}</title>
     </head>
@@ -184,6 +185,8 @@
     }
 </script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('assets/js/croppie.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/ajustement_photo.js') }}"></script>
 
      {% endblock %}
     </body>

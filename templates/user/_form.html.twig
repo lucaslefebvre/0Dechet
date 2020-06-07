@@ -10,6 +10,12 @@
 
     <div class="user-form-label">{{form_label (userForm.image) }}</div>
     <div>{{form_widget (userForm.image) }}</div>
+    <div class="center-block text-warning">
+        <div id="prev_photo"></div>
+        {# <img id="prep_photo"> #}
+    </div>
+    <br>
+    <input type="hidden" id="photocoupee" name="photocoupee">
 
     {% if userForm.cgu is defined %}
     <div class="user-form-label">{{form_label(userForm.cgu) }}</div>
@@ -20,3 +26,7 @@
         <button type="submit" class="btn form-btn">{{ button_label|default('Ajouter') }}</button>
     </div>
 {{ form_end(userForm)  }}
+
+<script type="text/javascript" 
+        src="{{ asset('assets/js/ajustement_photo.js') }}">
+</script>
