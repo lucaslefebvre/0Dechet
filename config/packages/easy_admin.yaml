@@ -92,7 +92,7 @@ easy_admin:
                     - { property: 'duration', label: 'Durée' }
                     - { property: 'difficulty', label: 'Difficulté' }
                     - { property: 'conservation', label: 'Conservation' }
-                    - { property: 'image', label: 'Image de la recette' }
+                    - { property: 'image', type: 'image', label: 'Image de la recette', base_path: '%app.path.recipe_images%' }
                     - { property: 'status', label: 'Status' }
                     - { property: 'slug', label: 'Slug' }
                     - { property: 'comments', label: 'Commentaire' }
@@ -167,7 +167,7 @@ easy_admin:
                   - { property: 'email', label: 'Email' }
                   - { property: 'username', label: 'Pseudo' }
                   - { property: 'roles', label: 'Rôle' }
-                  - { property: 'image', label: 'Photo de profil' }
+                  - { property: 'image', type: 'image', label: 'Photo de profil', base_path: '%app.path.user_images%' }
                   - { property: 'recipes', label: 'Recette ajouté' }
                   - { property: 'comments', label: 'Commentaire lié' }
                   - { property: 'createdAt', label: 'Créé le' }
