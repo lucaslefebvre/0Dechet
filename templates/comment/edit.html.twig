@@ -9,6 +9,7 @@
     {{ form_widget(form) }}
      <div class="submit-button-container">
         <button type="submit" class="btn form-btn">{{ button_label|default('Modifier') }}</button>
+        {# {{ form_widget(form.editValidButton, {'attr': {'class': 'form-btn'}, 'label': "Editer le commentaire"}) }} #}
     </div>
     {{ form_end(form) }}
        <div class="row justify-content-center">

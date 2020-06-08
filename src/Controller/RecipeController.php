@@ -236,6 +236,7 @@ class RecipeController extends AbstractController
 
         if ($_POST) {
 
+            
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
                 // Recipe linked to the comment
                 $comment->setRecipe($recipe);
@@ -259,7 +260,7 @@ class RecipeController extends AbstractController
                 ]);
             }
       
-            //Homemadeadmin/?entity=User&action=list&menuIndex=6&submenuIndex=-1 RateForm
+            // Homemadeadmin/?entity=User&action=list&menuIndex=6&submenuIndex=-1 RateForm
             else {
                 $rate = new Rate();
                 $rating = $_POST['difficulty'];
