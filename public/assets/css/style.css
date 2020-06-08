@@ -363,6 +363,7 @@ main {
     position: absolute;
     top: 0.75rem;
     left: 14.25rem;
+    z-index: 100;
 }
 
 .card-fav-icon-full{
@@ -709,6 +710,10 @@ ul.recipe-list li {
     font-size: 0.8rem;
     margin-right: 0.5rem;
     margin-left: 0.5rem;
+}
+
+.embed-responsive iframe {
+    max-height: 350px;
 }
 
 /* Commentaires */

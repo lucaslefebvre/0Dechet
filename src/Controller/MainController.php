@@ -35,7 +35,7 @@ class MainController extends AbstractController
      */
     public function contact(Request $request, MailerInterface $mailer)
     {
-        $form = $this->createForm(ContactType::class);
+        $form = $this->createForm(ContactType::class, null);
         $form->handleRequest($request);
 
         
@@ -49,9 +49,10 @@ class MainController extends AbstractController
 
             ->from($email)
             ->to('equipe0dechet@gmail.com')
-            ->subject($subject)
+            ->subject('Formulaire de contact')
             ->htmlTemplate('email/contact/send.html.twig')
             ->context([
+                'mail' => $email,
                 'subject' => $subject,
                 'message' => $message,
             ]);
@@ -62,7 +63,7 @@ class MainController extends AbstractController
 
             ->from('equipe0dechet@gmail.com')
             ->to($email)
-            ->subject('Confirmation de votre demande de contact')
+            ->subject('0\'Déchet - Confirmation de votre demande de contact')
             ->htmlTemplate('email/contact/confirmation.html.twig')
             ->context([
                 'subject' => $subject,
@@ -73,7 +74,7 @@ class MainController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Votre email a bien été envoyé un mail de confirmation vous a été envoyé'
+                'Votre message a bien été envoyé.'
             );
 
             return $this->redirectToRoute('main_home');

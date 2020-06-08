@@ -19,7 +19,7 @@ class ContactType extends AbstractType
         $builder
 
             ->add('email', EmailType::class, [
-                'label'=>'Entrer votre adresse email',
+                'label'=>'Votre email',
                 'constraints'=> [
                 new NotBlank([
                 'message'=>'Ce champ ne doit pas être vide',
@@ -30,7 +30,8 @@ class ContactType extends AbstractType
                 ]])
             ->add('subject', TextType::class, [
                 'required'=>true,
-                'label' => 'Objet de votre message (entre 5 et 50 caractères)',
+                'label' => 'Objet de votre message',
+                'help' => 'Doit faire entre 5 et 50 caractères',
                 'constraints'=> [
                 new NotBlank([
                 'message'=>'Ce champ ne doit pas être vide',
@@ -45,7 +46,7 @@ class ContactType extends AbstractType
             ]])
             ->add('message', TextareaType::class, [
                 'required'=>true,
-                'label' => 'Votre message (1000 caractères maximum)',
+                'label' => 'Votre message',
                 'constraints'=> [
                 new NotBlank([
                 'message'=>'Ce champ ne doit pas être vide',
@@ -53,9 +54,9 @@ class ContactType extends AbstractType
                 new Assert\Length
                 ([
                 'min' => 5,
-                'max' => 1000,
-                'minMessage' => 'L\'objet du message doit contenir au moins 5 caractères',
-                'maxMessage' => 'L\'objet du message ne doit pas contenir plus de 1000 caractères',
+                // 'max' => 1000,
+                'minMessage' => 'Le contenu du message doit contenir au moins 5 caractères',
+                // 'maxMessage' => 'L\'objet du message ne doit pas contenir plus de 1000 caractères',
                 ])
             ]]);
             
