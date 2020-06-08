@@ -24,16 +24,17 @@ class CreateAccountType extends AbstractType
         $builder
             ->add('username', null, [
                 'label'=>'Nom d\'utilisateur',
-                // 'constraints'=> [
-                //     new NotBlank([
-                //         'message'=>'Ce champ ne doit pas être vide'
-                //     ]),
-                //     new Regex([
-                //         'pattern'=>"/^[a-zA-Z0-9-_]*$/",
-                //         'match' => true,
-                //         'message'=>'Le nom d\'utilisateur ne peut pas contenir d\'espace ni de caractères spéciaux exceptés \'-\' et \'_\''
-                //     ]),
-                // ],
+                'help'=>'Le nom d\'utilisateur ne peut pas contenir d\'espace ni de caractères spéciaux à l\'exception de \'-\' et \'_\'',
+                'constraints'=> [
+                    new NotBlank([
+                        'message'=>'Ce champ ne doit pas être vide'
+                    ]),
+                    new Regex([
+                        'pattern'=>"/^[a-zA-Z0-9-_]*$/",
+                        'match' => true,
+                        'message'=>'Le nom d\'utilisateur ne peut pas contenir d\'espace ni de caractères spéciaux exceptés \'-\' et \'_\''
+                    ]),
+                ],
             ])
 
             ->add('email', null,[

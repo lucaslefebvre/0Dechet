@@ -1,18 +1,25 @@
 {{ form_start(userForm) }}
-  <div class="user-form-label">{{form_label (userForm.username) }}</div>
-  <div>{{form_widget (userForm.username) }}</div>
+    <div class="user-form-label">{{form_label (userForm.username) }} <span class="form-asterisk-mandatory">*</span></div>
+    <div>{{form_help (userForm.username) }}</div>
+    <div>{{form_widget (userForm.username) }}</div>
 
-  <div class="user-form-label">{{form_label (userForm.email) }}</div>
-  <div>{{form_widget (userForm.email) }}</div>
+    <div class="user-form-label">{{form_label (userForm.email) }} <span class="form-asterisk-mandatory">*</span></div>
+    <div>{{form_widget (userForm.email) }}</div>
 
-  <div class="user-form-input">{{form_widget (userForm.password) }}</div>
-  <div>{{form_help (userForm.password) }}</div>
+    <div class="user-form-label">{{form_label (userForm.password.first) }} {{ app.request.attributes.get('_route') == 'user_add' ? '<span class="form-asterisk-mandatory">*</span>' }}</div>
+    <div>{{form_help (userForm.password) }}</div>
+    <div>{{form_widget (userForm.password.first) }}</div>
 
-  <div class="user-form-label">{{form_label (userForm.image) }}</div>
-  <div>{{form_widget (userForm.image) }}</div>
+    <div class="user-form-label">{{form_label (userForm.password.second) }} {{ app.request.attributes.get('_route') == 'user_add' ? '<span class="form-asterisk-mandatory">*</span>' }}</div>
+    <div>{{form_widget (userForm.password.second) }}</div>
 
-  {% if userForm.cgu is defined %}
 
+    <div class="user-form-label">{{form_label (userForm.image) }}</span></div>
+    <div>{{form_widget (userForm.image) }}</div>
+
+    <div class="mt-3"><span class="form-asterisk-mandatory">*</span><span class="form-text-mandatory"> Champs obligatoires</span></div>
+ 
+ {% if userForm.cgu is defined %}
     <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">

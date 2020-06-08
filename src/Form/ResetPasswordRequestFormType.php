@@ -14,6 +14,8 @@ class ResetPasswordRequestFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'required' => true,
+                'help' => 'Un lien permettant de modifier votre mot de passe vous sera envoyé à l\'adresse email indiquée ci-dessous.',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer votre email',
