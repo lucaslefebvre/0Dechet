@@ -10,9 +10,9 @@
 
     <div class="user-form-label">{{form_label (userForm.image) }}</div>
     <div>{{form_widget (userForm.image) }}</div>
+    {# Allow to crop the user image with Croppie.js #}
     <div class="center-block text-warning">
-        <div id="prev_photo"></div>
-        {# <img id="prep_photo"> #}
+        <div id="prev_photo" class="mt-3"></div>
     </div>
     <br>
     <input type="hidden" id="photocoupee" name="photocoupee">
