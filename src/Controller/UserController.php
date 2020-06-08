@@ -57,9 +57,29 @@ class UserController extends AbstractController
                 $user->setPassword($encodedPassword);
                 $user->setRoles(['ROLE_USER']);
 
-                // We use a Services to move and rename the file
-                $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
-                $user->setImage($newName);
+                // OLD VERSION : We use a Services to move and rename the file
+                // $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
+
+                // NEW VERSION :  We retrieve the original image
+                $file = $userForm['image'];
+
+                if ($file->getData() !== null) {
+                    // We retrieve the cropped image
+                    $base64 = $request->request->get('photocoupee');
+
+                    // We decode the cropped image in base 64
+                    list(, $data) = explode(',', $base64);
+                    $data = base64_decode($data);
+
+                    // We rename the file with the service we created
+                    $fileName = $fileUploader->createFileName($file->getData()->getClientOriginalExtension());
+
+                    // We replace the content of the image with the info in base 64 from the cropped image
+                    file_put_contents('assets/images/users/' . $fileName, $data);
+
+                    // We set the cropped image in the user data
+                    $user->setImage($fileName);
+                }
 
                 $em = $this->getDoctrine()->getManager();
 
@@ -111,46 +131,64 @@ class UserController extends AbstractController
               
                 if ($userForm->isValid()){
                     $userPassword = $userForm->get('password')->getData();
+
                     // We modify the password only if the user modified it
                     if ($userPassword !== null) {
                         $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
                     }
 
-                    if ($user->getImage() === null){
+                    // We keep the old image if there is no new image uploaded
+                    if ($user->getImage() === null) {
                         $user->setImage($imageUser);
                     }
                   
-                    // We use a Services to move and rename the file
-                    $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
-                    $user->setImage($newName);
+                    // OLD VERSION : We use a Services to move and rename the file
+                    // $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
+                    // $user->setImage($newName);
+
+                    // NEW VERSION :  We retrieve the original image
+                    $file = $userForm['image'];
+
+                    if ($file->getData() !== null) {
+                        // We retrieve the cropped image
+                        $base64 = $request->request->get('photocoupee');
+
+                        // We decode the cropped image in base 64
+                        list(, $data) = explode(',', $base64);
+                        $data = base64_decode($data);
+
+                        // We rename the file with the service we created
+                        $fileName = $fileUploader->createFileName($file->getData()->getClientOriginalExtension());
+
+                        // We replace the content of the image with the info in base 64 from the cropped image
+                        file_put_contents('assets/images/users/' . $fileName, $data);
+
+                        // We set the cropped image in the user data
+                        $user->setImage($fileName);
+                    }
 
                     $em->flush();
 
-
-                // We create a request for send a email of confirmation
-
-                $email = (new TemplatedEmail())
-                ->from('equipe0dechet@gmail.com')
-                ->to($user->getEmail())
-                ->subject('0\'Déchet - Votre profil a bien été modifié')
-                ->htmlTemplate('email/user/edit.html.twig')
-                ->context([
+                    $email = (new TemplatedEmail())
+                      ->from('equipe0dechet@gmail.com')
+                      ->to($user->getEmail())
+                      ->subject('0\'Déchet - Votre profil a bien été modifié')
+                      ->htmlTemplate('email/user/edit.html.twig')
+                      ->context([
                             'username' => $user->getUsername(),
                         ]);
                 
-        
-                $mailer->send($email);
+                    $mailer->send($email);
 
-                $this->addFlash(
-                    'success',
-                    'Votre compte a bien été modifié, un email de confirmation a été envoyé.'
-                );
+                    $this->addFlash(
+                        'success',
+                        'Votre compte a bien été modifié, un email de confirmation a été envoyé.'
+                    );
 
                     return $this->redirectToRoute('user_read', [
                         'username' => $user->getUsername(),
                     ]);
-                }
-                else {
+                } else {
                     $em->refresh($user);
                 }
             }
