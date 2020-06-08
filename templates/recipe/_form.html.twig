@@ -1,9 +1,10 @@
 {{ form_start(form) }}
-    <div class="recipe-form-label">{{form_label (form.name) }}</div>
+    <div class="recipe-form-label">{{form_label (form.name) }} <span class="form-asterisk-mandatory">*</span></div>
+    <div>{{form_help (form.name) }}</div>
     <div>{{form_widget (form.name) }}</div>
 
     {# Le label est en dur car sinon bug lié au JS en dessous ! #}
-    <div class="recipe-form-label">Liste des ingrédients</div>
+    <div class="recipe-form-label">Liste des ingrédients <span class="form-asterisk-mandatory">*</span></div>
     <ul id="ingredient-fields-list" class="mt-3 form-ingredients-list"
         data-prototype="{{ form_widget(form.ingredient.vars.prototype)|e }}"
         data-widget-tags="{{ '<li></li>'|e }}"
@@ -34,13 +35,15 @@
 
     <button type="button" class="add-another-collection-widget btn form-btn-ingredients" data-list-selector="#equipement-fields-list">Ajouter un ustensile</button>
 
-    <div class="recipe-form-label">{{form_label (form.content) }}</div>
+    <div class="recipe-form-label">{{form_label (form.content) }} <span class="form-asterisk-mandatory">*</span></div>
+    <div>{{form_help (form.content) }}</div>
     <div>{{form_widget (form.content) }}</div>
 
-    <div class="recipe-form-label">{{form_label (form.duration) }}</div>
+    <div class="recipe-form-label">{{form_label (form.duration) }} <span class="form-asterisk-mandatory">*</span></div>
+    <div>{{form_help (form.duration) }}</div>
     <div>{{form_widget (form.duration) }}</div>
 
-    <div class="recipe-form-label">{{form_label (form.difficulty) }}</div>
+    <div class="recipe-form-label">{{form_label (form.difficulty) }} <span class="form-asterisk-mandatory">*</span></div>
     <div>{{form_widget (form.difficulty) }}</div>
 
     <div class="recipe-form-label">{{form_label (form.conservation) }}</div>
@@ -50,11 +53,13 @@
     <div>{{form_widget (form.image) }}</div>
 
     <div class="recipe-form-label">{{form_label (form.video) }}</div>
-    <div>{{form_widget (form.video) }}</div>
     <div>{{form_help (form.video) }}</div>
+    <div>{{form_widget (form.video) }}</div>
 
-    <div class="recipe-form-label">{{form_label (form.type) }}</div>
+    <div class="recipe-form-label">{{form_label (form.type) }} <span class="form-asterisk-mandatory">*</span></div>
     <div>{{form_widget (form.type) }}</div>
+
+    <div class="mt-3"><span class="form-asterisk-mandatory">*</span><span class="form-text-mandatory"> Champs obligatoires</span></div>
 
     <div class="submit-button-container">
         <button type="submit" class="btn form-btn">{{ button_label|default('Ajouter') }}</button>

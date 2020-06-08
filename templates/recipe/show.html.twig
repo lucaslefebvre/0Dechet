@@ -23,7 +23,27 @@
         </p> 
       </div>
       <div class="row justify-content-between text-md-right px-3 ml-md-2 mr-md-1 main-title">
-        <h2>{{ recipe.name }}</h2>
+        <div>
+            <h2 class="mr-3 d-inline">{{ recipe.name }}</h2>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              {% if app.user.favorites is empty %}
+              <a href="{{ path('favorite' , {'slug': recipe.slug}) }}"><i class="fa fa-heart-o fa-lg card-fav-icon-empty" aria-hidden="true"></i></a>
+              {% endif %}
+
+              {% set break = false %}
+              {% for favorite in app.user.favorites %}
+                {% if recipe == favorite.recipes %}
+                {% set break = true %}
+                {% endif %}
+              {% endfor %}
+
+              {% if break == true %}
+                <a href="{{ path('favorite' , {'slug': recipe.slug}) }}"><i class="fa fa-heart fa-lg card-fav-icon-full" aria-hidden="true"></i></a>
+              {% else  %}
+                <a href="{{ path('favorite' , {'slug': recipe.slug}) }}"><i class="fa fa-heart-o fa-lg card-fav-icon-empty" aria-hidden="true"></i></a>
+              {% endif %}
+            {% endif %}
+        </div>
         <div class="d-none d-md-flex align-items-center">
           <div class="recipe-nb-opinion">
             (Nombre d'avis : {{ recipe.rates|length }})
@@ -76,11 +96,11 @@
       </div>
         {% elseif recipe.image is not empty %}
       <div class="col-12 col-lg-6 order-lg-2 mb-3 mb-lg-0 text-center">
-          <img src="{{ asset('assets/images/recipes/' ~ recipe.image) }}" class="img-fluid" alt="préparation de {{recipe.name}}">
+          <img src="{{ asset('assets/images/recipes/' ~ recipe.image) }}" class="img-fluid recipe-img" alt="préparation de {{recipe.name}}">
       </div>
         {% else %}
       <div class="col-12 col-lg-6 order-lg-2 mb-3 mb-lg-0 text-center">
-          <img src="{{ asset('assets/images/default-recipe.png') }}" class="img-fluid" alt="préparation de {{recipe.name}}">
+          <img src="{{ asset('assets/images/default-recipe.png') }}" class="img-fluid recipe-img" alt="préparation de {{recipe.name}}">
       </div>
         {% endif %}
         <div class="col-12 col-lg-6 p-0">
@@ -108,17 +128,17 @@
           </div>
         </div>
       </div>
-      <div class="row pt-3 px-3 ml-md-2 mr-md-1 recipe-content">
+      <div class="row pt-3 px-3 ml-md-2 mr-md-1">
         <h5 class="recipe-content-title">Recette :</h5>
       </div>
       <div class="row px-3 ml-md-2 mr-md-1">
         {% if recipe.user != null %}
-        <p>Proposé par <a href="{{ path('user_read', {'username': recipe.user.username})}}"  class="user-profil">{{ recipe.user }}</a></p>
+        <p>Proposée par <a href="{{ path('user_read', {'username': recipe.user.username})}}"  class="user-profil">{{ recipe.user }}</a></p>
         {% else %}
-        <p>Proposé par Anonyme</p>
+        <p>Proposée par Anonyme</p>
         {% endif %}
       </div>
-      <div class="row px-3 ml-md-2 mr-md-1">
+      <div class="row px-3 ml-md-2 mr-md-1 recipe-content">
           <p>{{ recipe.content |nl2br }}</p>
       </div>
       <div class="row justify-content-center">
