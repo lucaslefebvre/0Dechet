@@ -72,3 +72,7 @@ thead {
 .user-action {
     color: #739377!important;
 }
+
+span.alert.alert-danger.d-block {
+    display: none!important;
+}
