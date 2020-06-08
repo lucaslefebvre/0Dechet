@@ -76,7 +76,7 @@ class CreateAccountType extends AbstractType
                 ],
             ])
             ->add('image', FileType::class, [
-                'label'=>'Ajouter un photo de profil',
+                'label'=>'Ajouter une photo de profil',
                 'required' => false,
                 'mapped' => false,
                 'attr' => ['placeholder' => 'Sélectionner votre fichier']
