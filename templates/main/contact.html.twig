@@ -67,24 +67,11 @@
       <h2>Nous contacter</h2>
     </div>
     <div>
-        {{ form_start(form) }}
-        <div class="user-form-label">{{form_label (form.email) }} <span class="form-asterisk-mandatory">*</span></div>
-        <div>{{form_widget (form.email) }}</div>
-
-        <div class="user-form-label">{{form_label (form.subject) }} <span class="form-asterisk-mandatory">*</span></div>
-        <div>{{form_help (form.subject) }}</div>
-        <div>{{form_widget (form.subject) }}</div>
-
-        <div class="user-form-label">{{form_label (form.message) }} <span class="form-asterisk-mandatory">*</span></div>
-        <div>{{form_widget (form.message) }}</div>
-
-      <div class="mt-3"><span class="form-asterisk-mandatory">*</span><span class="form-text-mandatory"> Champs obligatoires</span></div>
-
-      <div class="submit-button-container mb-4">
-          <button type="submit" class="btn form-btn">{{ button_label|default('Envoyer') }}</button>
-      </div>
-          {{ form_end(form) }}
-      </div>
+  {{ include('main/_form.html.twig') }}
     </div>
+      <div class="row">
+    <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
+  </div>
+    
 </main>
 {% endblock %}

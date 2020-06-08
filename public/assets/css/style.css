@@ -732,7 +732,7 @@ ul.recipe-list li {
 }
 
 /* FORMS */
-
+.contact-form-label,
 .recipe-form-label,
 .user-form-label,
 .user-form-input {
@@ -946,4 +946,7 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     left: -100%;
     right: -100%;
     bottom: -100%;
+}
+.g-recaptcha{
+    margin-top: 10px;
 }
