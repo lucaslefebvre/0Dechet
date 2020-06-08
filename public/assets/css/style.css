@@ -718,7 +718,7 @@ ul.recipe-list li {
     margin-top: 2rem;
 }
 
-.form-btn, .form-btn-delete, .form-btn-ingredients {
+.form-btn, .form-btn-delete, .form-btn-ingredients , .cgu-btn{
     width: 8rem;
     margin-top: 2rem;
     background-color: #b7cbad;
@@ -743,7 +743,7 @@ ul.recipe-list li {
     margin-top: 1rem;
 }
 
-.form-btn:hover, .form-btn-delete:hover, .form-btn-ingredients:hover {
+.form-btn:hover, .form-btn-delete:hover, .form-btn-ingredients:hover, .cgu-btn:hover{
     color: #ffffff;
     text-decoration: underline;
 }

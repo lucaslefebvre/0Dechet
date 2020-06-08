@@ -39,14 +39,14 @@ class CreateAccountType extends AbstractType
 
             ->add('email', null,[
                 'label'=>'Email',
-                'constraints'=> [
-                    new NotBlank([
-                    'message'=>'Ce champ ne doit pas être vide',
-                ]),
-                    new Email([
-                    'message'=>'L\'email n\'est pas valide'
-                ]),
-                ]
+                // 'constraints'=> [
+                //     new NotBlank([
+                //     'message'=>'Ce champ ne doit pas être vide',
+                // ]),
+                //     new Email([
+                //     'message'=>'L\'email n\'est pas valide'
+                // ]),
+                // ]
             ])
 
             // This add is for the edit and not for the add (create a new account)
@@ -77,7 +77,7 @@ class CreateAccountType extends AbstractType
                 ],
             ])
             ->add('image', FileType::class, [
-                'label'=>'Ajouter un photo de profil',
+                'label'=>'Ajouter une photo de profil',
                 'required' => false,
                 'mapped' => false,
                 'attr' => ['placeholder' => 'Sélectionner votre fichier']
@@ -110,7 +110,7 @@ class CreateAccountType extends AbstractType
                         ],
                         'invalid_message' => 'Les deux mots de passe ne correspondent pas',
                         'required'=> true,
-                        'constraints'=> [
+                        // 'constraints'=> [
                             // new NotBlank([
                             // 'normalizer'=>'trim',
                             // 'message'=>'Ce champ ne doit pas être vide',
@@ -120,7 +120,7 @@ class CreateAccountType extends AbstractType
                                 'message' => 'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,
                                  une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !',
                             ])*/
-                        ],
+                        // ],
                     ]);
                 }
             })

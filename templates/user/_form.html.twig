@@ -18,13 +18,35 @@
     <div>{{form_widget (userForm.image) }}</div>
 
     <div class="mt-3"><span class="form-asterisk-mandatory">*</span><span class="form-text-mandatory"> Champs obligatoires</span></div>
+ 
+ {% if userForm.cgu is defined %}
+    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalScrollableTitle">Conditions générales d'utilisation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×
+            </button>
+          </div>
+          <div class="modal-body">
 
-    {% if userForm.cgu is defined %}
-    <div class="user-form-label">{{form_label(userForm.cgu) }}</div>
-    <div class="user-form-input">{{form_widget (userForm.cgu) }}</div>
-    {% endif %}
+            {{ include('partials/cgu.html.twig') }}
 
-    <div class="submit-button-container">
-        <button type="submit" class="btn form-btn">{{ button_label|default('Ajouter') }}</button>
+            <div class="modal-footer">
+              <button type="button" class="btn cgu-btn" data-dismiss="modal">Fermer</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+      
+    <div class="user-form-label">{{form_label (userForm.cgu) }} </div>
+    <div>{{form_widget (userForm.cgu, {'attr': {'data-toggle': 'modal', 'data-target':'#exampleModalScrollable'}}) }}</div>
+
+  {% endif %}
+
+  <div class="submit-button-container">
+      <button type="submit" class="btn form-btn">{{ button_label|default('Ajouter') }}</button>
+  </div>
 {{ form_end(userForm)  }}

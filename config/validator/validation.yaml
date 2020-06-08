@@ -1,19 +1,23 @@
 App\Entity\Category:
     properties:
         name:
-            - NotBlank: ~
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
 App\Entity\SubCategory:
     properties:
         name:
-            - NotBlank: ~
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
 App\Entity\Type:
     properties:
         name:
-            - NotBlank: ~
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
 App\Entity\Recipe:
     properties:
         name:
-            - NotBlank: ~
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
             - Length:
                 min: 5
                 max: 50
@@ -28,7 +32,7 @@ App\Entity\Recipe:
             - NotBlank: 
                   message: 'Ce champ ne doit pas être vide'
         duration:
-            - Positive: ~
+            - Positive: 
 App\Entity\User:
     properties:
         username:
