@@ -21,7 +21,7 @@
             </a>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div class="d-flex justify-content-between align-items-center navbar-profil mr-md-4">
-              <div class="d-none d-sm-flex navbar-user-img-div">
+              <div class="d-none d-sm-flex navbar-user-img-div align-items-center">
                 <a href="{{ path('user_read', {'username': app.user.username})}}">
                   {% if app.user.image is not empty %}
                     <img src="{{ asset('assets/images/users/' ~ app.user.image) }}" class="navbar-user-img" alt="{{app.user.image}}">
@@ -32,7 +32,7 @@
               </div>
               <div>
                 <p><a href="{{ path('user_read', {'username': app.user.username})}}">{{app.user.username}}</a></p>
-                <a class="btn header-btn-deconnexion" href="{{ path('app_logout') }}">Déconnexion</a>
+                <a class="btn header-btn-deconnexion mt-1" href="{{ path('app_logout') }}">Déconnexion</a>
               </div>
             </div>
             {% else %}
@@ -108,6 +108,9 @@
               </li>
               {% endfor %}
               <li><a class="nav-link" href="{{ path('main_contact') }}">Contact</a></li>
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+              <li><a class="nav-link d-md-none" href="{{ path('user_read', {'username': app.user.username})}}">Accéder à mon profil</a></li>
+              {% endif %}
               <li>
                 <form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
                   <input class="form-control mr-sm-2" name="search" type="text" placeholder="Rechercher" aria-label="Rechercher">

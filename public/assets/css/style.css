@@ -431,6 +431,15 @@ main {
     margin-right: 1rem;
 }
 
+.card-img-top {
+    margin: auto;
+    left: -100%;
+    right: -100%;
+    top: -100%;
+    bottom: -100%;
+    position: absolute;
+}
+
 /* RECIPES LIST */
 
 .fil-ariane, .fil-ariane a{
@@ -661,11 +670,16 @@ label > .fa-minus-subcategory {
 
 .recipe-content {
     text-align: justify;
+    word-break: break-word;
 }
 
 .recipe-main h5 {
     margin-bottom: 1rem;
     font-weight: 700;
+}
+
+.recipe-img {
+    max-height: 400px;
 }
 
 .recipe-content-title {
@@ -682,8 +696,9 @@ ul.recipe-list li {
     display: block;
 }
 
-.recipe-list ul {
-    margin-left: -15px;
+.recipe-list {
+    padding-left: 0rem;
+    word-break: break-word;
 }
 
 .recipe-time-difficulty {
@@ -914,4 +929,15 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     height: 180px;
     overflow: hidden;
     position: relative;
+}
+
+.card-team-img-top {
+    position: absolute;
+    width: auto;
+    height: inherit;
+    margin: auto;
+    top: -100%;
+    left: -100%;
+    right: -100%;
+    bottom: -100%;
 }
