@@ -2,16 +2,14 @@
 
 {% block body %}
 
-<h1>Bonjour {{ username }}</h1>
+<main>
+    <p>Bonjour {{ username }},</p><br>
 
+    <p>Nous vous confirmons la suppression de votre recette "{{ name }}".</p><br>
 
-<p> Nous vous confirmons la suppression de votre recette {{ name }} !</p>
+    <p>Cordialement,</p>
 
-<p> Bonne Journée </p>
-
-<p> Cordialement </p>
-
-<p> L'équipe 0'déchet </p>
-
+    <p><strong>L'équipe 0'déchet</strong></p>
+</main>
 
 {% endblock %}

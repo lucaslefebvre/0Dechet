@@ -16,6 +16,12 @@
 
     <div class="user-form-label">{{form_label (userForm.image) }}</span></div>
     <div>{{form_widget (userForm.image) }}</div>
+    {# Allow to crop the user image with Croppie.js #}
+    <div class="center-block text-warning">
+        <div id="prev_photo" class="mt-3"></div>
+    </div>
+    <br>
+    <input type="hidden" id="photocoupee" name="photocoupee">
 
     <div class="mt-3"><span class="form-asterisk-mandatory">*</span><span class="form-text-mandatory"> Champs obligatoires</span></div>
  
@@ -39,8 +45,7 @@
           </div>
         </div>
       </div>
-    </div>
-      
+    </div>     
     <div class="user-form-label">{{form_label (userForm.cgu) }} </div>
     <div>{{form_widget (userForm.cgu, {'attr': {'data-toggle': 'modal', 'data-target':'#exampleModalScrollable'}}) }}</div>
 
@@ -50,3 +55,7 @@
       <button type="submit" class="btn form-btn">{{ button_label|default('Ajouter') }}</button>
   </div>
 {{ form_end(userForm)  }}
+
+<script type="text/javascript" 
+        src="{{ asset('assets/js/ajustement_photo.js') }}">
+</script>

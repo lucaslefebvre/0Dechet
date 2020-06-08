@@ -21,12 +21,12 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
  
-        $builder
-            
+        $builder          
             ->add('email',EmailType::class,
                 [
                 'label'=>'Votre adresse email',
                 'help' => 'Rentrez une adresse email valide afin que nous puissions répondre à votre message',
+
                 'constraints'=> [
                 new NotBlank([
                 'message'=>'Ce champ ne doit pas être vide',
@@ -61,9 +61,9 @@ class ContactType extends AbstractType
                 ]),
                 new Assert\Length([
                 'min' => 5,
-                'max' => 1000,
-                'minMessage' => 'L\'objet du message doit contenir au moins 5 caractères',
-                'maxMessage' => 'L\'objet du message ne doit pas contenir plus de 1000 caractères',
+                // 'max' => 1000,
+                'minMessage' => 'Le contenu du message doit contenir au moins 5 caractères',
+                // 'maxMessage' => 'L\'objet du message ne doit pas contenir plus de 1000 caractères',
                 ])
             ]]);
 
