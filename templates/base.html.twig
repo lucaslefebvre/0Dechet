@@ -38,7 +38,7 @@
               </div>
             </div>
             {% else %}
-            <a class="mr-md-4 btn header-btn-connexion" href="{{ path('app_login') }}">Connexion</a>
+            <button type="button" class="btn btn-lg form-btn-connexion" data-toggle="modal" data-target="#exampleModalScrollable">Connexion</button>
             {% endif %}
         </nav>
 
@@ -123,6 +123,8 @@
         </nav>
     </header>
     {% endblock %}
+
+    {{ include('partials/modal.login.html.twig') }}
 
     {% block body %}{% endblock %}
 
