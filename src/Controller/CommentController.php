@@ -24,7 +24,7 @@ class CommentController extends AbstractController
     public function edit(Comment $comment, Request $request)
     {
         $this->denyAccessUnlessGranted('EDIT', $comment);
-
+        dump($comment);
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -41,6 +41,7 @@ class CommentController extends AbstractController
                 'slug' => $comment->getRecipe()->getSlug(),
             ]);
         }
+
 
         $formDelete = $this->createForm(DeleteType::class, null, [
             'action' => $this->generateUrl('comment_delete', ['id' => $comment->getId()])
@@ -63,7 +64,8 @@ class CommentController extends AbstractController
     {
         $this->denyAccessUnlessGranted('EDIT', $comment);
 
-        $form = $this->createForm(CommentType::class, $comment);
+        $formOptions = ['method' => 'POST', 'action' => $this->generateUrl('comment_editModal', ['id' => $comment->getId()])];
+        $form = $this->createForm(CommentType::class, $comment, $formOptions);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
