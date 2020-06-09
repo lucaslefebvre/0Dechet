@@ -105,7 +105,6 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //($form['video']->getData());
 
             $recipe->setStatus(1);
             $recipe->setUser($this->getUser());

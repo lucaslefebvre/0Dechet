@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class CreateAccountType extends AbstractType
@@ -25,16 +26,20 @@ class CreateAccountType extends AbstractType
             ->add('username', null, [
                 'label'=>'Nom d\'utilisateur',
                 'help'=>'Le nom d\'utilisateur ne peut pas contenir d\'espace ni de caractères spéciaux à l\'exception de \'-\' et \'_\'',
-                'constraints'=> [
+                /*'constraints'=> [
                     new NotBlank([
-                        'message'=>'Ce champ ne doit pas être vide'
+                        'message'=>'Ce champ ne doit pas être vide',
+                        'normalizer'=>'trim',
                     ]),
                     new Regex([
                         'pattern'=>"/^[a-zA-Z0-9-_]*$/",
                         'match' => true,
                         'message'=>'Le nom d\'utilisateur ne peut pas contenir d\'espace ni de caractères spéciaux exceptés \'-\' et \'_\''
                     ]),
-                ],
+                    new NotNull([
+                        'message'=>'Ce champ ne doit pas être vide',
+                    ])
+                ],*/
             ])
 
             ->add('email', null,[
@@ -66,14 +71,14 @@ class CreateAccountType extends AbstractType
                 'constraints'=> [
                     new NotBlank([
                     'allowNull'=>true,
-                    // 'normalizer'=>'trim',
-                    // 'message'=>'Ce champ ne doit pas être vide',
+                    'normalizer'=>'trim',
+                    'message'=>'Ce champ ne doit pas être vide',
                     ]),
-                    /*new Regex([
+                    new Regex([
                         'pattern'=>'/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/',
                         'message' => 'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,
                          une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !',
-                    ])*/
+                    ])
                 ],
             ])
             ->add('image', FileType::class, [
@@ -110,17 +115,17 @@ class CreateAccountType extends AbstractType
                         ],
                         'invalid_message' => 'Les deux mots de passe ne correspondent pas',
                         'required'=> true,
-                        // 'constraints'=> [
-                            // new NotBlank([
-                            // 'normalizer'=>'trim',
-                            // 'message'=>'Ce champ ne doit pas être vide',
-                            // ]),
-                            /*new Regex([
+                        'constraints'=> [
+                            new NotBlank([
+                            'normalizer'=>'trim',
+                            'message'=>'Ce champ ne doit pas être vide',
+                            ]),
+                            new Regex([
                                 'pattern'=>'/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/',
                                 'message' => 'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,
                                  une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !',
-                            ])*/
-                        // ],
+                            ])
+                        ],
                     ]);
                 }
             })

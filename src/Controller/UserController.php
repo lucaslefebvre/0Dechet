@@ -116,13 +116,13 @@ class UserController extends AbstractController
                         $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
                     }
 
-                    if ($user->getImage() === null){
+                    if ($userForm->get('image')->getData() == null){
                         $user->setImage($imageUser);
+                    }else{
+                        // We use a Services to move and rename the file
+                        $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
+                        $user->setImage($newName);
                     }
-                  
-                    // We use a Services to move and rename the file
-                    $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
-                    $user->setImage($newName);
 
                     $em->flush();
 
