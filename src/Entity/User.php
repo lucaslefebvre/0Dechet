@@ -89,6 +89,11 @@ class User implements UserInterface
      */
     private $favorites;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
@@ -356,6 +361,18 @@ class User implements UserInterface
                 $favorite->setUsers(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

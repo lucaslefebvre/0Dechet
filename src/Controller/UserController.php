@@ -23,7 +23,7 @@ class UserController extends AbstractController
 {
     /**
      * Method to display the account page of the connected user
-     * @Route("/profil/{username}", name="user_read", methods={"GET"})
+     * @Route("/profil/{slug}", name="user_read", methods={"GET"})
      */
     public function read(User $user)
     {
@@ -115,7 +115,7 @@ class UserController extends AbstractController
      /**
      * Method to edit an existing account on the website
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @Route("/profil/edition/{username}", name="user_edit", methods={"GET","POST"})
+     * @Route("/profil/edition/{slug}", name="user_edit", methods={"GET","POST"})
      */
     public function edit(User $user, Request $request, MailerInterface $mailer, UserPasswordEncoderInterface $passwordEncoder, FileUploader $fileUploader)
     {
@@ -186,7 +186,7 @@ class UserController extends AbstractController
                     );
 
                     return $this->redirectToRoute('user_read', [
-                        'username' => $user->getUsername(),
+                        'slug' => $user->getSlug(),
                     ]);
                 } else {
                     $em->refresh($user);
@@ -194,7 +194,7 @@ class UserController extends AbstractController
             }
             
         $formDelete = $this->createForm(DeleteType::class, null, [
-            'action' => $this->generateUrl('user_delete', ['username' => $user->getUsername()])
+            'action' => $this->generateUrl('user_delete', ['slug' => $user->getSlug()])
         ]);
 
         return $this->render('user/edit.html.twig', [
@@ -208,7 +208,7 @@ class UserController extends AbstractController
     /**
      * Method to allow a user to delete his/her account on the website
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @Route("/profil/suppression/{username}", name="user_delete", methods={"DELETE"})
+     * @Route("/profil/suppression/{slug}", name="user_delete", methods={"DELETE"})
      */
     public function delete(EntityManagerInterface $em, MailerInterface $mailer, Request $request, User $user)
     {
@@ -254,7 +254,7 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('user_edit', [
-            'username' => $user->getUsername(),
+            'slug' => $user->getSlug(),
         ]);
     }
 
