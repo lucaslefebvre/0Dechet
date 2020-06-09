@@ -24,7 +24,7 @@
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div class="d-flex justify-content-between align-items-center navbar-profil mr-md-4">
               <div class="d-none d-sm-flex navbar-user-img-div align-items-center">
-                <a href="{{ path('user_read', {'username': app.user.username})}}">
+                <a href="{{ path('user_read', {'slug': app.user.slug})}}">
                   {% if app.user.image is not empty %}
                     <img src="{{ asset('assets/images/users/' ~ app.user.image) }}" class="navbar-user-img" alt="{{app.user.image}}">
                   {% else %}
@@ -33,12 +33,12 @@
                 </a>
               </div>
               <div>
-                <p><a href="{{ path('user_read', {'username': app.user.username})}}">{{app.user.username}}</a></p>
+                <p><a href="{{ path('user_read', {'slug': app.user.slug})}}">{{app.user.username}}</a></p>
                 <a class="btn header-btn-deconnexion mt-1" href="{{ path('app_logout') }}">Déconnexion</a>
               </div>
             </div>
             {% else %}
-            <a class="mr-md-4 btn header-btn-connexion" href="{{ path('app_login') }}">Connexion</a>
+            <button type="button" class="btn btn-lg form-btn-connexion" data-toggle="modal" data-target="#exampleModalScrollable">Connexion</button>
             {% endif %}
         </nav>
 
@@ -109,9 +109,9 @@
                 
               </li>
               {% endfor %}
-              <li><a class="nav-link" href="{{ path('main_contact') }}">Contact</a></li>
+              
               {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-              <li><a class="nav-link d-md-none" href="{{ path('user_read', {'username': app.user.username})}}">Accéder à mon profil</a></li>
+              <li><a class="nav-link d-md-none" href="{{ path('user_read', {'slug': app.user.slug})}}">Accéder à mon profil</a></li>
               {% endif %}
               <li>
                 <form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
@@ -124,12 +124,18 @@
     </header>
     {% endblock %}
 
+    {{ include('partials/modal.login.html.twig') }}
+
     {% block body %}{% endblock %}
 
     {% block footer %}
-    <footer>
-        <p>Tous droits réservés © 2020 0'Déchet</p>
-    </footer>
+        <footer>
+          <div>
+            <a class="footer-link" href="{{ path('main_mentions_legales') }}">Mentions légales</a> - 
+            <a class="footer-link" href="{{ path('main_contact') }}">Contact</a>
+          </div>
+            <p>Tous droits réservés © 2020 0'Déchet</p>
+        </footer>
     {% endblock %}
 
     {% block javascripts %}
