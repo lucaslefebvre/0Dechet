@@ -137,72 +137,81 @@
             <p>Tous droits réservés © 2020 0'Déchet</p>
         </footer>
     {% endblock %}
+
     {% block javascripts %}
-        <script src="https://www.google.com/recaptcha/api.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-        <script>
-          $('.custom-file-input').on('change', function(event) {
-              var inputFile = event.currentTarget;
-              $(inputFile).parent()
-                  .find('.custom-file-label')
-                  .html(inputFile.files[0].name);
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script>
+      $('.custom-file-input').on('change', function(event) {
+          var inputFile = event.currentTarget;
+          $(inputFile).parent()
+              .find('.custom-file-label')
+              .html(inputFile.files[0].name);
+      });
+    </script>
+    <script>
+      jQuery(document).ready(function () {
+      jQuery('.add-another-collection-widget').click(function (e) {
+          var list = jQuery(jQuery(this).attr('data-list-selector'));
+          // Try to find the counter of the list or use the length of the list
+          var counter = list.data('widget-counter') || list.children().length;
+
+          // grab the prototype template
+          var newWidget = list.attr('data-prototype');
+          // replace the "__name__" used in the id and name of the prototype
+          // with a number that's unique to your emails
+          // end name attribute looks like name="contact[emails][2]"
+          newWidget = newWidget.replace(/__name__/g, counter);
+          // Increase the counter
+          counter++;
+          // And store it, the length cannot be used if deleting widgets is allowed
+          list.data('widget-counter', counter);
+
+          // create a new list element and add it to the list
+          var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+          newElem.appendTo(list);
+          addTagFormDeleteLink(newElem);
+
           });
-        </script>
-        <script>
-    jQuery(document).ready(function () {
-        jQuery('.add-another-collection-widget').click(function (e) {
-            var list = jQuery(jQuery(this).attr('data-list-selector'));
-            // Try to find the counter of the list or use the length of the list
-            var counter = list.data('widget-counter') || list.children().length;
+      });
 
-            // grab the prototype template
-            var newWidget = list.attr('data-prototype');
-            // replace the "__name__" used in the id and name of the prototype
-            // with a number that's unique to your emails
-            // end name attribute looks like name="contact[emails][2]"
-            newWidget = newWidget.replace(/__name__/g, counter);
-            // Increase the counter
-            counter++;
-            // And store it, the length cannot be used if deleting widgets is allowed
-            list.data('widget-counter', counter);
+      $ingredientsCollectionHolder = $('ul#ingredient-fields-list');
+      $ingredientsCollectionHolder.find('li').each(function() {
+          addTagFormDeleteLink($(this));
+      });
 
-            // create a new list element and add it to the list
-            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-            newElem.appendTo(list);
-            addTagFormDeleteLink(newElem);
+      $equipmentsCollectionHolder = $('ul#equipement-fields-list');
+      $equipmentsCollectionHolder.find('li').each(function() {
+          addTagFormDeleteLink($(this));
+      });
 
+      function addTagFormDeleteLink($tagFormLi) {
+          var $removeFormButton = $('<a class="form-ingredient-delete">Supprimer</a>');
+          $tagFormLi.append($removeFormButton);
+          $removeFormButton.on('click', function(e) {
+              // remove the li for the tag form
+              $tagFormLi.remove();
+          });
+      }
+    </script>
+    <script>
+      function onSubmit(token) {
+        document.getElementById("form").submit();
+      }
+    </script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/croppie.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/ajustement_photo.js') }}"></script>
+    <script>
+      $(document).ready(function () {
+        $(".confirmModalLink").click(function(e) {
+            e.preventDefault();
+            $("#confirmModal").modal("show");
         });
-    });
-
-    $ingredientsCollectionHolder = $('ul#ingredient-fields-list');
-    $ingredientsCollectionHolder.find('li').each(function() {
-        addTagFormDeleteLink($(this));
-    });
-
-    $equipmentsCollectionHolder = $('ul#equipement-fields-list');
-    $equipmentsCollectionHolder.find('li').each(function() {
-        addTagFormDeleteLink($(this));
-    });
-
-    function addTagFormDeleteLink($tagFormLi) {
-        var $removeFormButton = $('<a class="form-ingredient-delete">Supprimer</a>');
-        $tagFormLi.append($removeFormButton);
-        $removeFormButton.on('click', function(e) {
-            // remove the li for the tag form
-            $tagFormLi.remove();
-        });
-    }
-</script>
- <script>
-   function onSubmit(token) {
-     document.getElementById("form").submit();
-   }
- </script>
-<script src="{{ asset('assets/js/app.js') }}"></script>
-<script src="{{ asset('assets/js/croppie.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/ajustement_photo.js') }}"></script>
-     {% endblock %}
+      });
+    </script>
+    {% endblock %}
     </body>
 </html>

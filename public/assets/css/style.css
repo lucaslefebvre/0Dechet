@@ -717,7 +717,7 @@ ul.recipe-list li {
     margin-left: 0.5rem;
 }
 
-.embed-responsive iframe {
+.embed-responsive-16by9 {
     max-height: 350px;
 }
 
@@ -806,6 +806,31 @@ ul.recipe-list li {
 
 .form-link-password {
     color: #000000 !important;
+}
+
+.modal-btn {
+    background-color: #b7cbad;
+    border: 2px solid #617e64; 
+    font-size: 0.8rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
+}
+
+.modal-btn-delete {
+    background-color: #f4bca6; 
+    border: 2px solid  #F1AF96; 
+    font-size: 0.8rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
+}
+
+.modal-btn:hover, .modal-btn-delete:hover {
+    color: #ffffff;
+    text-decoration: underline;
 }
 
 /* Rating star */

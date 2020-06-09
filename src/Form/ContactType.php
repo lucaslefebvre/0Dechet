@@ -25,7 +25,7 @@ class ContactType extends AbstractType
             ->add('email',EmailType::class,
                 [
                 'label'=>'Votre adresse email',
-                'help' => 'Rentrez une adresse email valide afin que nous puissions répondre à votre message',
+                'help' => 'Merci d\'indiquer une adresse email valide afin que nous puissions répondre à votre message',
 
                 'constraints'=> [
                 new NotBlank([
