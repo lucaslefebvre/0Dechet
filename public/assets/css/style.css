@@ -294,6 +294,10 @@ footer {
     color: #ffffff;
 }
 
+.footer-link {
+    color: #b7cbad;
+}
+
 /* HOMEPAGE */
 
 .btn-floating, .btn-floating:focus, .btn-floating:hover {

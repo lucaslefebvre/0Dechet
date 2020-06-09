@@ -115,4 +115,15 @@ class MainController extends AbstractController
     return $data->success;        
     }
 
+    /**
+     * Method for the homepage to show the 3 lastest and the 3 gradest recipes
+     * @Route("/mentions-legales", name="mentions_legales")
+     */
+    public function MentionLegal(RecipeRepository $recipeRepository)
+    {
+        return $this->render('main/mentions_legales.html.twig', [
+            'title'=>'Mentions légales',
+        ]);
+    }
+
 }
