@@ -137,36 +137,33 @@ class UserController extends AbstractController
                         $user->setPassword($passwordEncoder->encodePassword($user, $userPassword));
                     }
 
-                    // We keep the old image if there is no new image uploaded
-                    if ($user->getImage() === null) {
+
+                    if ($userForm->get('image')->getData() == null){
                         $user->setImage($imageUser);
-                    }
+                    }else{
+                      // OLD VERSION : We use a Services to move and rename the file
+                      // $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
+                      // $user->setImage($newName);
+                      
+                      // NEW VERSION :  We retrieve the original image
+                      $file = $userForm['image'];
+                      // We retrieve the cropped image
+                      $base64 = $request->request->get('photocoupee');
+
+                      // We decode the cropped image in base 64
+                      list(, $data) = explode(',', $base64);
+                      $data = base64_decode($data);
+
+                      // We rename the file with the service we created
+                      $fileName = $fileUploader->createFileName($file->getData()->getClientOriginalExtension());
+
+                      // We replace the content of the image with the info in base 64 from the cropped image
+                      file_put_contents('assets/images/users/' . $fileName, $data);
+
+                      // We set the cropped image in the user data
+                      $user->setImage($fileName);
+                     }
                   
-                    // OLD VERSION : We use a Services to move and rename the file
-                    // $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
-                    // $user->setImage($newName);
-
-                    // NEW VERSION :  We retrieve the original image
-                    $file = $userForm['image'];
-
-                    if ($file->getData() !== null) {
-                        // We retrieve the cropped image
-                        $base64 = $request->request->get('photocoupee');
-
-                        // We decode the cropped image in base 64
-                        list(, $data) = explode(',', $base64);
-                        $data = base64_decode($data);
-
-                        // We rename the file with the service we created
-                        $fileName = $fileUploader->createFileName($file->getData()->getClientOriginalExtension());
-
-                        // We replace the content of the image with the info in base 64 from the cropped image
-                        file_put_contents('assets/images/users/' . $fileName, $data);
-
-                        // We set the cropped image in the user data
-                        $user->setImage($fileName);
-                    }
-
                     $em->flush();
 
                     $email = (new TemplatedEmail())
