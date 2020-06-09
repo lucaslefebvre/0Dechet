@@ -33,6 +33,7 @@ security:
             form_login:
                 use_referer: true
                 csrf_token_generator: security.csrf.token_manager
+                remember_me: true
 
 
             # activate different ways to authenticate

@@ -42,6 +42,7 @@ class RecipeType extends AbstractType
             ->add('ingredient', CollectionType::class, [
                 'required' => true,
                 'label' => false,
+                'help' => 'Merci d\'indiquer au moins un ingrédient',
                 'entry_type' => TextType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -68,7 +69,7 @@ class RecipeType extends AbstractType
             ->add('duration', IntegerType::class, [
                 'required' => true,
                 'label' => 'Durée',
-                'help' => 'Indiquer la durée de la préparation en minutes',
+                'help' => 'Merci d\'indiquer la durée de la préparation en minutes',
                 'attr' => [
                     'min' => 0
                 ]

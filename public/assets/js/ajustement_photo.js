@@ -1,11 +1,11 @@
 var uploadCrop = $('#prev_photo').croppie({
     enableExif: true,
     viewport: {
-        width: 300,
-        height: 300,
+        width: 250,
+        height: 250,
         type: 'circle'
     },
-    boundary: { width: 400, height: 400 },
+    boundary: { width: 300, height: 300 },
 });
 
 $('#user_image').on('change', function () {
