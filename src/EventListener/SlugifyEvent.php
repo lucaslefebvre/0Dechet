@@ -3,6 +3,7 @@
 namespace App\EventListener;
 
 use App\Entity\Recipe;
+use App\Entity\User;
 use App\Services\Slugger;
 
 
@@ -29,6 +30,16 @@ class SlugifyEvent
 
             //Associate the new slug to the entity
             $recipe->setSlug($newSlug);
+        }
+        //If it's an User Object
+        if($entity instanceof User){
+
+            $user = $entity;
+            //Create a new slug for the user
+            $newSlug = strtolower($user->getUsername());
+
+            //Associate the new slug to the user
+            $user->setSlug($newSlug);
         }
         //If it's an entity with a slug property other than Recipe
         elseif(property_exists($entity, 'slug')){
@@ -58,6 +69,16 @@ class SlugifyEvent
  
              //Associate the new slug to the entity
              $recipe->setSlug($newSlug);
+        }
+         //If it's an User Object
+         if($entity instanceof User){
+
+            $user = $entity;
+            //Create a new slug for the user
+            $newSlug = strtolower($user->getUsername());
+
+            //Associate the new slug to the user
+            $user->setSlug($newSlug);
         }
          //If it's an entity with a slug property other than Recipe
          elseif(property_exists($entity, 'slug')){
