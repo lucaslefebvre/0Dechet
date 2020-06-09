@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -12,14 +13,20 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+
 class ContactType extends AbstractType
 {
+
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+ 
+        $builder          
+            ->add('email',EmailType::class,
+                [
+                'label'=>'Votre adresse email',
+                'help' => 'Rentrez une adresse email valide afin que nous puissions répondre à votre message',
 
-            ->add('email', EmailType::class, [
-                'label'=>'Entrer votre adresse email',
                 'constraints'=> [
                 new NotBlank([
                 'message'=>'Ce champ ne doit pas être vide',
@@ -27,16 +34,17 @@ class ContactType extends AbstractType
                 new Email([
                 'message'=>'L\'email n\'est pas valide'
                 ]),
-                ]])
+                ]]
+                )
             ->add('subject', TextType::class, [
                 'required'=>true,
-                'label' => 'Objet de votre message (entre 5 et 50 caractères)',
+                'label' => 'Objet de votre message',
+                'help' => 'L\'objet de votre message doit contenir au minimum 5 caractères et au maximum 50 caractères',
                 'constraints'=> [
                 new NotBlank([
                 'message'=>'Ce champ ne doit pas être vide',
                 ]),
-                new Assert\Length
-                ([
+                new Assert\Length([
                 'min' => 5,
                 'max' => 50,
                 'minMessage' => 'L\'objet du message doit contenir au moins 5 caractères',
@@ -45,23 +53,24 @@ class ContactType extends AbstractType
             ]])
             ->add('message', TextareaType::class, [
                 'required'=>true,
-                'label' => 'Votre message (1000 caractères maximum)',
+                'help' => 'Votre message doit contenir au minimum 5 caractères et au maximum 1000 caractères',
+                'label' => 'Votre message',
                 'constraints'=> [
                 new NotBlank([
                 'message'=>'Ce champ ne doit pas être vide',
                 ]),
-                new Assert\Length
-                ([
+                new Assert\Length([
                 'min' => 5,
-                'max' => 1000,
-                'minMessage' => 'L\'objet du message doit contenir au moins 5 caractères',
-                'maxMessage' => 'L\'objet du message ne doit pas contenir plus de 1000 caractères',
+                // 'max' => 1000,
+                'minMessage' => 'Le contenu du message doit contenir au moins 5 caractères',
+                // 'maxMessage' => 'L\'objet du message ne doit pas contenir plus de 1000 caractères',
                 ])
             ]]);
-            
+
+
     }
-
-
+            
+    
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

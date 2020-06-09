@@ -2,16 +2,23 @@
 
 {% block body %}
 
-<h1> Bonjour </h1>
+<main>
+    <p>Bonjour,</p><br>
 
-<p> Nous vous confirmons l'envoi de votre demande de contact ayant pour objet {{ subject }} </p>
+    <p>Nous vous confirmons l'envoi de votre demande via notre formulaire de contact.</p>
 
-<p> Nous nous efforcons de répondre dans les plus brefs délais .</p>
+    <p>Pour rappel, le contenu de votre message est le suivant :</p><br>
 
+    <p>Sujet : <em>{{ subject }}</em></p>
+    <p><em>{{ message|nl2br}}</em></p><br>
 
-<p> Cordialement </p>
+    <p>Au besoin, nous nous ferons un plaisir de vous répondre dans les plus brefs délais.</p>
 
-<p> L'équipe 0'déchet </p>
+    <p>Cordialement,</p>
+
+    <p><strong>L'équipe 0'déchet</strong></p>
+</main>
+
 
 
 {% endblock %}

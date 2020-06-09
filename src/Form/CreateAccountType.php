@@ -138,4 +138,9 @@ class CreateAccountType extends AbstractType
             'data_class' => User::class,
         ]);
     }
+
+    public function getBlockPrefix()
+	{
+		return 'user';
+	}
 }

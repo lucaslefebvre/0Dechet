@@ -123,7 +123,7 @@ class RecipeController extends AbstractController
             $email = (new TemplatedEmail())
             ->from('equipe0dechet@gmail.com')
             ->to($recipe->getUser()->getEmail())
-            ->subject('Ajout de votre recette')
+            ->subject('0\'Déchet - Votre recette a bien été ajoutée')
             ->htmlTemplate('email/recipe/add.html.twig')
             ->context([
                 'username' => $recipe->getUser()->getUsername(),
@@ -134,7 +134,7 @@ class RecipeController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Votre recette a été ajoutée, un mail de confirmation vous a été envoyé'
+                'Votre recette a été ajoutée, un mail de confirmation vous a été envoyé.'
             );
 
             return $this->redirectToRoute('recipe_show', [
@@ -188,7 +188,7 @@ class RecipeController extends AbstractController
             $email = (new TemplatedEmail())
             ->from('equipe0dechet@gmail.com')
             ->to($recipe->getUser()->getEmail())
-            ->subject('Modification de votre recette')
+            ->subject('0\'Déchet - Votre recette a bien été modifiée')
             ->htmlTemplate('email/recipe/edit.html.twig')
             ->context([
                 'username' => $recipe->getUser()->getUsername(),
@@ -200,7 +200,7 @@ class RecipeController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Votre recette a été modifié'
+                'Votre recette a été modifiée.'
             );
 
             return $this->redirectToRoute('recipe_show', [
@@ -250,7 +250,7 @@ class RecipeController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    'Votre commentaire a été ajouté'
+                    'Votre commentaire a été ajouté.'
                 );
 
                 return $this->redirectToRoute('recipe_show', [
@@ -272,7 +272,7 @@ class RecipeController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    'Votre note a été prise en compte'
+                    'Votre note a été prise en compte.'
                 );
 
                 return $this->redirectToRoute('recipe_show', [
@@ -389,7 +389,7 @@ class RecipeController extends AbstractController
             $email = (new TemplatedEmail())
              ->from('equipe0dechet@gmail.com')
              ->to($recipe->getUser()->getEmail())
-             ->subject('Suppression de votre recette')
+             ->subject('0\'Déchet - Votre recette a bien été supprimée')
              ->htmlTemplate('email/recipe/delete.html.twig')
              ->context([
                  'username' => $recipe->getUser()->getUsername(),
@@ -403,7 +403,7 @@ class RecipeController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'La recette a bien été supprimé.'
+                'La recette a bien été supprimée.'
             );
 
             return $this->redirectToRoute('user_read', [

@@ -4,10 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% block stylesheets %}
+        <script src='https://www.google.com/recaptcha/api.js'></script>
         <link rel="icon" href="{{ asset('assets/images/logo-mobile.png') }}" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
         <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/css/croppie.css') }}" rel="stylesheet"/>
         {% endblock %}
         <title>{% block title %}{{title}} - 0Déchet{% endblock %}</title>
     </head>
@@ -22,7 +24,7 @@
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div class="d-flex justify-content-between align-items-center navbar-profil mr-md-4">
               <div class="d-none d-sm-flex navbar-user-img-div align-items-center">
-                <a href="{{ path('user_read', {'username': app.user.username})}}">
+                <a href="{{ path('user_read', {'slug': app.user.slug})}}">
                   {% if app.user.image is not empty %}
                     <img src="{{ asset('assets/images/users/' ~ app.user.image) }}" class="navbar-user-img" alt="{{app.user.image}}">
                   {% else %}
@@ -31,7 +33,7 @@
                 </a>
               </div>
               <div>
-                <p><a href="{{ path('user_read', {'username': app.user.username})}}">{{app.user.username}}</a></p>
+                <p><a href="{{ path('user_read', {'slug': app.user.slug})}}">{{app.user.username}}</a></p>
                 <a class="btn header-btn-deconnexion mt-1" href="{{ path('app_logout') }}">Déconnexion</a>
               </div>
             </div>
@@ -107,9 +109,9 @@
                 
               </li>
               {% endfor %}
-              <li><a class="nav-link" href="{{ path('main_contact') }}">Contact</a></li>
+              
               {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-              <li><a class="nav-link d-md-none" href="{{ path('user_read', {'username': app.user.username})}}">Accéder à mon profil</a></li>
+              <li><a class="nav-link d-md-none" href="{{ path('user_read', {'slug': app.user.slug})}}">Accéder à mon profil</a></li>
               {% endif %}
               <li>
                 <form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
@@ -126,10 +128,15 @@
 
     {% block footer %}
         <footer>
+          <div>
+            <a class="footer-link" href="{{ path('main_mentions_legales') }}">Mentions légales</a> - 
+            <a class="footer-link" href="{{ path('main_contact') }}">Contact</a>
+          </div>
             <p>Tous droits réservés © 2020 0'Déchet</p>
         </footer>
     {% endblock %}
     {% block javascripts %}
+        <script src="https://www.google.com/recaptcha/api.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
@@ -186,8 +193,14 @@
         });
     }
 </script>
+ <script>
+   function onSubmit(token) {
+     document.getElementById("form").submit();
+   }
+ </script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
-
+<script src="{{ asset('assets/js/croppie.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/ajustement_photo.js') }}"></script>
      {% endblock %}
     </body>
 </html>
