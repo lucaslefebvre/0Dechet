@@ -235,7 +235,12 @@
                 <p class="recipe-comment-title">{{ comment.title }}</p>
                 {% if comment.user == app.user %}
                 <a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn card-btn ml-3"><i class="fa fa-pencil-square fa-2x" aria-hidden="true"></i></a>
-                {# <a data-target="{{ path('comment_edit', {'id': comment.id}) }}" data-tooltip="voir" class="tooltipped modal-trigger btn right-align" href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a> #}
+                
+                 <button type="button" id="createmodelBtn" class="btn btn-dark" href="" data-toggle="modal" data-target="#createmodel" data-commentid="{{ comment.id }}">Modifier</button>
+                 {# {% set submit_url = path('comment_editModal', {'id': comment.id}) %} #}
+                  {# {% include 'comment/modal.html.twig' with {'id': comment.id}%} #}
+                  {# {% include 'comment/modal.html.twig' with {'url': submit_url} %} #}
+
                 {% endif %}
                 </div>
               <p class="recipe-comment-user">par {{ comment.user }} le {{ comment.createdAt|date("d/m/Y") }}</p>
@@ -246,17 +251,34 @@
         {% endif %}
         </div>
       </div>
+      {% include 'comment/modal.html.twig' %}
     </main>
 {% endblock %}
 
-{% block javascript %}
+{% block javascripts %}
+{{parent()}}
 <script type="text/javascript">
 let rating = document.querySelector('input:checked').value;
-$.post("{{ path('recipe_show') }}", {variable : rating},function data(reply){});
+$.post("{{ path('recipe_show', {'slug': recipe.slug}) }}", {variable : rating},function data(reply){});
 </script>
+
 <script type="text/javascript">
-let modalBtn = document.querySelector('.modal-trigger');
-console.log(modalBtn)
+
+let button = document.querySelector('#createmodelBtn');
+  console.log(button);
+  let id = button.dataset.commentid;
+  console.log(id);
+  {# $.get("{{ path('comment_editModal') }}", {variable : id},function data(reply){}); #} #}
+{# $('#createmodelBtn').on(function (event) {
+  let button = $(event.relatedTarget)// Button that triggered the modal
+  console.log(button);
+  var id= button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-title').text('The ID is: ' + id)
+  modal.find('.modal-body input').val(id)
+}) #}
 </script>
 {% endblock %}
 

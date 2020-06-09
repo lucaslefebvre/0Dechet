@@ -20,6 +20,8 @@ let app = {
 
             app.leftMenuOnClick();
         }
+
+
     },
 
     // Method to filter the left menu, depend on where we are on the website
@@ -94,6 +96,7 @@ let app = {
             }
         }
     }
+
 
 }
 
