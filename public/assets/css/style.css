@@ -947,6 +947,12 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     right: -100%;
     bottom: -100%;
 }
-.g-recaptcha{
+.g-recaptcha {
     margin-top: 10px;
+}
+.modal-header {
+    background-color:  #617e64;
+}
+.modal-title {
+    color: white;
 }
