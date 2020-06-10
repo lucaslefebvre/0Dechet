@@ -182,7 +182,6 @@ easy_admin:
                   - { property: 'username', label: "Nom d'utilisateur", type_options: { required: true } }
                   - { property: 'email', label: 'Email', type: 'email', type_options: { required: true } }
                   - { property: 'password', type: 'password', label: 'Mot de passe', help: "Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle, une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !", type_options: { required: true, mapped: true } }
-                  - { property: 'imageFile', type: 'vich_image', label: 'Ajouter une photo de profil' }
                   - { property: 'roles', label: 'Rôles', type: choice, 
                         type_options: {expanded: true, multiple: true, 
                           choices: {'Utilisateur':'ROLE_USER', 
