@@ -257,33 +257,31 @@
 let rating = document.querySelector('input:checked').value;
 $.post("{{ path('recipe_show', {'slug': recipe.slug}) }}", {variable : rating},function data(reply){});
 </script>
-
-
 <script type="text/javascript">
- $('.btn-modal').click(function (event) {
-  let button = $(event.currentTarget) // Button that triggered the modal
-  let commentId = button.data('commentid') // Extract info from data-* attributes
-  console.log(commentId);
-  
-  let url = "{{ path('comment_editModal', {'id': '00'}) }}";
-  url = url.replace("00", commentId);
- // console.log(url);
- var modal = document.querySelector('#createmodel');
- var modalBody = modal.querySelector('.modal-body');
- console.log(modalBody);
 
-      $.ajax({
-      method: "GET",
-      url: url,
-      success: function(result) {
-        modalBody.innerHTML = result
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-        console.log('xHR: ' + xhr);
-        console.log('ajaxOption: ' + ajaxOptions);
-        console.log('thrownError: ' + thrownError);
-      }
-    });
+ $('.btn-modal').click(function (event) { //We are listening to every modify button on the page
+let button = $(event.currentTarget) // Button that triggered the modal
+let commentId = button.data('commentid') // Extract the comment id from data-* attributes
+
+let url = "{{ path('comment_edit', {'id': '00'}) }}";
+url = url.replace("00", commentId); // Prepare the url for Ajax Request with the id given by the js variable "commentId"
+
+var modal = document.querySelector('#createmodel');// Target the included modal
+var modalBody = modal.querySelector('.modal-body');// Target the modal body
+
+    $.ajax({
+    method: "GET",
+    url: url,
+    success: function(result) { // On success "result" is the render of comment_edit route for an Ajax Request
+      modalBody.innerHTML = result // Rendering the form given by comment_edit in the modal body
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('xHR: ' + xhr);
+      console.log('ajaxOption: ' + ajaxOptions);
+      console.log('thrownError: ' + thrownError);
+    }
+    // When submiting the form, it use the action option setup in CommentController to submit on "POST" method on comment_edit
+  });
 })
 </script>
 {% endblock %}
