@@ -15,11 +15,6 @@
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        {% if app.user %}
-            <div class="mb-3">
-                Vous êtes identifié {{ app.user.username }}, <a href="{{ path('app_logout') }}">Deconnexion</a>
-            </div>
-        {% endif %}
         <label for="inputEmail" class="user-form-label">Email</label>
 
         <input type="email" name="email" id="inputEmail" class="form-control" required autofocus>
@@ -32,7 +27,7 @@
             <br>
             <div class="checkbox mb-3">
                 <label>
-                    <input type="checkbox" name="_remember_me"> Se souvenir de moi
+                    <input type="checkbox" name="_remember_me" id="form_saveCredentials" name="form[saveCredentials]"> Se souvenir de moi
                 </label>
             </div>
             <input type="hidden" name="_csrf_token"
