@@ -25,7 +25,9 @@ class CommentController extends AbstractController
     {
         $this->denyAccessUnlessGranted('EDIT', $comment);
 
-        $form = $this->createForm(CommentType::class, $comment);
+        // Setup formOptions to submit on this route even in the case of an Ajax Request
+        $formOptions = ['method' => 'POST', 'action' => $this->generateUrl('comment_edit', ['id' => $comment->getId()])];
+        $form = $this->createForm(CommentType::class, $comment, $formOptions);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -41,18 +43,24 @@ class CommentController extends AbstractController
                 'slug' => $comment->getRecipe()->getSlug(),
             ]);
         }
-
         $formDelete = $this->createForm(DeleteType::class, null, [
             'action' => $this->generateUrl('comment_delete', ['id' => $comment->getId()])
         ]);
         
-        return $this->render('comment/edit.html.twig', [
-            'comment' => $comment,
-            'form' => $form->createView(),
-            'deleteForm' => $formDelete->createView(),
-            'title' => "Modifier un commentaire",
-        ]);
-       
+        if ($request->isXmlHttpRequest()) {  // If the request is an Ajax Call
+            return $this->render('comment/ajax.edit.html.twig', [
+                'comment' => $comment,
+                'form' => $form->createView(),
+                'deleteForm' => $formDelete->createView(),
+            ]);
+        } else {  // If the request is a classic Call
+            return $this->render('comment/edit.html.twig', [
+                'comment' => $comment,
+                'form' => $form->createView(),
+                'deleteForm' => $formDelete->createView(),
+                'title' => "Modifier un commentaire",
+            ]); 
+        } 
     }
 
         /**
