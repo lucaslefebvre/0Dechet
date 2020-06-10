@@ -295,7 +295,12 @@ footer {
 }
 
 .footer-link {
-    color: #b7cbad;
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+.footer-link:hover {
+    color: #ffffff;
 }
 
 /* HOMEPAGE */
@@ -976,12 +981,22 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     right: -100%;
     bottom: -100%;
 }
+
 .g-recaptcha {
     margin-top: 10px;
 }
+
 .modal-header {
     background-color:  #617e64;
 }
+
 .modal-title {
     color: white;
 }
+
+.cgu-li {
+    display: list-item;
+    list-style-type: initial;
+    margin-top: .5rem;
+}
+
