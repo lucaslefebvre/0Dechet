@@ -374,7 +374,7 @@ class RecipeController extends AbstractController
     /**
      * Method to allow a user to delete one of his/her recipe off the website
      * @IsGranted("IS_AUTHENTICATED_FULLY")
-     * @Route("/recipe/suppression/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
+     * @Route("/suppression/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
     public function delete(EntityManagerInterface $em, MailerInterface $mailer, Request $request, Recipe $recipe)
     {
@@ -407,7 +407,7 @@ class RecipeController extends AbstractController
             );
 
             return $this->redirectToRoute('user_read', [
-                'username' => $this->getUser()->getUsername(),
+                'slug' => $this->getUser()->getSlug(),
             ]);
         }
 
