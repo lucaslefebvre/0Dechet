@@ -234,7 +234,8 @@
                 <div class="d-flex">
                 <p class="recipe-comment-title">{{ comment.title }}</p>
                 {% if comment.user == app.user %}
-                <a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn card-btn ml-3"><i class="fa fa-pencil-square fa-2x" aria-hidden="true"></i></a>
+                {# <a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn card-btn ml-3"><i class="fa fa-pencil-square fa-2x" aria-hidden="true"></i></a> #}
+                <button type="button" class="btn card-btn btn-modal ml-3" href="" data-toggle="modal" data-target="#createmodel" data-commentid="{{ comment.id }}"><i class="fa fa-pencil-square fa-2x" aria-hidden="true"></i></button>
                 {# <a data-target="{{ path('comment_edit', {'id': comment.id}) }}" data-tooltip="voir" class="tooltipped modal-trigger btn right-align" href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a> #}
                 {% endif %}
                 </div>
@@ -246,17 +247,44 @@
         {% endif %}
         </div>
       </div>
+      {% include 'partials/modal.comment.html.twig' %}
     </main>
 {% endblock %}
 
-{% block javascript %}
+{% block javascripts %}
+{{parent()}}
 <script type="text/javascript">
 let rating = document.querySelector('input:checked').value;
-$.post("{{ path('recipe_show') }}", {variable : rating},function data(reply){});
+$.post("{{ path('recipe_show', {'slug': recipe.slug}) }}", {variable : rating},function data(reply){});
 </script>
+
+
 <script type="text/javascript">
-let modalBtn = document.querySelector('.modal-trigger');
-console.log(modalBtn)
+ $('.btn-modal').click(function (event) {
+  let button = $(event.currentTarget) // Button that triggered the modal
+  let commentId = button.data('commentid') // Extract info from data-* attributes
+  console.log(commentId);
+  
+  let url = "{{ path('comment_editModal', {'id': '00'}) }}";
+  url = url.replace("00", commentId);
+ // console.log(url);
+ var modal = document.querySelector('#createmodel');
+ var modalBody = modal.querySelector('.modal-body');
+ console.log(modalBody);
+
+      $.ajax({
+      method: "GET",
+      url: url,
+      success: function(result) {
+        modalBody.innerHTML = result
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log('xHR: ' + xhr);
+        console.log('ajaxOption: ' + ajaxOptions);
+        console.log('thrownError: ' + thrownError);
+      }
+    });
+})
 </script>
 {% endblock %}
 
