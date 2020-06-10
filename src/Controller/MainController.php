@@ -104,7 +104,7 @@ class MainController extends AbstractController
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-            "secret"=>"6LccZwEVAAAAABwtfiAhVmJtPCsDb5HjvBJQQKWP","response"=>$recaptcha));
+            "secret"=>"6LeN2KIZAAAAAAGCZqJdlfm4_ZqO-fiu_X6kWoIP","response"=>$recaptcha));
             $response = curl_exec($ch);
             curl_close($ch);
         }else{
