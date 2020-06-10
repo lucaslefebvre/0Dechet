@@ -26,6 +26,7 @@ class RecipeType extends AbstractType
             [   
                 'label' => 'Nom de la recette',
                 'required' => true,
+                'help' => 'Le nom de la recette doit être compris entre 5 et 50 caractères'
                 // 'constraints' => new Assert\NotBlank(),
                 // 'constraints' => [
                 // new Assert\Length
@@ -55,6 +56,7 @@ class RecipeType extends AbstractType
             ->add('content', TextareaType::class, [
                 'required' => true,
                 'label' => 'Détail de la préparation',
+                'help' => 'Le détail de la préparation doit contenir au moins 30 caractères',
                 // 'constraints' => [
                 // new Assert\Length
                 // ([
@@ -65,7 +67,11 @@ class RecipeType extends AbstractType
             )
             ->add('duration', IntegerType::class, [
                 'required' => true,
-                'label' => 'Durée (en minutes)',
+                'label' => 'Durée',
+                'help' => 'Merci d\'indiquer la durée de la préparation en minutes',
+                'attr' => [
+                    'min' => 0
+                ]
                 // 'constraints' => new Assert\Positive(),
             ])
             ->add('difficulty', ChoiceType::class, [
@@ -83,12 +89,14 @@ class RecipeType extends AbstractType
             ->add('conservation', ChoiceType::class,  [
                 'placeholder' => 'Sélectionner le temps de conservation',
                 'choices' => [
+                    'Aucune limite de conservation' => '0',
                     '1 semaine' => '7',
                     '2 semaines' => '14',
                     '1 mois' => '30',
                     '2 mois' => '60',
                     '3 mois' => '90',
-                    '6 mois' => '180'],
+                    '6 mois' => '180',
+                    ],
                 'multiple' => false,
                 'expanded' => false,
                 'required' => false,
@@ -103,7 +111,7 @@ class RecipeType extends AbstractType
                 'label' => 'Vidéo',
                 'required' => false,
                 'mapped' => false,
-                'help' => 'Copier le lien où se situe votre vidéo'
+                'help' => 'Copier le lien Youtube, Dailymotion ou Vimeo de votre vidéo'
             ])
 
             ->add('type', EntityType::class, [

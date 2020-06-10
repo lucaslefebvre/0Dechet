@@ -1,22 +1,62 @@
 {{ form_start(userForm) }}
-    <div class="user-form-label">{{form_label (userForm.username) }}</div>
+    <div class="user-form-label">{{form_label (userForm.username) }} <span class="form-asterisk-mandatory">*</span></div>
+    <div>{{form_help (userForm.username) }}</div>
     <div>{{form_widget (userForm.username) }}</div>
 
-    <div class="user-form-label">{{form_label (userForm.email) }}</div>
+    <div class="user-form-label">{{form_label (userForm.email) }} <span class="form-asterisk-mandatory">*</span></div>
     <div>{{form_widget (userForm.email) }}</div>
 
-    <div class="user-form-input">{{form_widget (userForm.password) }}</div>
+    <div class="user-form-label">{{form_label (userForm.password.first) }} {{ app.request.attributes.get('_route') == 'user_add' ? '<span class="form-asterisk-mandatory">*</span>' }}</div>
     <div>{{form_help (userForm.password) }}</div>
+    <div>{{form_widget (userForm.password.first) }}</div>
 
-    <div class="user-form-label">{{form_label (userForm.image) }}</div>
+    <div class="user-form-label">{{form_label (userForm.password.second) }} {{ app.request.attributes.get('_route') == 'user_add' ? '<span class="form-asterisk-mandatory">*</span>' }}</div>
+    <div>{{form_widget (userForm.password.second) }}</div>
+
+
+    <div class="user-form-label">{{form_label (userForm.image) }}</span></div>
     <div>{{form_widget (userForm.image) }}</div>
-
-    {% if userForm.cgu is defined %}
-    <div class="user-form-label">{{form_label(userForm.cgu) }}</div>
-    <div class="user-form-input">{{form_widget (userForm.cgu) }}</div>
-    {% endif %}
-
-    <div class="submit-button-container">
-        <button type="submit" class="btn form-btn">{{ button_label|default('Ajouter') }}</button>
+    {# Allow to crop the user image with Croppie.js #}
+    <div class="center-block text-warning">
+        <div id="prev_photo" class="mt-3"></div>
     </div>
+    <br>
+    <input type="hidden" id="photocoupee" name="photocoupee">
+
+    <div class="mt-3"><span class="form-asterisk-mandatory">*</span><span class="form-text-mandatory"> Champs obligatoires</span></div>
+ 
+ {% if userForm.cgu is defined %}
+    <div class="modal fade" id="cguModal" tabindex="-1" role="dialog" aria-labelledby="cguModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cguModalTitle">Conditions générales d'utilisation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×
+            </button>
+          </div>
+          <div class="modal-body">
+
+            {{ include('partials/cgu.html.twig') }}
+
+            <div class="modal-footer">
+              <button type="button" class="btn cgu-btn" data-dismiss="modal">Fermer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>     
+    <div class="user-form-label">{{form_label (userForm.cgu) }} </div>
+    <div>{{form_widget (userForm.cgu, {'attr': {'data-toggle': 'modal', 'data-target':'#cguModal'}}) }}</div>
+
+  {% endif %}
+  <div class="g-recaptcha" data-sitekey="6LccZwEVAAAAAIANtOqqk4lWejKoK1_9xrFHMEdG"></div>
+
+  <div class="submit-button-container">
+      <button type="submit" class="btn form-btn">{{ button_label|default('Ajouter') }}</button>
+  </div>
 {{ form_end(userForm)  }}
+
+<script type="text/javascript" 
+        src="{{ asset('assets/js/ajustement_photo.js') }}">
+</script>

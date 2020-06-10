@@ -1,0 +1,24 @@
+{% extends 'email/base.html.twig' %}
+
+{% block body %}
+
+<main>
+    <p>Bonjour,</p><br>
+
+    <p>Nous vous confirmons l'envoi de votre demande via notre formulaire de contact.</p>
+
+    <p>Pour rappel, le contenu de votre message est le suivant :</p><br>
+
+    <p>Sujet : <em>{{ subject }}</em></p>
+    <p><em>{{ message|nl2br}}</em></p><br>
+
+    <p>Au besoin, nous nous ferons un plaisir de vous répondre dans les plus brefs délais.</p>
+
+    <p>Cordialement,</p>
+
+    <p><strong>L'équipe 0'déchet</strong></p>
+</main>
+
+
+
+{% endblock %}

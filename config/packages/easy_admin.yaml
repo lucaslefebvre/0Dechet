@@ -1,5 +1,9 @@
 easy_admin:
   site_name: '<a href="/"><img src="/assets/images/logo.png" style="height: 80px" alt="0déchet"></a>'
+  formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i'
   design:
         brand_color: '#739377'
         assets:
@@ -92,7 +96,7 @@ easy_admin:
                     - { property: 'duration', label: 'Durée' }
                     - { property: 'difficulty', label: 'Difficulté' }
                     - { property: 'conservation', label: 'Conservation' }
-                    - { property: 'image', label: 'Image de la recette' }
+                    - { property: 'image', type: 'image', label: 'Image de la recette', base_path: '%app.path.recipe_images%' }
                     - { property: 'status', label: 'Status' }
                     - { property: 'slug', label: 'Slug' }
                     - { property: 'comments', label: 'Commentaire' }
@@ -167,7 +171,7 @@ easy_admin:
                   - { property: 'email', label: 'Email' }
                   - { property: 'username', label: 'Pseudo' }
                   - { property: 'roles', label: 'Rôle' }
-                  - { property: 'image', label: 'Photo de profil' }
+                  - { property: 'image', type: 'image', label: 'Photo de profil', base_path: '%app.path.user_images%' }
                   - { property: 'recipes', label: 'Recette ajouté' }
                   - { property: 'comments', label: 'Commentaire lié' }
                   - { property: 'createdAt', label: 'Créé le' }
@@ -178,7 +182,6 @@ easy_admin:
                   - { property: 'username', label: "Nom d'utilisateur", type_options: { required: true } }
                   - { property: 'email', label: 'Email', type: 'email', type_options: { required: true } }
                   - { property: 'password', type: 'password', label: 'Mot de passe', help: "Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle, une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !", type_options: { required: true, mapped: true } }
-                  - { property: 'imageFile', type: 'vich_image', label: 'Ajouter une photo de profil' }
                   - { property: 'roles', label: 'Rôles', type: choice, 
                         type_options: {expanded: true, multiple: true, 
                           choices: {'Utilisateur':'ROLE_USER', 
@@ -188,7 +191,6 @@ easy_admin:
               fields: 
                   - { property: 'username', label: "Nom d'utilisateur", type_options: { required: true } }
                   - { property: 'email', label: 'Email', type: 'email', type_options: { required: true } }
-                  - { property: 'password', type: 'password', label: 'Mot de passe', help: "Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle, une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !", type_options: { required: false, mapped: false, empty_data: null, disabled: true } }
                   - { property: 'imageFile', type: 'vich_image', label: 'Modifier la photo de profil' }
                   - { property: 'recipes', label: 'Recette ajouté' }
                   - { property: 'comments', label: 'Commentaire lié' }

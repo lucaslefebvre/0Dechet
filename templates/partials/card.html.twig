@@ -3,9 +3,6 @@
   <div class="pt-3">
     <div class="card-recipe-img">
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-      {% if app.user.favorites is empty %}
-      <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon"><i class="fa fa-heart-o fa-lg card-fav-icon-empty" aria-hidden="true"></i></a>
-      {% endif %}
 
       {% set break = false %}
       {% for favorite in app.user.favorites %}
@@ -44,9 +41,9 @@
     </div>
   </div>
   <div class="d-flex justify-content-center">
-    <div class="card-profil-img">
+    <div class="card-profil-img d-flex align-items-center">
     {% if recipe.user is not empty %}
-      <a href="{{ path('user_read', {'username': recipe.user.username})}}">
+      <a href="{{ path('user_read', {'slug': recipe.user.slug})}}">
         {% if recipe.user.image is not empty %}
           <img src="{{ asset('assets/images/users/' ~ recipe.user.image) }}" class="card-img-user" alt="{{recipe.user.image}}">
         {% else %}
@@ -59,7 +56,7 @@
     </div>
     <div class="card-profil">
       {% if recipe.user != null %}
-        <p>Proposé par <a href="{{ path('user_read', {'username': recipe.user.username})}}"  class="user-profil">{{ recipe.user }}</a></p>
+        <p>Proposé par <a href="{{ path('user_read', {'slug': recipe.user.slug})}}"  class="user-profil">{{ recipe.user }}</a></p>
       {% else %}
         <p>Proposé par Anonyme</p>
       {% endif %}

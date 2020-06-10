@@ -7,17 +7,38 @@
     <h2>Modifier une recette</h2>
   </div>
 
-{{ include('recipe/_form.html.twig', {'button_label': 'Modifier'}) }}
+  {{ include('recipe/_form.html.twig', {'button_label': 'Modifier'}) }}
 
+  <div class="row justify-content-center">
+    <button type="button" class="confirmModalLink form-btn-delete mt-0">Supprimer la recette</button>
+  </div>
 
-    <div class="row justify-content-center">
-    {{ form_start(deleteForm) }}
-      {{ form_widget(deleteForm.deleteButton, {'attr': {'class': 'form-btn-delete'}, 'label': "Supprimer ma recette"}) }}
-    {{ form_end(deleteForm) }}
-    </div>
-
-    <div class="row mt-4">
-      <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
-    </div>
+  <div class="row mt-4">
+    <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
+  </div>
 </main>
+
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Confirmation de suppression</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body d-flex align-items-center justify-content-center">
+        <div><img src="{{ asset('assets/images/Modale.png') }}" width="80px" alt=""></div>
+        <div class="ml-3">Êtes-vous sûr(e) de vouloir supprimer la recette ?</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn modal-btn-delete" data-dismiss="modal">Non</button>
+        {{ form_start(deleteForm) }}
+          {{ form_widget(deleteForm.deleteButton, {'attr': {'class': 'modal-btn'}, 'label': "Oui"}) }}
+        {{ form_end(deleteForm) }}
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

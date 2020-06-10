@@ -10,7 +10,7 @@
       <div class="card card-team col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
         <div class="pt-3">
             <div class="card-team-img">
-              <img src="{{ asset('assets/images/paul.png') }}" class="card-img-top" alt="Logo 0'Déchet">
+              <img src="{{ asset('assets/images/paul.png') }}" class="card-team-img-top" alt="Photo Paul Brousses">
             </div>
             <div class="card-body p-2">
               <h5 class="card-title card-team-title">Paul Brousses</h5>
@@ -21,7 +21,7 @@
       <div class="card card-team col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
         <div class="pt-3">
             <div class="card-team-img">
-              <img src="{{ asset('assets/images/manon.png') }}" class="card-img-top" alt="Logo 0'Déchet">
+              <img src="{{ asset('assets/images/manon.png') }}" class="card-team-img-top" alt="Photo Manon Furrer">
             </div>
             <div class="card-body p-2">
               <h5 class="card-title card-team-title">Manon Furrer</h5>
@@ -32,7 +32,7 @@
       <div class="card card-team col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
         <div class="pt-3">
             <div class="card-team-img">
-              <img src="{{ asset('assets/images/laetitia.png') }}" class="card-img-top" alt="Logo 0'Déchet">
+              <img src="{{ asset('assets/images/laetitia.png') }}" class="card-team-img-top" alt="Photo Laetitia Georgelin">
             </div>
             <div class="card-body p-2">
               <h5 class="card-title card-team-title">Laëtitia Georgelin</h5>
@@ -43,7 +43,7 @@
       <div class="card card-team col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
         <div class="pt-3">
             <div class="card-team-img">
-              <img src="{{ asset('assets/images/lucas.png') }}" class="card-img-top" alt="Logo 0'Déchet">
+              <img src="{{ asset('assets/images/lucas.png') }}" class="card-team-img-top" alt="Photo Lucas Lefebvre">
             </div>
             <div class="card-body p-2">
               <h5 class="card-title card-team-title">Lucas Lefebvre</h5>
@@ -54,7 +54,7 @@
       <div class="card card-team col-11 col-sm-5 col-lg-3 pb-4 mt-3 my-md-4 mx-1 mx-md-2">
         <div class="pt-3">
             <div class="card-team-img">
-              <img src="{{ asset('assets/images/steven.png') }}" class="card-img-top" alt="Logo 0'Déchet">
+              <img src="{{ asset('assets/images/steven.png') }}" class="card-team-img-top" alt="Photo Steven Renaux">
             </div>
             <div class="card-body p-2">
               <h5 class="card-title card-team-title">Steven Renaux</h5>
@@ -66,9 +66,12 @@
     <div class="row pt-3 px-3 main-title">
       <h2>Nous contacter</h2>
     </div>
-    <div class="row pt-3 px-3">
-      <p>Par mail à l'adresse suivante : equipe0dechet@gmail.com</p>
+    <div>
+  {{ include('main/_form.html.twig') }}
     </div>
+      <div class="row">
+    <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
+  </div>
+    
 </main>
-
 {% endblock %}

@@ -23,7 +23,24 @@
         </p> 
       </div>
       <div class="row justify-content-between text-md-right px-3 ml-md-2 mr-md-1 main-title">
-        <h2>{{ recipe.name }}</h2>
+        <div>
+            <h2 class="mr-3 d-inline">{{ recipe.name }}</h2>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+              {% set break = false %}
+              {% for favorite in app.user.favorites %}
+                {% if recipe == favorite.recipes %}
+                {% set break = true %}
+                {% endif %}
+              {% endfor %}
+
+              {% if break == true %}
+                <a href="{{ path('favorite' , {'slug': recipe.slug}) }}"><i class="fa fa-heart fa-lg card-fav-icon-full" aria-hidden="true"></i></a>
+              {% else  %}
+                <a href="{{ path('favorite' , {'slug': recipe.slug}) }}"><i class="fa fa-heart-o fa-lg card-fav-icon-empty" aria-hidden="true"></i></a>
+              {% endif %}
+            {% endif %}
+        </div>
         <div class="d-none d-md-flex align-items-center">
           <div class="recipe-nb-opinion">
             (Nombre d'avis : {{ recipe.rates|length }})
@@ -76,11 +93,11 @@
       </div>
         {% elseif recipe.image is not empty %}
       <div class="col-12 col-lg-6 order-lg-2 mb-3 mb-lg-0 text-center">
-          <img src="{{ asset('assets/images/recipes/' ~ recipe.image) }}" class="img-fluid" alt="préparation de {{recipe.name}}">
+          <img src="{{ asset('assets/images/recipes/' ~ recipe.image) }}" class="img-fluid recipe-img" alt="préparation de {{recipe.name}}">
       </div>
         {% else %}
       <div class="col-12 col-lg-6 order-lg-2 mb-3 mb-lg-0 text-center">
-          <img src="{{ asset('assets/images/default-recipe.png') }}" class="img-fluid" alt="préparation de {{recipe.name}}">
+          <img src="{{ asset('assets/images/default-recipe.png') }}" class="img-fluid recipe-img" alt="préparation de {{recipe.name}}">
       </div>
         {% endif %}
         <div class="col-12 col-lg-6 p-0">
@@ -108,17 +125,17 @@
           </div>
         </div>
       </div>
-      <div class="row pt-3 px-3 ml-md-2 mr-md-1 recipe-content">
+      <div class="row pt-3 px-3 ml-md-2 mr-md-1">
         <h5 class="recipe-content-title">Recette :</h5>
       </div>
       <div class="row px-3 ml-md-2 mr-md-1">
         {% if recipe.user != null %}
-        <p>Proposé par <a href="{{ path('user_read', {'username': recipe.user.username})}}"  class="user-profil">{{ recipe.user }}</a></p>
+        <p>Proposée par <a href="{{ path('user_read', {'slug': recipe.user.slug})}}"  class="user-profil">{{ recipe.user }}</a></p>
         {% else %}
-        <p>Proposé par Anonyme</p>
+        <p>Proposée par Anonyme</p>
         {% endif %}
       </div>
-      <div class="row px-3 ml-md-2 mr-md-1">
+      <div class="row px-3 ml-md-2 mr-md-1 recipe-content">
           <p>{{ recipe.content |nl2br }}</p>
       </div>
       <div class="row justify-content-center">
@@ -214,7 +231,8 @@
                 <div class="d-flex">
                 <p class="recipe-comment-title">{{ comment.title }}</p>
                 {% if comment.user == app.user %}
-                <a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn card-btn ml-3"><i class="fa fa-pencil-square fa-2x" aria-hidden="true"></i></a>
+                {# <a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn card-btn ml-3"><i class="fa fa-pencil-square fa-2x" aria-hidden="true"></i></a> #}
+                <button type="button" class="btn card-btn btn-modal ml-3" href="" data-toggle="modal" data-target="#createmodel" data-commentid="{{ comment.id }}"><i class="fa fa-pencil-square fa-2x" aria-hidden="true"></i></button>
                 {# <a data-target="{{ path('comment_edit', {'id': comment.id}) }}" data-tooltip="voir" class="tooltipped modal-trigger btn right-align" href="{{ path('comment_edit', {'id': comment.id}) }}">Modifier</a> #}
                 {% endif %}
                 </div>
@@ -226,17 +244,42 @@
         {% endif %}
         </div>
       </div>
+      {% include 'partials/modal.comment.html.twig' %}
     </main>
 {% endblock %}
 
-{% block javascript %}
+{% block javascripts %}
+{{parent()}}
 <script type="text/javascript">
 let rating = document.querySelector('input:checked').value;
-$.post("{{ path('recipe_show') }}", {variable : rating},function data(reply){});
+$.post("{{ path('recipe_show', {'slug': recipe.slug}) }}", {variable : rating},function data(reply){});
 </script>
 <script type="text/javascript">
-let modalBtn = document.querySelector('.modal-trigger');
-console.log(modalBtn)
+
+ $('.btn-modal').click(function (event) { //We are listening to every modify button on the page
+let button = $(event.currentTarget) // Button that triggered the modal
+let commentId = button.data('commentid') // Extract the comment id from data-* attributes
+
+let url = "{{ path('comment_edit', {'id': '00'}) }}";
+url = url.replace("00", commentId); // Prepare the url for Ajax Request with the id given by the js variable "commentId"
+
+var modal = document.querySelector('#createmodel');// Target the included modal
+var modalBody = modal.querySelector('.modal-body');// Target the modal body
+
+    $.ajax({
+    method: "GET",
+    url: url,
+    success: function(result) { // On success "result" is the render of comment_edit route for an Ajax Request
+      modalBody.innerHTML = result // Rendering the form given by comment_edit in the modal body
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('xHR: ' + xhr);
+      console.log('ajaxOption: ' + ajaxOptions);
+      console.log('thrownError: ' + thrownError);
+    }
+    // When submiting the form, it use the action option setup in CommentController to submit on "POST" method on comment_edit
+  });
+})
 </script>
 {% endblock %}
 

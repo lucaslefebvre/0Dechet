@@ -1,24 +1,28 @@
 App\Entity\Category:
     properties:
         name:
-            - NotBlank: ~
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
 App\Entity\SubCategory:
     properties:
         name:
-            - NotBlank: ~
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
 App\Entity\Type:
     properties:
         name:
-            - NotBlank: ~
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
 App\Entity\Recipe:
     properties:
         name:
-            - NotBlank: ~
+            - NotBlank: 
+                message: 'Ce champ ne doit pas être vide'
             - Length:
                 min: 5
-                max: 35
+                max: 50
                 minMessage: 'Le nom de la recette doit contenir au moins 5 caractères'
-                maxMessage: 'Le nom de la recette ne doit pas contenir plus de 35 caractères'
+                maxMessage: 'Le nom de la recette ne doit pas contenir plus de 50 caractères'
         content:
             - NotBlank: ~
             - Length:
@@ -26,14 +30,16 @@ App\Entity\Recipe:
                 minMessage: 'La recette doit contenir au moins 30 caractères'
         ingredient:
             - NotBlank: 
-                  message: 'Ce champ ne doit pas être vide'
+                message: 'Ce champ ne doit pas être vide'
         duration:
             - Positive: ~
 App\Entity\User:
     properties:
         username:
             - NotBlank: 
+                normalizer: 'trim'
                 message: 'Ce champ ne doit pas être vide'
+            - NotNull: ~
             - Regex:
                 pattern: '/^[a-zA-Z0-9-_]*$/'
                 match: true
@@ -43,13 +49,13 @@ App\Entity\User:
                 message: 'Ce champ ne doit pas être vide'
             - Email: 
                 message: "L'email n'est pas valide"
+            - NotNull: ~
         password:
-            - Regex:
-                pattern: '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/'
-                message: "Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle, une majuscule, un chiffre et un des caractères spéciaux $ @ % * + - _ !"
+            - App\Validator\Constraints\RegexPassword: ~
             - NotBlank: 
                 normalizer: 'trim'
                 message: 'Ce champ ne doit pas être vide'
+            - NotNull: ~
 App\Entity\Comment:
     properties:
         title:

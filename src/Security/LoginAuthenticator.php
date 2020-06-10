@@ -71,7 +71,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException(' Cette adresse email n\'existe pas');
         }
 
         return $user;
@@ -103,5 +103,10 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
     protected function getLoginUrl()
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+    }
+
+    public function supportsRememberMe()
+    {
+        return true;
     }
 }
