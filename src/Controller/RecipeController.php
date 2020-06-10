@@ -407,7 +407,7 @@ class RecipeController extends AbstractController
             );
 
             return $this->redirectToRoute('user_read', [
-                'username' => $this->getUser()->getUsername(),
+                'slug' => $this->getUser()->getSlug(),
             ]);
         }
 
