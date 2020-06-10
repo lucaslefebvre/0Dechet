@@ -3,9 +3,6 @@
   <div class="pt-3">
     <div class="card-recipe-img">
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-      {% if app.user.favorites is empty %}
-      <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon"><i class="fa fa-heart-o fa-lg card-fav-icon-empty" aria-hidden="true"></i></a>
-      {% endif %}
 
       {% set break = false %}
       {% for favorite in app.user.favorites %}
