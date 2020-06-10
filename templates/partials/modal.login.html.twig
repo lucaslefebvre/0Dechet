@@ -9,17 +9,17 @@
               </div>
     <div class="modal-body">
 
- <form method="post" action= "{{path('app_login')}}">
+    <form method="post" action= "{{path('app_login')}}">
         {% if error is defined %}
+            <form method="post" action= "#">
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
         {% if app.user %}
             <div class="mb-3">
-                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                Vous êtes identifié {{ app.user.username }}, <a href="{{ path('app_logout') }}">Deconnexion</a>
             </div>
         {% endif %}
-
         <label for="inputEmail" class="user-form-label">Email</label>
 
         <input type="email" name="email" id="inputEmail" class="form-control" required autofocus>
