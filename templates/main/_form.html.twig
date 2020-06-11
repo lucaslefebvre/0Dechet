@@ -18,16 +18,14 @@
     <div>{{form_help (form.message) }}</div>
     <div>{{form_widget (form.message) }}</div>
 
-                <input type="hidden" id="token" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}"
-        >
+    <div class="g-recaptcha" data-sitekey="6LfROqMZAAAAAOGfAxgcajxhcga801l6yzV-ruyj"></div>
+
 
         <div class="mt-3"><span class="form-asterisk-mandatory">*</span><span class="form-text-mandatory"> Champs obligatoires</span></div>
     <div class="submit-button-container">
         <button type="submit" class="btn form-btn">{{ button_label|default('Envoyer') }}</button>
     </div>
 
-        
         {{ form_end(form) }}
 
     </div>
