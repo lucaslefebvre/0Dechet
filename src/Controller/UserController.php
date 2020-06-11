@@ -49,7 +49,7 @@ class UserController extends AbstractController
 
         $userForm->handleRequest($request);
 
-            if ($userForm->isSubmitted() && $userForm->isValid() && $this->captchaverify($request->get('g-recaptcha-response'))) {
+            if ($userForm->isSubmitted() && $userForm->isValid()) {
                 $userPassword = $userForm->getData()->getPassword();
 
                 $encodedPassword = $passwordEncoder->encodePassword($user, $userPassword);
@@ -104,13 +104,6 @@ class UserController extends AbstractController
                 );
 
                 return $this->redirectToRoute('main_home');
-            }
-            if($userForm->isSubmitted() &&  $userForm->isValid() && !$this->captchaverify($request->get('g-recaptcha-response'))){
-                 
-                $this->addFlash(
-                    'error',
-                    'Captcha obligatoire'
-                  );             
             }
 
         return $this->render('user/add.html.twig', [
@@ -260,26 +253,6 @@ class UserController extends AbstractController
         return $this->redirectToRoute('user_edit', [
             'slug' => $user->getSlug(),
         ]);
-    }
-
-    function captchaverify($recaptcha){
-        $url = "https://www.google.com/recaptcha/api/siteverify";
-        if (function_exists('curl_version')) {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-            "secret"=>"6LeN2KIZAAAAAAGCZqJdlfm4_ZqO-fiu_X6kWoIP","response"=>$recaptcha));
-            $response = curl_exec($ch);
-            curl_close($ch);
-        }else{
-            $response = file_get_contents($url);
-        }
-        $data = json_decode($response);     
-    
-    return $data->success;        
     }
 
 }
