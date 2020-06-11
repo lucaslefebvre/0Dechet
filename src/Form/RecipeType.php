@@ -105,6 +105,7 @@ class RecipeType extends AbstractType
             ->add('image', FileType::class, [
                 'required' => false,
                 'mapped' => false,
+                'help' => 'La photo doit faire 4Mo maximum',
                 'attr' => ['placeholder' => 'Sélectionner votre fichier']
             ])
             ->add('video', UrlType::class, [

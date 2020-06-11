@@ -95,6 +95,7 @@ class MainController extends AbstractController
         ]);
 
     }
+
     function captchaverify($recaptcha){
         $url = "https://www.google.com/recaptcha/api/siteverify";
         if (function_exists('curl_version')) {
@@ -116,13 +117,24 @@ class MainController extends AbstractController
     }
 
     /**
-     * Method for the homepage to show the 3 lastest and the 3 gradest recipes
+     * Method for the legal mentions
      * @Route("/mentions-legales", name="mentions_legales")
      */
     public function MentionLegal(RecipeRepository $recipeRepository)
     {
         return $this->render('main/mentions_legales.html.twig', [
             'title'=>'Mentions légales',
+        ]);
+    }
+
+    /**
+     * Method for the team page
+     * @Route("/notre-equipe", name="team")
+     */
+    public function team(RecipeRepository $recipeRepository)
+    {
+        return $this->render('main/team.html.twig', [
+            'title'=>'Notre équipe',
         ]);
     }
 
