@@ -1,4 +1,4 @@
-{{ form_start(userForm) }}
+{{ form_start(userForm, {'attr': {'id': 'form'}}) }}
     <div class="user-form-label">{{form_label (userForm.username) }} <span class="form-asterisk-mandatory">*</span></div>
     <div>{{form_help (userForm.username) }}</div>
     <div>{{form_widget (userForm.username) }}</div>
@@ -50,8 +50,8 @@
     <div>{{form_widget (userForm.cgu, {'attr': {'data-toggle': 'modal', 'data-target':'#cguModal'}}) }}</div>
 
   {% endif %}
-  <div class="g-recaptcha" data-sitekey="6LeN2KIZAAAAAOpIxXG_GM3hknOlHgwSM8bEWunK"></div>
 
+  <input type='hidden' id='token' name='token' value="{{ app.token.secret }}">
   <div class="submit-button-container">
       <button type="submit" class="btn form-btn">{{ button_label|default('Ajouter') }}</button>
   </div>
