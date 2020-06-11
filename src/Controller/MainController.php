@@ -40,53 +40,61 @@ class MainController extends AbstractController
 
         $form->handleRequest($request);
       
-        if ($form->isSubmitted() && $form->isValid() && $this->captchaverify($request->get('g-recaptcha-response'))) {
-            
-            $email = $form->get('email')->getData(); 
-            $subject = $form->get('subject')->getData();
-            $message = $form->get('message')->getData(); 
-            
-            $emailToSend = (new TemplatedEmail())
+            if ($form->isSubmitted()) {
 
-            ->from($email)
-            ->to('equipe0dechet@gmail.com')
-            ->subject('Formulaire de contact')
-            ->htmlTemplate('email/contact/send.html.twig')
-            ->context([
-                'mail' => $email,
-                'subject' => $subject,
-                'message' => $message,
-            ]);
-    
-            $mailer->send($emailToSend);
+                if ($form->isValid() && $this->captchaverify($request->get('g-recaptcha-response'))) {
+                    $email = $form->get('email')->getData();
+                    $subject = $form->get('subject')->getData();
+                    $message = $form->get('message')->getData();
+                
+                    $emailToSend = (new TemplatedEmail())
 
-            $mailConfirm = (new TemplatedEmail())
+                    ->from($email)
+                    ->to('equipe0dechet@gmail.com')
+                    ->subject('Formulaire de contact')
+                    ->htmlTemplate('email/contact/send.html.twig')
+                    ->context([
+                        'mail' => $email,
+                        'subject' => $subject,
+                        'message' => $message,
+                    ]);
+        
+                    $mailer->send($emailToSend);
 
-            ->from('equipe0dechet@gmail.com')
-            ->to($email)
-            ->subject('0\'Déchet - Confirmation de votre demande de contact')
-            ->htmlTemplate('email/contact/confirmation.html.twig')
-            ->context([
-                'subject' => $subject,
-                'message' => $message,
-            ]);
+                    $mailConfirm = (new TemplatedEmail())
 
-            $mailer->send($mailConfirm);
+                    ->from('equipe0dechet@gmail.com')
+                    ->to($email)
+                    ->subject('0\'Déchet - Confirmation de votre demande de contact')
+                    ->htmlTemplate('email/contact/confirmation.html.twig')
+                    ->context([
+                        'subject' => $subject,
+                        'message' => $message,
+                    ]);
 
-            $this->addFlash(
-                'success',
-                'Votre message a bien été envoyé.'
-            );
+                    $mailer->send($mailConfirm);
 
-            return $this->redirectToRoute('main_home');
-        }
-        if($form->isSubmitted() &&  $form->isValid() && !$this->captchaverify($request->get('g-recaptcha-response'))){
-                 
-            $this->addFlash(
-                'error',
-                'Captcha obligatoire'
-              );             
-        }
+                    $this->addFlash(
+                        'success',
+                        'Votre message a bien été envoyé.'
+                    );
+
+                    return $this->redirectToRoute('main_home');
+
+                }else{
+                    return $this->render('main/contact.html.twig', [
+                        'title'=>'Contact',
+                        'form' => $form->createView(),
+                    ]);
+                }
+            }
+            if($form->isSubmitted() &&  $form->isValid() && !$this->captchaverify($request->get('g-recaptcha-response'))){
+                    
+                $this->addFlash(
+                    'error',
+                    'Captcha obligatoire'
+                );
+            }
 
         
         return $this->render('main/contact.html.twig', [

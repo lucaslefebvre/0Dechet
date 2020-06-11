@@ -142,7 +142,7 @@ class Recipe
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName($name): self
     {
         $this->name = $name;
 
@@ -178,7 +178,7 @@ class Recipe
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent($content): self
     {
         $this->content = $content;
 
@@ -190,7 +190,7 @@ class Recipe
         return $this->duration;
     }
 
-    public function setDuration(int $duration): self
+    public function setDuration($duration): self
     {
         $this->duration = $duration;
 

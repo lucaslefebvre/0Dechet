@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -23,7 +24,7 @@ class CreateAccountType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', null, [
+            ->add('username', TextType::class, [
                 'label'=>'Nom d\'utilisateur',
                 'help'=>'Le nom d\'utilisateur ne peut pas contenir d\'espace ni de caractères spéciaux à l\'exception de \'-\' et \'_\'',
                 /*'constraints'=> [
@@ -69,11 +70,6 @@ class CreateAccountType extends AbstractType
                 ],
                 'invalid_message' => 'Les deux mots de passe ne correspondent pas',
                 'constraints'=> [
-                    new NotBlank([
-                    'allowNull'=>true,
-                    'normalizer'=>'trim',
-                    'message'=>'Ce champ ne doit pas être vide',
-                    ]),
                     new Regex([
                         'pattern'=>'/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/',
                         'message' => 'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,
@@ -116,10 +112,6 @@ class CreateAccountType extends AbstractType
                         'invalid_message' => 'Les deux mots de passe ne correspondent pas',
                         'required'=> true,
                         'constraints'=> [
-                            new NotBlank([
-                            'normalizer'=>'trim',
-                            'message'=>'Ce champ ne doit pas être vide',
-                            ]),
                             new Regex([
                                 'pattern'=>'/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/',
                                 'message' => 'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,

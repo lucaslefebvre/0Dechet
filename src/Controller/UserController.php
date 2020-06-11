@@ -50,44 +50,46 @@ class UserController extends AbstractController
         $userForm->handleRequest($request);
 
             if ($userForm->isSubmitted() && $userForm->isValid()) {
-                $userPassword = $userForm->getData()->getPassword();
 
-                $encodedPassword = $passwordEncoder->encodePassword($user, $userPassword);
+                if ($userForm->isValid()) {
+                    $userPassword = $userForm->getData()->getPassword();
+
+                    $encodedPassword = $passwordEncoder->encodePassword($user, $userPassword);
         
-                $user->setPassword($encodedPassword);
-                $user->setRoles(['ROLE_USER']);
+                    $user->setPassword($encodedPassword);
+                    $user->setRoles(['ROLE_USER']);
 
-                // OLD VERSION : We use a Services to move and rename the file
-                // $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
+                    // OLD VERSION : We use a Services to move and rename the file
+                    // $newName = $fileUploader->saveFile($userForm['image'], 'assets/images/users');
 
-                // NEW VERSION :  We retrieve the original image
-                $file = $userForm['image'];
+                    // NEW VERSION :  We retrieve the original image
+                    $file = $userForm['image'];
 
-                if ($file->getData() !== null) {
-                    // We retrieve the cropped image
-                    $base64 = $request->request->get('photocoupee');
+                    if ($file->getData() !== null) {
+                        // We retrieve the cropped image
+                        $base64 = $request->request->get('photocoupee');
 
-                    // We decode the cropped image in base 64
-                    list(, $data) = explode(',', $base64);
-                    $data = base64_decode($data);
+                        // We decode the cropped image in base 64
+                        list(, $data) = explode(',', $base64);
+                        $data = base64_decode($data);
 
-                    // We rename the file with the service we created
-                    $fileName = $fileUploader->createFileName($file->getData()->getClientOriginalExtension());
+                        // We rename the file with the service we created
+                        $fileName = $fileUploader->createFileName($file->getData()->getClientOriginalExtension());
 
-                    // We replace the content of the image with the info in base 64 from the cropped image
-                    file_put_contents('assets/images/users/' . $fileName, $data);
+                        // We replace the content of the image with the info in base 64 from the cropped image
+                        file_put_contents('assets/images/users/' . $fileName, $data);
 
-                    // We set the cropped image in the user data
-                    $user->setImage($fileName);
-                }
+                        // We set the cropped image in the user data
+                        $user->setImage($fileName);
+                    }
 
-                $em = $this->getDoctrine()->getManager();
+                    $em = $this->getDoctrine()->getManager();
 
-                $em->persist($user);
-                $em->flush();
+                    $em->persist($user);
+                    $em->flush();
 
-                // We create a request for send a email of confirmation
-                $email = (new TemplatedEmail())
+                    // We create a request for send a email of confirmation
+                    $email = (new TemplatedEmail())
                         ->from('equipe0dechet@gmail.com')
                         ->to($user->getEmail())
                         ->subject('Bienvenue sur 0\'Déchet!')
@@ -96,14 +98,22 @@ class UserController extends AbstractController
                             'username' => $user->getUsername(),
                         ]);
                 
-                $mailer->send($email);
+                    $mailer->send($email);
 
-                $this->addFlash(
-                    'success',
-                    'Votre compte a été créé, un email de confirmation a été envoyé sur votre boîte mail. Vous pouvez dès à présent vous y connecter pour ajouter des recettes et des commentaires.'
-                );
+                    $this->addFlash(
+                        'success',
+                        'Votre compte a été créé, un email de confirmation a été envoyé sur votre boîte mail. Vous pouvez dès à présent vous y connecter pour ajouter des recettes et des commentaires.'
+                    );
 
-                return $this->redirectToRoute('main_home');
+                    return $this->redirectToRoute('main_home');
+
+                }else{
+                    
+                    return $this->render('user/add.html.twig', [
+                        'userForm' => $userForm->createView(),
+                        'title'=>'Créer un profil'
+                    ]);
+                }
             }
 
         return $this->render('user/add.html.twig', [

@@ -28,24 +28,35 @@ class CommentController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->flush();
-
-            $this->addFlash(
-                'success',
-                'Votre commentaire a été modifié'
-            );
-
-            return $this->redirectToRoute('recipe_show', [
-                'slug' => $comment->getRecipe()->getSlug(),
-            ]);
-        }
-
         $formDelete = $this->createForm(DeleteType::class, null, [
             'action' => $this->generateUrl('comment_delete', ['id' => $comment->getId()])
         ]);
-        
+
+            if ($form->isSubmitted()) {
+
+                if ($form->isValid()) {
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Votre commentaire a été modifié'
+                    );
+
+                    return $this->redirectToRoute('recipe_show', [
+                    'slug' => $comment->getRecipe()->getSlug(),
+                    ]);
+                }else{
+                    
+                    return $this->render('comment/edit.html.twig', [
+                        'comment' => $comment,
+                        'form' => $form->createView(),
+                        'deleteForm' => $formDelete->createView(),
+                        'title' => "Modifier un commentaire",
+                    ]);
+                }
+            }
+
         return $this->render('comment/edit.html.twig', [
             'comment' => $comment,
             'form' => $form->createView(),
