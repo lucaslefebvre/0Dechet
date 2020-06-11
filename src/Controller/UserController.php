@@ -49,7 +49,17 @@ class UserController extends AbstractController
 
         $userForm->handleRequest($request);
 
-            if ($userForm->isSubmitted() && $userForm->isValid()) {
+        $secretKey = '6LfROqMZAAAAAJrcinhNGi9nDeaO1EKf-pIPY2Fw';
+        $responseKey = $request->request->get('g-recaptcha-response');
+        $userIP = $_SERVER['REMOTE_ADDR'];
+
+        $url = 'https://www.google.com/recaptcha/api/siteverify?secret='.$secretKey.'&response='.$responseKey.'&remoteip='.$userIP.'';
+        $response = file_get_contents($url);
+
+        $response = json_decode($response);
+
+
+            if ($userForm->isSubmitted() && $userForm->isValid() && $response->success == true) {
                 $userPassword = $userForm->getData()->getPassword();
 
                 $encodedPassword = $passwordEncoder->encodePassword($user, $userPassword);
@@ -126,10 +136,20 @@ class UserController extends AbstractController
 
         $userForm->handleRequest($request);
 
+
+        $secretKey = '6LfROqMZAAAAAJrcinhNGi9nDeaO1EKf-pIPY2Fw';
+        $responseKey = $request->request->get('g-recaptcha-response');
+        $userIP = $_SERVER['REMOTE_ADDR'];
+
+        $url = 'https://www.google.com/recaptcha/api/siteverify?secret='.$secretKey.'&response='.$responseKey.'&remoteip='.$userIP.'';
+        $response = file_get_contents($url);
+
+        $response = json_decode($response);
+
             if ($userForm->isSubmitted()) {
                 $em = $this->getDoctrine()->getManager();
               
-                if ($userForm->isValid()){
+                if ($userForm->isValid()  && $response->success == true ){
                     $userPassword = $userForm->get('password')->getData();
 
                     // We modify the password only if the user modified it
