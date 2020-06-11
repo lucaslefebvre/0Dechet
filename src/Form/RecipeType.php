@@ -100,7 +100,7 @@ class RecipeType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
                 'required' => false,
-                'label' => 'Temps le conservation',
+                'label' => 'Temps de conservation',
             ])
             ->add('image', FileType::class, [
                 'required' => false,
