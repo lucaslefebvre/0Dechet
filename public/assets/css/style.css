@@ -718,11 +718,12 @@ label > .fa-minus-subcategory {
 }
 
 ul.recipe-list li {
-    display: block;
+    display: list-item;
+    list-style-type: initial;
 }
 
 .recipe-list {
-    padding-left: 0rem;
+    padding-left: 1rem;
     word-break: break-word;
 }
 
@@ -824,7 +825,7 @@ ul.recipe-list li {
 }
 
 .form-link-password {
-    color: #000000 !important;
+    color: #617e64 !important;
 }
 
 .modal-btn {
@@ -850,6 +851,15 @@ ul.recipe-list li {
 .modal-btn:hover, .modal-btn-delete:hover {
     color: #ffffff;
     text-decoration: underline;
+}
+
+.alert {
+    margin-top: 1rem;
+}
+
+.alert-danger {
+    color: #d63804 !important;
+    background-color: #F1AF96 !important;
 }
 
 /* Rating star */
