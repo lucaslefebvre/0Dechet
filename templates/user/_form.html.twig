@@ -10,12 +10,13 @@
     <div class="user-form-label">{{form_label (userForm.password.first)}} {{ app.request.attributes.get('_route') == 'user_add' ? '<span class="form-asterisk-mandatory">*</span>' }}</div>
     <div>{{form_help (userForm.password) }}</div>
     <div>{{form_widget (userForm.password.first) }}</div>
-    <button type="button" id="eye">Afficher le mot de passe</button>
+    <button type="button" class="btnEye" id="eye">Afficher le mot de passe</button>
+
 
 
     <div class="user-form-label">{{form_label (userForm.password.second) }} {{ app.request.attributes.get('_route') == 'user_add' ? '<span class="form-asterisk-mandatory">*</span>' }}</div>
     <div>{{form_widget (userForm.password.second) }}</div>
-    <button type="button" id="eyeConfirm">Afficher le mot de passe</button>
+    <button type="button" class="btnEye" id="eyeConfirm">Afficher le mot de passe</button>
 
 
     <div class="user-form-label">{{form_label (userForm.image) }}</span></div>

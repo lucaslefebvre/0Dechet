@@ -1024,3 +1024,14 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     margin-top: .5rem;
 }
 
+
+.btnEye {
+    background-color: #b7cbad !important;
+    border: 2px solid #617e64; 
+    font-size: 0.8rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 700;
+    width: 220px;
+    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
+}
