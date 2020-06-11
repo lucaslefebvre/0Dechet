@@ -51,8 +51,6 @@
 
   {% endif %}
 
-  <input type='hidden' id='token' name='token' value="{{ app.token.secret }}">
-  <div class="submit-button-container">
       <button type="submit" class="btn form-btn">{{ button_label|default('Ajouter') }}</button>
   </div>
 {{ form_end(userForm)  }}
