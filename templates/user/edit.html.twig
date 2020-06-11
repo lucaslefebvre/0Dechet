@@ -13,7 +13,7 @@
     <button type="button" class="confirmModalLink form-btn-delete">Supprimer mon profil</button>
   </div>
   <div class="row mt-4">
-    <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
+    <a class="form-link-back" href="{{ path('user_read', {'slug': app.user.slug})}}">Revenir à mon profil</a>
   </div>
 </main>
 
