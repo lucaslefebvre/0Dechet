@@ -40,28 +40,19 @@ class MainController extends AbstractController
 
         $form->handleRequest($request);
 
-        $token = $request->request->get('_csrf_token');
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = [
-            'secret' => '6LeN2KIZAAAAAAGCZqJdlfm4_ZqO-fiu_X6kWoIP',
-            'response' => $token,
-        ];
-        $options = [
-            'http' => [
-                'method' => 'POST',
-                'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
-                            "User-Agent:MyAgent/1.0\r\n",
-                'content' => http_build_query($data),
-            ]
-            ];
-        $context = stream_context_create($options);
-        $response = file_get_contents($url, false, $context);
+        $secretKey = '6LfROqMZAAAAAJrcinhNGi9nDeaO1EKf-pIPY2Fw';
+        $responseKey = $request->request->get('g-recaptcha-response');
+        $userIP = $_SERVER['REMOTE_ADDR'];
 
-        $result = json_decode($response, true);
+        $url = 'https://www.google.com/recaptcha/api/siteverify?secret='.$secretKey.'&response='.$responseKey.'&remoteip='.$userIP.'';
+        $response = file_get_contents($url);
+
+        $response = json_decode($response);
+
       
-        if ($form->isSubmitted() && $form->isValid() && $result['success'] == true) {
-
-
+        if ($form->isSubmitted() && $form->isValid() && $response->success == true ) {
+           
+        
             $email = $form->get('email')->getData(); 
             $subject = $form->get('subject')->getData();
             $message = $form->get('message')->getData(); 
@@ -101,6 +92,7 @@ class MainController extends AbstractController
             return $this->redirectToRoute('main_home');
         }
 
+
         return $this->render('main/contact.html.twig', [
             'title'=>'Contact',
             'form' => $form->createView(),
@@ -108,25 +100,6 @@ class MainController extends AbstractController
 
     }
   
-    function captchaverify($recaptcha){
-        $url = "https://www.google.com/recaptcha/api/siteverify";
-        if (function_exists('curl_version')) {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-            "secret"=>"6LeN2KIZAAAAAAGCZqJdlfm4_ZqO-fiu_X6kWoIP","response"=>$recaptcha));
-            $response = curl_exec($ch);
-            curl_close($ch);
-        }else{
-            $response = file_get_contents($url);
-        }
-        $data = json_decode($response);     
-    
-    return $data->success;        
-    }
 
     /**
      * Method to display the legal mentions
@@ -143,7 +116,7 @@ class MainController extends AbstractController
      * Method for the team page
      * @Route("/notre-equipe", name="team")
      */
-    public function team(RecipeRepository $recipeRepository)
+    public function team()
     {
         return $this->render('main/team.html.twig', [
             'title'=>'Notre équipe',

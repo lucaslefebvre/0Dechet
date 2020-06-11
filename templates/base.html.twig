@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
         <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
         <link href="{{ asset('assets/css/croppie.css') }}" rel="stylesheet"/>
-        <script src="https://www.google.com/recaptcha/api.js?render=6LeN2KIZAAAAAOpIxXG_GM3hknOlHgwSM8bEWunK"></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         {% endblock %}
         <title>{% block title %}{{title}} - 0Déchet{% endblock %}</title>
     </head>
@@ -210,17 +210,7 @@
         });
       });
     </script>
-    <script>
-      function onClick(e) {
-        e.preventDefault();
-        grecaptcha.ready(function() {
-          grecaptcha.execute('6LeN2KIZAAAAAOpIxXG_GM3hknOlHgwSM8bEWunK', {action: 'submit'}).then(function(token) {
-              console.log(token);
-              document.getEelementById("token").value = token;
-          });
-        });
-      }
-  </script>
+
     {% endblock %}
     </body>
 </html>
