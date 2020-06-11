@@ -122,7 +122,7 @@
         "version": "v2.1.3"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.1.0"
@@ -454,6 +454,15 @@
     },
     "symfony/security-http": {
         "version": "v5.0.8"
+    },
+    "symfony/sendgrid-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "b46e4f8f1adb2864f0aa9c0ff57aea3324a07199"
+        }
     },
     "symfony/serializer": {
         "version": "v5.0.8"

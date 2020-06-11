@@ -11,13 +11,13 @@ easy_admin:
             - 'assets/css/admin.css'
           favicon: '/assets/images/logo-mobile.png'
         menu:
-            - { entity: 'Category', label: 'Catégorie' }
-            - { entity: 'SubCategory', label: 'Sous-catégorie', icon: 'list' }
-            - { entity: 'Type', label: 'Type', icon: 'list-ol' }
-            - { entity: 'Recipe', label: 'Recette', icon: 'file-image' }
-            - { entity: 'Rate', label: 'Note', icon: 'star' }
-            - { entity: 'Comment', label: 'Commentaire', icon: 'file-text' }
-            - { entity: 'User', label: 'Utilisateur', icon: 'user' }
+            - { entity: 'Category', label: 'Catégories' }
+            - { entity: 'SubCategory', label: 'Sous-catégories', icon: 'list' }
+            - { entity: 'Type', label: 'Types', icon: 'list-ol' }
+            - { entity: 'Recipe', label: 'Recettes', icon: 'file-image' }
+            - { entity: 'Rate', label: 'Notes', icon: 'star' }
+            - { entity: 'Comment', label: 'Commentaires', icon: 'file-text' }
+            - { entity: 'User', label: 'Utilisateurs', icon: 'user' }
             - { label: 'Retour sur le site', route: 'main_home', icon: 'leaf' }
   user:
         display_avatar: false
