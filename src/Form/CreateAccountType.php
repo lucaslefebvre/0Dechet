@@ -85,6 +85,7 @@ class CreateAccountType extends AbstractType
                 'label'=>'Ajouter une photo de profil',
                 'required' => false,
                 'mapped' => false,
+                'help' => 'La photo doit faire 4Mo maximum',
                 'attr' => ['placeholder' => 'Sélectionner votre fichier']
             ])
 

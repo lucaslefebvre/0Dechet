@@ -107,6 +107,26 @@ class MainController extends AbstractController
         ]);
 
     }
+  
+    function captchaverify($recaptcha){
+        $url = "https://www.google.com/recaptcha/api/siteverify";
+        if (function_exists('curl_version')) {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+            "secret"=>"6LeN2KIZAAAAAAGCZqJdlfm4_ZqO-fiu_X6kWoIP","response"=>$recaptcha));
+            $response = curl_exec($ch);
+            curl_close($ch);
+        }else{
+            $response = file_get_contents($url);
+        }
+        $data = json_decode($response);     
+    
+    return $data->success;        
+    }
 
     /**
      * Method to display the legal mentions
@@ -116,6 +136,17 @@ class MainController extends AbstractController
     {
         return $this->render('main/mentions_legales.html.twig', [
             'title'=>'Mentions légales',
+        ]);
+    }
+
+    /**
+     * Method for the team page
+     * @Route("/notre-equipe", name="team")
+     */
+    public function team(RecipeRepository $recipeRepository)
+    {
+        return $this->render('main/team.html.twig', [
+            'title'=>'Notre équipe',
         ]);
     }
 
