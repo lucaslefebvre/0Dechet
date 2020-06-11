@@ -48,3 +48,9 @@ services:
         class: App\EventListener\ResponseListener
         tags:
             - { name: kernel.event_listener, event: kernel.response }
+
+    app_bundle.listener.removed_file_listener:
+        class: App\EventListener\RemovedFileListener
+        arguments: [ '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: kernel.event_listener, event: vich_uploader.post_remove, method: onPostRemove }
