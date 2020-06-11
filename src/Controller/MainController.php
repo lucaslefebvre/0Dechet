@@ -39,9 +39,29 @@ class MainController extends AbstractController
         $form = $this->createForm(ContactType::class);
 
         $form->handleRequest($request);
+
+        $token = $request->request->get('_csrf_token');
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $data = [
+            'secret' => '6LeN2KIZAAAAAAGCZqJdlfm4_ZqO-fiu_X6kWoIP',
+            'response' => $token,
+        ];
+        $options = [
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+                            "User-Agent:MyAgent/1.0\r\n",
+                'content' => http_build_query($data),
+            ]
+            ];
+        $context = stream_context_create($options);
+        $response = file_get_contents($url, false, $context);
+
+        $result = json_decode($response, true);
       
-        if ($form->isSubmitted() && $form->isValid() && $this->captchaverify($request->get('g-recaptcha-response'))) {
-            
+        if ($form->isSubmitted() && $form->isValid() && $result['success'] == true) {
+
+
             $email = $form->get('email')->getData(); 
             $subject = $form->get('subject')->getData();
             $message = $form->get('message')->getData(); 
@@ -80,46 +100,19 @@ class MainController extends AbstractController
 
             return $this->redirectToRoute('main_home');
         }
-        if($form->isSubmitted() &&  $form->isValid() && !$this->captchaverify($request->get('g-recaptcha-response'))){
-                 
-            $this->addFlash(
-                'error',
-                'Captcha obligatoire'
-              );             
-        }
 
-        
         return $this->render('main/contact.html.twig', [
             'title'=>'Contact',
             'form' => $form->createView(),
         ]);
 
     }
-    function captchaverify($recaptcha){
-        $url = "https://www.google.com/recaptcha/api/siteverify";
-        if (function_exists('curl_version')) {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-            "secret"=>"6LeN2KIZAAAAAAGCZqJdlfm4_ZqO-fiu_X6kWoIP","response"=>$recaptcha));
-            $response = curl_exec($ch);
-            curl_close($ch);
-        }else{
-            $response = file_get_contents($url);
-        }
-        $data = json_decode($response);     
-    
-    return $data->success;        
-    }
 
     /**
-     * Method for the homepage to show the 3 lastest and the 3 gradest recipes
+     * Method to display the legal mentions
      * @Route("/mentions-legales", name="mentions_legales")
      */
-    public function MentionLegal(RecipeRepository $recipeRepository)
+    public function MentionLegal()
     {
         return $this->render('main/mentions_legales.html.twig', [
             'title'=>'Mentions légales',
