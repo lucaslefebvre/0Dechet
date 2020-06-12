@@ -235,56 +235,75 @@ class RecipeController extends AbstractController
 
         if ($_POST) {
 
-            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-                // Recipe linked to the comment
-                $comment->setRecipe($recipe);
+            if ($commentForm->isSubmitted()) {
 
-                $comment->setStatus(1);
-          
-                $comment->setUser($this->getUser());
+                if ($commentForm->isValid()) {
+                    // Recipe linked to the comment
+                    $comment->setRecipe($recipe);
 
-                $em = $this->getDoctrine()->getManager();
-                // Cette fois on persiste le genre car c'est un nouvel objet
-                $em->persist($comment);
-                $em->flush();
+                    $comment->setStatus(1);
+                    $comment->setUser($this->getUser());
 
-                $this->addFlash(
-                    'success',
-                    'Votre commentaire a été ajouté.'
-                );
+                    $em = $this->getDoctrine()->getManager();
+                    // Cette fois on persiste le genre car c'est un nouvel objet
+                    $em->persist($comment);
+                    $em->flush();
 
-                return $this->redirectToRoute('recipe_show', [
-                'slug' => $recipe->getSlug(),
-                ]);
+                    $this->addFlash(
+                        'success',
+                        'Votre commentaire a été ajouté.'
+                    );
+
+                    return $this->redirectToRoute('recipe_show', [
+                    'slug' => $recipe->getSlug(),
+                    ]);
+
+                }else{
+
+                    return $this->render('recipe/show.html.twig', [
+                        'recipe' => $recipe,
+                        'title' => $recipe->getName(),
+                        'commentForm' => $commentForm->createView(),
+                    ]);
+                }
             }
       
             //Homemadeadmin/?entity=User&action=list&menuIndex=6&submenuIndex=-1 RateForm
-            else {
+            else{
                 $rate = new Rate();
                 $rating = $_POST['difficulty'];
-                $rate->setRate($rating);
-                $rate->setRecipe($recipe);
-                $rate->setUser($this->getUser());
 
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($rate);
-                $entityManager->flush();
+                if($rating <1 || $rating > 5){
+                    $this->addFlash(
+                        'failed',
+                        'La note n\'a pas pu être prise en compte'
+                    );
 
-                $this->addFlash(
-                    'success',
-                    'Votre note a été prise en compte.'
-                );
+                }else{
+                    $rate->setRate($rating);
+                    $rate->setRecipe($recipe);
+                    $rate->setUser($this->getUser());
 
-                return $this->redirectToRoute('recipe_show', [
-                'slug' => $recipe->getSlug(),
-                ]);
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($rate);
+                    $entityManager->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Votre note a été prise en compte.'
+                    );
+
+                    return $this->redirectToRoute('recipe_show', [
+                    'slug' => $recipe->getSlug(),
+                    ]);
+                }
             }
         }
-        
-            return $this->render('recipe/show.html.twig', [
-            'recipe' => $recipe,
-            'title' => $recipe->getName(),
-            'commentForm' => $commentForm->createView(),
+
+        return $this->render('recipe/show.html.twig', [
+        'recipe' => $recipe,
+        'title' => $recipe->getName(),
+        'commentForm' => $commentForm->createView(),
         ]);
 
     }
@@ -396,7 +415,7 @@ class RecipeController extends AbstractController
                  'name' => $recipe->getName(),
              ]);
  
-            $mailer->send($email);           
+            $mailer->send($email);
 
             $em->remove($recipe);
             $em->flush();

@@ -118,9 +118,10 @@ class CreateAccountType extends AbstractType
                         'required'=> true,
                         'constraints'=> [
                             new NotBlank([
-                            'normalizer'=>'trim',
-                            'message'=>'Ce champ ne doit pas être vide',
-                            ]),
+                                'allowNull'=>true,
+                                'normalizer'=>'trim',
+                                'message'=>'Ce champ ne doit pas être vide',
+                                ]),
                             new Regex([
                                 'pattern'=>'/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,20})$/',
                                 'message' => 'Votre mot de passe doit être compris entre 8 et 20 caractères et doit contenir au moins une minuscle,

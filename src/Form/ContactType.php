@@ -16,12 +16,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ContactType extends AbstractType
 {
-
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
  
-        $builder          
+        $builder
             ->add('email',EmailType::class,
                 [
                 'label'=>'Votre adresse email',
@@ -61,16 +59,13 @@ class ContactType extends AbstractType
                 ]),
                 new Assert\Length([
                 'min' => 5,
-                // 'max' => 1000,
+                'max' => 1000,
                 'minMessage' => 'Le contenu du message doit contenir au moins 5 caractères',
-                // 'maxMessage' => 'L\'objet du message ne doit pas contenir plus de 1000 caractères',
+                'maxMessage' => 'L\'objet du message ne doit pas contenir plus de 1000 caractères',
                 ])
             ]]);
-
-
     }
-            
-    
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

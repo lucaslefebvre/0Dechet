@@ -5,7 +5,16 @@
    <main class="container recipe-main">
 
     {% for message in app.flashes('success') %}
-    <div class="flash-notice my-3">
+    <div class="flash-notice-success my-3">
+        <div class="alert alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p class="mb-0">{{message}}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% for message in app.flashes('failed') %}
+    <div class="flash-notice-failed my-3">
         <div class="alert alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <p class="mb-0">{{message}}</p>

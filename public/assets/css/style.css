@@ -278,8 +278,15 @@ ul li{
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
-.flash-notice{
+.flash-notice-success{
     background-color: #b7cbad;
+    text-align: center;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.flash-notice-failed{
+    background-color: #F1AF96; 
     text-align: center;
     margin-right: -15px;
     margin-left: -15px;
@@ -946,7 +953,7 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
 
 /* Error 403/404 */
 
-.message-error, .title-error {
+.message-error{
     text-align: center;
     font-size: 2rem;
 }
@@ -955,13 +962,8 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     color: #739377;
 }
 
-.title-error {
-    color: #F1AF96;
-    font-weight: 700;
-}
-
 @media only screen and (min-width: 992px) {
-    .message-error, .title-error {
+    .message-error {
         font-size: 3rem;
     }
 }
