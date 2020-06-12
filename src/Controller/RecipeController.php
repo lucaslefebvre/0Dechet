@@ -16,6 +16,7 @@ use App\Repository\RecipeRepository;
 use App\Services\EmbedVideo;
 use App\Services\FileUploader;
 use App\Services\NumberToAlpha;
+use App\Services\Slugger;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -97,7 +98,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/ajout", name="add", methods={"GET","POST"})
      */
-    public function add(Request $request, MailerInterface $mailer, FileUploader $fileUploader, EmbedVideo $embedVideo)
+    public function add(Request $request, MailerInterface $mailer, FileUploader $fileUploader, EmbedVideo $embedVideo, Slugger $slugger)
     {
         $recipe = new Recipe;
 
@@ -105,6 +106,7 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //dd($recipe);
 
             $recipe->setStatus(1);
             $recipe->setUser($this->getUser());
@@ -114,10 +116,11 @@ class RecipeController extends AbstractController
             // We use a Services to move and rename the file
             $newName = $fileUploader->saveFile($form['image'], 'assets/images/recipes');
             $recipe->setImage($newName);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);
             $entityManager->flush();
+            $entityManager->refresh($recipe);
+            //dd($recipe);
 
             // We create a templated email for confirmation 
             $email = (new TemplatedEmail())
@@ -154,7 +157,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/edition/{slug}", name="edit", methods={"GET","POST"})
      */
-    public function edit(Recipe $recipe, MailerInterface $mailer, Request $request, FileUploader $fileUploader, EmbedVideo $embedVideo)
+    public function edit(Recipe $recipe, MailerInterface $mailer, Request $request, FileUploader $fileUploader, EmbedVideo $embedVideo, Slugger $slugger)
     {
         $this->denyAccessUnlessGranted('EDIT', $recipe);
 
@@ -181,8 +184,12 @@ class RecipeController extends AbstractController
                 $recipe->setVideo($video);
             }
 
+            $newSlug = $slugger->slugify($recipe->getName(), $recipe->getId());
+            $recipe->setSlug($newSlug);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
+            $entityManager->refresh($recipe);
 
             // We create a templated email for confirmation 
             $email = (new TemplatedEmail())

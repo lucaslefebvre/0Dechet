@@ -148,6 +148,7 @@ class UserController extends AbstractController
             if ($userForm->isSubmitted()) {
                 $em = $this->getDoctrine()->getManager();
               
+
                 if ($userForm->isValid() && $response->success == true ){
                     $userPassword = $userForm->get('password')->getData();
 
