@@ -11,19 +11,19 @@ class SluggerTest extends TestCase
     {
         //Test with one string//
         $slugger = new Slugger;
-        $string = 'Le savon de M@rseille';
+        $string = 'Le savon de Marseille';
 
         $result = $slugger->slugify($string);
         dump($result);
-        $this->assertEquals('le-savon-de-m-rseille', $result);
+        $this->assertEquals('le-savon-de-marseille', $result);
 
         //Test with two strings//
         $slugger = new Slugger;
-        $string = 'Le savon de Marseille';
+        $string = 'Le s@von de Méàûïrseille';
         $optionalString = '2';
 
         $result = $slugger->slugify($string, $optionalString);
         dump($result);
-        $this->assertEquals('le-savon-de-marseille-2', $result);
+        $this->assertEquals('le-savon-de-meauirseille-2', $result);
     }
 }

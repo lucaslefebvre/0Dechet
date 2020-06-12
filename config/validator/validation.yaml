@@ -16,7 +16,7 @@ App\Entity\Type:
 App\Entity\Recipe:
     properties:
         name:
-            - NotBlank: 
+            - NotBlank:
                 message: 'Ce champ ne doit pas être vide'
             - Length:
                 min: 5
@@ -24,43 +24,52 @@ App\Entity\Recipe:
                 minMessage: 'Le nom de la recette doit contenir au moins 5 caractères'
                 maxMessage: 'Le nom de la recette ne doit pas contenir plus de 50 caractères'
         content:
-            - NotBlank: ~
+            - NotBlank: 
+                normalizer: 'trim'
+                message: 'Ce champ ne doit pas être vide'
             - Length:
                 min: 30
                 minMessage: 'La recette doit contenir au moins 30 caractères'
         ingredient:
-            - NotBlank: 
+            - NotBlank:
+                normalizer: 'trim'
                 message: 'Ce champ ne doit pas être vide'
         duration:
-            - Positive: ~
+            - NotNull:
+                message: 'Ce champ doit être renseigné'
+            - Positive: 
+                message: 'La valeur doit être un chiffre au dessus de 0'
+        difficulty:
+            - NotNull:
+                message: 'Ce champ doit être renseigné'
+        type:
+            - NotNull:
+                message: 'Ce champ doit être renseigné'
 App\Entity\User:
     properties:
         username:
             - NotBlank: 
                 normalizer: 'trim'
                 message: 'Ce champ ne doit pas être vide'
-            - NotNull: ~
             - Regex:
                 pattern: '/^[a-zA-Z0-9-_]*$/'
                 match: true
                 message: "Le nom d'utilisateur ne peut pas contenir d'espace ni de caractères spéciaux exceptés '-' et '_'"
         email:
-            - NotBlank: 
+            - NotBlank:
+                normalizer: 'trim'
                 message: 'Ce champ ne doit pas être vide'
             - Email: 
                 message: "L'email n'est pas valide"
-            - NotNull: ~
         password:
             - App\Validator\Constraints\RegexPassword: ~
-            - NotBlank: 
-                normalizer: 'trim'
-                message: 'Ce champ ne doit pas être vide'
-            - NotNull: ~
 App\Entity\Comment:
     properties:
         title:
             - NotBlank:
+                normalizer: 'trim'
                 message: 'Ce champ ne doit pas être vide'
         content:
             - NotBlank: 
+                normalizer: 'trim'
                 message: 'Ce champ ne doit pas être vide'

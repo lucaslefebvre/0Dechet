@@ -27,16 +27,6 @@ class RecipeType extends AbstractType
                 'label' => 'Nom de la recette',
                 'required' => true,
                 'help' => 'Le nom de la recette doit être compris entre 5 et 50 caractères'
-                // 'constraints' => new Assert\NotBlank(),
-                // 'constraints' => [
-                // new Assert\Length
-                // ([
-                // 'min' => 5,
-                // 'max' => 35,
-                // 'minMessage' => 'Le nom de la recette doit contenir au moins 5 caractères',
-                // 'maxMessage' => 'Le nom de la recette ne doit pas contenir plus de 35 caractères',
-                // ]),
-                // ]
             ])
 
             ->add('ingredient', CollectionType::class, [
@@ -57,12 +47,6 @@ class RecipeType extends AbstractType
                 'required' => true,
                 'label' => 'Détail de la préparation',
                 'help' => 'Le détail de la préparation doit contenir au moins 30 caractères',
-                // 'constraints' => [
-                // new Assert\Length
-                // ([
-                // 'min' => 30,
-                // 'minMessage' => 'La recette doit contenir au moins 30 caractères',
-                // ])],
                 ]
             )
             ->add('duration', IntegerType::class, [
@@ -72,7 +56,6 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'min' => 0
                 ]
-                // 'constraints' => new Assert\Positive(),
             ])
             ->add('difficulty', ChoiceType::class, [
                 'label' => 'Difficulté',

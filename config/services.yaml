@@ -37,7 +37,8 @@ services:
     App\EventListener\SlugifyEvent:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
-            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
 
     App\EventListener\TimeStampEvent:
         tags:
@@ -48,3 +49,9 @@ services:
         class: App\EventListener\ResponseListener
         tags:
             - { name: kernel.event_listener, event: kernel.response }
+
+    app_bundle.listener.removed_file_listener:
+        class: App\EventListener\RemovedFileListener
+        arguments: [ '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: kernel.event_listener, event: vich_uploader.post_remove, method: onPostRemove }

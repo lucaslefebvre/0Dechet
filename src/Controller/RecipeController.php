@@ -16,6 +16,7 @@ use App\Repository\RecipeRepository;
 use App\Services\EmbedVideo;
 use App\Services\FileUploader;
 use App\Services\NumberToAlpha;
+use App\Services\Slugger;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -97,7 +98,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/ajout", name="add", methods={"GET","POST"})
      */
-    public function add(Request $request, MailerInterface $mailer, FileUploader $fileUploader, EmbedVideo $embedVideo)
+    public function add(Request $request, MailerInterface $mailer, FileUploader $fileUploader, EmbedVideo $embedVideo, Slugger $slugger)
     {
         $recipe = new Recipe;
 
@@ -105,6 +106,7 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //dd($recipe);
 
             $recipe->setStatus(1);
             $recipe->setUser($this->getUser());
@@ -114,10 +116,11 @@ class RecipeController extends AbstractController
             // We use a Services to move and rename the file
             $newName = $fileUploader->saveFile($form['image'], 'assets/images/recipes');
             $recipe->setImage($newName);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recipe);
             $entityManager->flush();
+            $entityManager->refresh($recipe);
+            //dd($recipe);
 
             // We create a templated email for confirmation 
             $email = (new TemplatedEmail())
@@ -154,7 +157,7 @@ class RecipeController extends AbstractController
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/edition/{slug}", name="edit", methods={"GET","POST"})
      */
-    public function edit(Recipe $recipe, MailerInterface $mailer, Request $request, FileUploader $fileUploader, EmbedVideo $embedVideo)
+    public function edit(Recipe $recipe, MailerInterface $mailer, Request $request, FileUploader $fileUploader, EmbedVideo $embedVideo, Slugger $slugger)
     {
         $this->denyAccessUnlessGranted('EDIT', $recipe);
 
@@ -181,8 +184,12 @@ class RecipeController extends AbstractController
                 $recipe->setVideo($video);
             }
 
+            $newSlug = $slugger->slugify($recipe->getName(), $recipe->getId());
+            $recipe->setSlug($newSlug);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
+            $entityManager->refresh($recipe);
 
             // We create a templated email for confirmation 
             $email = (new TemplatedEmail())
@@ -235,56 +242,75 @@ class RecipeController extends AbstractController
 
         if ($_POST) {
 
-            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-                // Recipe linked to the comment
-                $comment->setRecipe($recipe);
+            if ($commentForm->isSubmitted()) {
 
-                $comment->setStatus(1);
-          
-                $comment->setUser($this->getUser());
+                if ($commentForm->isValid()) {
+                    // Recipe linked to the comment
+                    $comment->setRecipe($recipe);
 
-                $em = $this->getDoctrine()->getManager();
-                // Cette fois on persiste le genre car c'est un nouvel objet
-                $em->persist($comment);
-                $em->flush();
+                    $comment->setStatus(1);
+                    $comment->setUser($this->getUser());
 
-                $this->addFlash(
-                    'success',
-                    'Votre commentaire a été ajouté.'
-                );
+                    $em = $this->getDoctrine()->getManager();
+                    // Cette fois on persiste le genre car c'est un nouvel objet
+                    $em->persist($comment);
+                    $em->flush();
 
-                return $this->redirectToRoute('recipe_show', [
-                'slug' => $recipe->getSlug(),
-                ]);
+                    $this->addFlash(
+                        'success',
+                        'Votre commentaire a été ajouté.'
+                    );
+
+                    return $this->redirectToRoute('recipe_show', [
+                    'slug' => $recipe->getSlug(),
+                    ]);
+
+                }else{
+
+                    return $this->render('recipe/show.html.twig', [
+                        'recipe' => $recipe,
+                        'title' => $recipe->getName(),
+                        'commentForm' => $commentForm->createView(),
+                    ]);
+                }
             }
       
             //Homemadeadmin/?entity=User&action=list&menuIndex=6&submenuIndex=-1 RateForm
-            else {
+            else{
                 $rate = new Rate();
                 $rating = $_POST['difficulty'];
-                $rate->setRate($rating);
-                $rate->setRecipe($recipe);
-                $rate->setUser($this->getUser());
 
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($rate);
-                $entityManager->flush();
+                if($rating <1 || $rating > 5){
+                    $this->addFlash(
+                        'failed',
+                        'La note n\'a pas pu être prise en compte'
+                    );
 
-                $this->addFlash(
-                    'success',
-                    'Votre note a été prise en compte.'
-                );
+                }else{
+                    $rate->setRate($rating);
+                    $rate->setRecipe($recipe);
+                    $rate->setUser($this->getUser());
 
-                return $this->redirectToRoute('recipe_show', [
-                'slug' => $recipe->getSlug(),
-                ]);
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($rate);
+                    $entityManager->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Votre note a été prise en compte.'
+                    );
+
+                    return $this->redirectToRoute('recipe_show', [
+                    'slug' => $recipe->getSlug(),
+                    ]);
+                }
             }
         }
-        
-            return $this->render('recipe/show.html.twig', [
-            'recipe' => $recipe,
-            'title' => $recipe->getName(),
-            'commentForm' => $commentForm->createView(),
+
+        return $this->render('recipe/show.html.twig', [
+        'recipe' => $recipe,
+        'title' => $recipe->getName(),
+        'commentForm' => $commentForm->createView(),
         ]);
 
     }
@@ -396,7 +422,7 @@ class RecipeController extends AbstractController
                  'name' => $recipe->getName(),
              ]);
  
-            $mailer->send($email);           
+            $mailer->send($email);
 
             $em->remove($recipe);
             $em->flush();

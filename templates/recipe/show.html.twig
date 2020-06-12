@@ -5,7 +5,16 @@
    <main class="container recipe-main">
 
     {% for message in app.flashes('success') %}
-    <div class="flash-notice my-3">
+    <div class="flash-notice-success my-3">
+        <div class="alert alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p class="mb-0">{{message}}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% for message in app.flashes('failed') %}
+    <div class="flash-notice-failed my-3">
         <div class="alert alert-dismissible">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <p class="mb-0">{{message}}</p>
@@ -230,8 +239,18 @@
       <div class="row pt-3 px-3 ml-md-2 mr-md-1">
         <h5>Commentaires :</h5>
       </div>
+
+      {# Calculation to know if there is at least one comment that has not been moderated #}
+      {% set loopLength = 0 %}
+      {% for comment in recipe.comments %}
+        {% if comment.status == true %}
+          {%set loopLength = loopLength + 1%}
+        {% endif %}
+      {% endfor %}
+
       <div class="row justify-content-center mb-5 px-3 ml-md-2 mr-md-1">
-        {% if recipe.comments is empty %}
+        {# If there is no comment or if all the comments have been moderated #}
+        {% if recipe.comments is empty  or loopLength == 0 %}
         <p>Cette recette n'a pas encore de commentaire</p>
         {% else %}
         <div class="comments col-12 overflow-auto">

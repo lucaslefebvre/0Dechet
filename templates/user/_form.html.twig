@@ -5,14 +5,19 @@
 
     <div class="user-form-label">{{form_label (userForm.email) }} <span class="form-asterisk-mandatory">*</span></div>
     <div>{{form_widget (userForm.email) }}</div>
-
-    <div class="user-form-label">{{form_label (userForm.password.first) }} {{ app.request.attributes.get('_route') == 'user_add' ? '<span class="form-asterisk-mandatory">*</span>' }}</div>
+    
+    <div class="user-form-label">{{form_label (userForm.password.first)}} {{ app.request.attributes.get('_route') == 'user_add' ? '<span class="form-asterisk-mandatory">*</span>' }}</div>
     <div>{{form_help (userForm.password) }}</div>
     <div>{{form_widget (userForm.password.first) }}</div>
+    <div class="row mt-1 px-4 justify-content-end">
+      <button type="button" class="btnEye" id="eye">Afficher le mot de passe</button>
+    </div>
 
     <div class="user-form-label">{{form_label (userForm.password.second) }} {{ app.request.attributes.get('_route') == 'user_add' ? '<span class="form-asterisk-mandatory">*</span>' }}</div>
     <div>{{form_widget (userForm.password.second) }}</div>
-
+    <div class="row mt-1 px-4 justify-content-end">
+      <button type="button" class="btnEye" id="eyeConfirm">Afficher le mot de passe</button>
+    </div>
 
     <div class="user-form-label">{{form_label (userForm.image) }}</span></div>
     <div>{{form_help (userForm.image) }}</div>
@@ -60,4 +65,25 @@
 
 <script type="text/javascript" 
         src="{{ asset('assets/js/ajustement_photo.js') }}">
+</script>
+
+<script>
+  document.getElementById("eye").addEventListener("click", function(e){
+  var pwd = document.getElementById("user_password_first");
+  if(pwd.getAttribute("type")=="password"){
+  pwd.setAttribute("type","text");
+  } else {
+  pwd.setAttribute("type","password");
+  }
+  });
+  </script>
+  <script>
+  document.getElementById("eyeConfirm").addEventListener("click", function(e){
+  var pwd = document.getElementById("user_password_second");
+  if(pwd.getAttribute("type")=="password"){
+  pwd.setAttribute("type","text");
+  } else {
+  pwd.setAttribute("type","password");
+  }
+  });
 </script>
