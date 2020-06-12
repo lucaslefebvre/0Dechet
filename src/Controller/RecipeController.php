@@ -104,9 +104,10 @@ class RecipeController extends AbstractController
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted()) {
 
                 if ($form->isValid()) {
+                    
                     $recipe->setStatus(1);
                     $recipe->setUser($this->getUser());
                     $videoFrame = $embedVideo->videoPlayer($form['video']->getData());
@@ -179,7 +180,7 @@ class RecipeController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
 
             if ($form->isValid()) {
 

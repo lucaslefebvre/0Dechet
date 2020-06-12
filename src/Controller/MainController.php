@@ -118,9 +118,9 @@ class MainController extends AbstractController
         }else{
             $response = file_get_contents($url);
         }
-        $data = json_decode($response);     
+        $data = json_decode($response);
     
-    return $data->success;        
+    return $data->success;
     }
 
     /**
