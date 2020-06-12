@@ -136,7 +136,6 @@ class UserController extends AbstractController
 
         $userForm->handleRequest($request);
 
-
         $secretKey = '6LfROqMZAAAAAJrcinhNGi9nDeaO1EKf-pIPY2Fw';
         $responseKey = $request->request->get('g-recaptcha-response');
         $userIP = $_SERVER['REMOTE_ADDR'];

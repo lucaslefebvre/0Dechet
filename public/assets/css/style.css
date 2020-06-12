@@ -869,6 +869,18 @@ ul.recipe-list li {
     background-color: #F1AF96 !important;
 }
 
+.btnEye {
+    color: #739377;
+    border: 0px;
+    background-color: #ffffff;
+}
+
+.btnEye:hover, .btnEye:focus {
+    color: #739377;
+    outline: none;
+    text-decoration: underline;
+}
+
 /* Rating star */
 .stars {
 	direction: rtl;
@@ -1024,16 +1036,4 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     display: list-item;
     list-style-type: initial;
     margin-top: .5rem;
-}
-
-
-.btnEye {
-    background-color: #b7cbad !important;
-    border: 2px solid #617e64; 
-    font-size: 0.8rem;
-    color: #ffffff;
-    text-transform: uppercase;
-    font-weight: 700;
-    width: 220px;
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
