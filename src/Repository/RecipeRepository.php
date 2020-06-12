@@ -53,6 +53,7 @@ class RecipeRepository extends ServiceEntityRepository
         $qb =  $this->createQueryBuilder('r');
         $qb
             ->orderBy('r.averageRate', 'DESC')
+            ->where('r.status = 1')
             ->setMaxResults(6)
         ;
         return $qb->getQuery()->getResult();
@@ -62,6 +63,7 @@ class RecipeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->orderBy('r.createdAt', 'DESC')
+            ->where('r.status = 1')
             ->setMaxResults(6)
             ->getQuery()
             ->getResult()
