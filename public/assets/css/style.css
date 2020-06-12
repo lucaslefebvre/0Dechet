@@ -792,7 +792,8 @@ ul.recipe-list li {
     background-color: #f4bca6; 
     border: 2px solid  #F1AF96; 
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
-    margin-top: 1rem;
+    margin-top: 0rem;
+    border-radius: .25rem;
 }
 
 .form-btn:hover, .form-btn-delete:hover, .form-btn-ingredients:hover, .cgu-btn:hover{
