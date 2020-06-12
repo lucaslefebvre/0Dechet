@@ -149,7 +149,7 @@ class UserController extends AbstractController
             if ($userForm->isSubmitted()) {
                 $em = $this->getDoctrine()->getManager();
               
-                if ($userForm->isValid()  && $response->success == true ){
+                if ($userForm->isValid()  /*&& $response->success == true */ ){
                     $userPassword = $userForm->get('password')->getData();
 
                     // We modify the password only if the user modified it
