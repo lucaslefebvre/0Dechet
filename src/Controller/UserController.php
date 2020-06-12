@@ -59,7 +59,7 @@ class UserController extends AbstractController
         $response = json_decode($response);
 
 
-            if ($userForm->isSubmitted() && $userForm->isValid() && $response->success == true) {
+            if ($userForm->isSubmitted() && $userForm->isValid() /*&& $response->success == true*/) {
                 $userPassword = $userForm->getData()->getPassword();
 
                 $encodedPassword = $passwordEncoder->encodePassword($user, $userPassword);
