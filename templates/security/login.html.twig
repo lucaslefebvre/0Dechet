@@ -26,16 +26,7 @@
           <a class="form-link-password" href="{{ path('app_forgot_password_request')}}"> Mot de passe oublié</a>
         </div>
 
-        <input type="hidden" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}">
-
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Se souvenir de moi
-                </label>
-            </div>
-            <input type="hidden" name="_csrf_token"
-                  value="{{ csrf_token('authenticate') }}">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         
         <div class="submit-button-container pt-3">
           <button class="btn btn-lg form-btn-connexion" type="submit">Se connecter</button>
