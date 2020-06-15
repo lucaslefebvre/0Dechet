@@ -252,7 +252,6 @@ class RecipeController extends AbstractController
                     $comment->setUser($this->getUser());
 
                     $em = $this->getDoctrine()->getManager();
-                    // Cette fois on persiste le genre car c'est un nouvel objet
                     $em->persist($comment);
                     $em->flush();
 

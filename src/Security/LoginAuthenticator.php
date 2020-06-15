@@ -105,9 +105,4 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
-
-    public function supportsRememberMe()
-    {
-        return true;
-    }
 }
