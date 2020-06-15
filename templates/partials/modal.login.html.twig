@@ -10,10 +10,6 @@
     <div class="modal-body">
 
     <form method="post" action= "{{path('app_login')}}">
-        {% if error is defined %}
-            <form method="post" action= "#">
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
 
         <label for="inputEmail" class="user-form-label">Email</label>
 
@@ -32,7 +28,7 @@
         <div class="row mt-3 justify-content-center">
           <p class="mx-3 text-center">Vous n'êtes pas encore incrit ? <a class="form-link-password" href="{{ path('user_add')}}">Inscrivez-vous !</a></p>
         </div>
-      </form>
+    </form>
 
           </div>
        </div>
