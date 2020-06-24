@@ -17,15 +17,14 @@ class SlugifyEvent
     {
         //$args is the object concerned by the evenement
         // if it's modified and flushed, it's intercepted there
-        
         $entity = $args->getObject();
 
         $slugger = new Slugger;
 
         //If it's a Recipe Object
         if($entity instanceof Recipe){
-
             $recipe = $entity;
+
             //Create a new slug for the entity
             $newSlug = $slugger->slugify($recipe->getName(), $recipe->getId());
 
@@ -46,17 +45,16 @@ class SlugifyEvent
         }
         //If it's an User Object
         if($entity instanceof User){
-
             $user = $entity;
+
             //Create a new slug for the user
             $newSlug = strtolower($user->getUsername());
 
             //Associate the new slug to the user
             $user->setSlug($newSlug);
         }
-        //If it's an entity with a slug property other than Recipe
+        //If it's an other entity with a slug property
         elseif(property_exists($entity, 'slug')){
-
             //Create a new slug for the entity
             $newSlug = $slugger->slugify($entity->getName());
 
@@ -76,8 +74,8 @@ class SlugifyEvent
 
          //If it's a Recipe Object
         if($entity instanceof Recipe){
-
              $recipe = $entity;
+
              //Create a new slug for the entity
              $newSlug = $slugger->slugify($recipe->getName(), $recipe->getId());
  
@@ -86,8 +84,8 @@ class SlugifyEvent
         }
          //If it's an User Object
          elseif($entity instanceof User){
-             
             $user = $entity;
+
             //Create a new slug for the user
             $newSlug = strtolower($user->getUsername());
 
@@ -96,7 +94,6 @@ class SlugifyEvent
         }
          //If it's an entity with a slug property other than Recipe
          elseif(property_exists($entity, 'slug')){
-
              //Create a new slug for the entity
              $newSlug = $slugger->slugify($entity->getName());
  
@@ -104,13 +101,14 @@ class SlugifyEvent
              $entity->setSlug($newSlug);
         }
     }
+
     // This method is executed postPersist of forms
     public function postPersist(LifecycleEventArgs $args)
     {
         //$args is the object concerned by the evenement
         // if it's modified and flushed, it's intercepted there
-        
         $entity = $args->getObject();
+        
         $slugger = new Slugger;
 
         //If it's a Recipe Object

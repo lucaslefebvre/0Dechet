@@ -58,7 +58,6 @@ class UserController extends AbstractController
 
         $response = json_decode($response);
 
-
             if ($userForm->isSubmitted() && $userForm->isValid() /*&& $response->success == true*/) {
                 $userPassword = $userForm->getData()->getPassword();
 
@@ -98,13 +97,13 @@ class UserController extends AbstractController
 
                 // We create a request for send a email of confirmation
                 $email = (new TemplatedEmail())
-                        ->from('equipe0dechet@gmail.com')
-                        ->to($user->getEmail())
-                        ->subject('Bienvenue sur 0\'Déchet!')
-                        ->htmlTemplate('email/user/add.html.twig')
-                        ->context([
-                            'username' => $user->getUsername(),
-                        ]);
+                    ->from('equipe0dechet@gmail.com')
+                    ->to($user->getEmail())
+                    ->subject('Bienvenue sur 0\'Déchet!')
+                    ->htmlTemplate('email/user/add.html.twig')
+                    ->context([
+                        'username' => $user->getUsername(),
+                    ]);
                 
                 $mailer->send($email);
 
@@ -187,11 +186,11 @@ class UserController extends AbstractController
                     $em->flush();
 
                     $email = (new TemplatedEmail())
-                      ->from('equipe0dechet@gmail.com')
-                      ->to($user->getEmail())
-                      ->subject('0\'Déchet - Votre profil a bien été modifié')
-                      ->htmlTemplate('email/user/edit.html.twig')
-                      ->context([
+                        ->from('equipe0dechet@gmail.com')
+                        ->to($user->getEmail())
+                        ->subject('0\'Déchet - Votre profil a bien été modifié')
+                        ->htmlTemplate('email/user/edit.html.twig')
+                        ->context([
                             'username' => $user->getUsername(),
                         ]);
                 
@@ -252,13 +251,13 @@ class UserController extends AbstractController
             // We create a request for send a email of confirmation
 
             $email = (new TemplatedEmail())
-            ->from('equipe0dechet@gmail.com')
-            ->to($user->getEmail())
-            ->subject('0\'Déchet - Votre compte a bien été supprimé')
-            ->htmlTemplate('email/user/delete.html.twig')
-            ->context([
-                        'username' => $user->getUsername(),
-                    ]);
+                ->from('equipe0dechet@gmail.com')
+                ->to($user->getEmail())
+                ->subject('0\'Déchet - Votre compte a bien été supprimé')
+                ->htmlTemplate('email/user/delete.html.twig')
+                ->context([
+                    'username' => $user->getUsername(),
+                ]);
     
             $mailer->send($email);
 

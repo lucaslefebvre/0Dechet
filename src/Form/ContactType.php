@@ -18,22 +18,18 @@ class ContactType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
- 
         $builder
-            ->add('email',EmailType::class,
-                [
+            ->add('email',EmailType::class, [
                 'label'=>'Votre adresse email',
                 'help' => 'Merci d\'indiquer une adresse email valide afin que nous puissions répondre à votre message',
-
                 'constraints'=> [
                 new NotBlank([
-                'message'=>'Ce champ ne doit pas être vide',
+                    'message'=>'Ce champ ne doit pas être vide',
                 ]),
                 new Email([
-                'message'=>'L\'email n\'est pas valide'
+                    'message'=>'L\'email n\'est pas valide'
                 ]),
-                ]]
-                )
+            ]])
             ->add('subject', TextType::class, [
                 'required'=>true,
                 'label' => 'Objet de votre message',

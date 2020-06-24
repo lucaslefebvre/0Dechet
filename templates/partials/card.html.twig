@@ -12,9 +12,9 @@
       {% endfor %}
 
       {% if break == true %}
-        <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon"><i class="fa fa-heart fa-lg card-fav-icon-full" aria-hidden="true"></i></a>
+      <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon"><i class="fa fa-heart fa-lg card-fav-icon-full" aria-hidden="true"></i></a>
       {% else  %}
-        <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon"><i class="fa fa-heart-o fa-lg card-fav-icon-empty" aria-hidden="true"></i></a>
+      <a href="{{ path('favorite' , {'slug': recipe.slug}) }}" class="card-fav-icon"><i class="fa fa-heart-o fa-lg card-fav-icon-empty" aria-hidden="true"></i></a>
       {% endif %}
       
     {% endif %}
@@ -44,22 +44,22 @@
     <div class="card-profil-img d-flex align-items-center">
     {% if recipe.user is not empty %}
       <a href="{{ path('user_read', {'slug': recipe.user.slug})}}">
-        {% if recipe.user.image is not empty %}
-          <img src="{{ asset('assets/images/users/' ~ recipe.user.image) }}" class="card-img-user" alt="{{recipe.user.image}}">
-        {% else %}
-          <img src="{{ asset('assets/images/default-user.png') }}" class="card-img-user" alt="">
-        {% endif %}
+      {% if recipe.user.image is not empty %}
+      <img src="{{ asset('assets/images/users/' ~ recipe.user.image) }}" class="card-img-user" alt="{{recipe.user.image}}">
       {% else %}
-        <img src="{{ asset('assets/images/default-user.png') }}" class="card-img-user" alt="">
+      <img src="{{ asset('assets/images/default-user.png') }}" class="card-img-user" alt="">
       {% endif %}
+    {% else %}
+      <img src="{{ asset('assets/images/default-user.png') }}" class="card-img-user" alt="">
       </a>
+    {% endif %}
     </div>
     <div class="card-profil">
-      {% if recipe.user != null %}
-        <p>Proposé par <a href="{{ path('user_read', {'slug': recipe.user.slug})}}"  class="user-profil">{{ recipe.user }}</a></p>
-      {% else %}
-        <p>Proposé par Anonyme</p>
-      {% endif %}
+    {% if recipe.user != null %}
+      <p>Proposé par <a href="{{ path('user_read', {'slug': recipe.user.slug})}}"  class="user-profil">{{ recipe.user }}</a></p>
+    {% else %}
+      <p>Proposé par Anonyme</p>
+    {% endif %}
       <a href="{{ path('recipe_show', {'slug': recipe.slug})}}" class="btn card-btn">Voir la recette</a>
     </div>
   </div>

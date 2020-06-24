@@ -3,40 +3,40 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <main class="container">
-      <div class="row px-3 pt-3 main-title">
-        <h2>Se connecter</h2>
-      </div>
-      <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+<main class="container">
+  <div class="row px-3 pt-3 main-title">
+    <h2>Se connecter</h2>
+  </div>
+  <form method="post">
+  {% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+  {% endif %}
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-        {% endif %}
+  {% if app.user %}
+    <div class="mb-3">
+        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+    </div>
+  {% endif %}
 
-        <label for="inputEmail" class="user-form-label">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-        <label for="inputPassword" class="user-form-label">Mot de passe</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" required>
-        <div class="row mt-1 px-4 justify-content-end">
-          <a class="form-link-password" href="{{ path('app_forgot_password_request')}}"> Mot de passe oublié</a>
-        </div>
+    <label for="inputEmail" class="user-form-label">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+    <label for="inputPassword" class="user-form-label">Mot de passe</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" required>
+    <div class="row mt-1 px-4 justify-content-end">
+      <a class="form-link-password" href="{{ path('app_forgot_password_request')}}"> Mot de passe oublié</a>
+    </div>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        
-        <div class="submit-button-container pt-3">
-          <button class="btn btn-lg form-btn-connexion" type="submit">Se connecter</button>
-        </div>
-        <div class="row mt-3 justify-content-center">
-          <p class="mx-3">Vous n'êtes pas encore incrit ? <a class="form-link-password" href="{{ path('user_add')}}">Inscrivez-vous !</a></p>
-        </div>
-        <div class="row mt-4">
-          <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
-        </div>
-      </form>
-    </main>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    
+    <div class="submit-button-container pt-3">
+      <button class="btn btn-lg form-btn-connexion" type="submit">Se connecter</button>
+    </div>
+    <div class="row mt-3 justify-content-center">
+      <p class="mx-3">Vous n'êtes pas encore incrit ? <a class="form-link-password" href="{{ path('user_add')}}">Inscrivez-vous !</a></p>
+    </div>
+    <div class="row mt-4">
+      <a class="form-link-back" href="{{ path('main_home') }}">Revenir à l'accueil</a>
+    </div>
+  </form>
+</main>
 {% endblock %}

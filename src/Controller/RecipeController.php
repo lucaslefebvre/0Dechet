@@ -204,7 +204,6 @@ class RecipeController extends AbstractController
 
             $mailer->send($email);
 
-
             $this->addFlash(
                 'success',
                 'Votre recette a été modifiée.'
@@ -234,7 +233,6 @@ class RecipeController extends AbstractController
   
     public function show(Recipe $recipe, Request $request, EntityManagerInterface $em, SessionInterface $session): Response
     {
-
         // Comment Form
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
@@ -273,7 +271,6 @@ class RecipeController extends AbstractController
                     ]);
                 }
             }
-      
             //Homemadeadmin/?entity=User&action=list&menuIndex=6&submenuIndex=-1 RateForm
             else{
                 $rate = new Rate();
@@ -338,7 +335,7 @@ class RecipeController extends AbstractController
                 'recipes' => $recipes,
                 'category' => $category,
                 'title' => $category->getName(),
-                ]);
+            ]);
         }
     }
           
@@ -365,7 +362,7 @@ class RecipeController extends AbstractController
                 'recipes' => $recipes,
                 'subCategory' => $subCategory,
                 'title' => $subCategory->getName(),
-                ]);
+            ]);
         }
     }
 
@@ -392,7 +389,7 @@ class RecipeController extends AbstractController
                 'recipes' => $recipes,
                 'type' => $type,
                 'title' => $type->getName(),
-                ]);
+            ]);
         }
     }
 

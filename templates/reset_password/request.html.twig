@@ -4,14 +4,14 @@
 
 {% block body %}
 <main class="container">
-
-  {% for flashError in app.flashes('reset_password_error') %}
+{% for flashError in app.flashes('reset_password_error') %}
   <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-  {% endfor %}
+{% endfor %}
   
   <div class="row px-3 pt-3 main-title">
     <h2>Réinitialiser votre mot de passe</h2>
   </div>
+
   {{ form_start(requestForm) }}
     <div class="user-form-label">{{form_label (requestForm.email) }} <span class="form-asterisk-mandatory">*</span></div>
     <div>{{ form_help(requestForm.email) }}</div>

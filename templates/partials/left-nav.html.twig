@@ -1,31 +1,30 @@
 <div class="col-lg-4 mr-auto d-none d-lg-block nav__category p-0 pt-4 left-nav">
-    <nav class="nav" role="navigation">
-        <ul class="nav__list">
-            {% for category in allCategory %}
-            <li>
-                <input id="group-{{ loop.index }}" type="checkbox" hidden />
-                <label class="left-nav-label left-nav-label-category" data-category="{{category.slug}}" for="group-{{ loop.index }}" ><a class="left-nav-link" href="{{path ('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}</a><i class="fa fa-plus fa-plus-category" aria-hidden="true"></i><i class="fa fa-minus fa-minus-category" aria-hidden="true"></i></label>
-                <ul class="group-list px-3">
-                {% for subCategory in category.subCategories %}
-                <li>
-                    {% if category.id == 1 %}
-                    <input id="sub-group-{{loop.index0 + 100}}" type="checkbox" hidden />
-                    <label class="left-nav-label left-nav-label-subCategory" data-subcategory="{{subCategory.slug}}" for="sub-group-{{loop.index0 + 100}}"><a class="left-nav-link" href="{{path ('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}</a><i class="fa fa-plus fa-plus-subcategory" aria-hidden="true"></i><i class="fa fa-minus fa-minus-subcategory" aria-hidden="true"></i></label>
-                    {% else %}
-                    <input id="sub-group-{{loop.index0 + 200}}" type="checkbox" hidden />
-                    <label class="left-nav-label left-nav-label-subCategory" data-subcategory="{{subCategory.slug}}" for="sub-group-{{loop.index0 + 200}}"><a class="left-nav-link" href="{{path ('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}</a><i class="fa fa-plus fa-plus-subcategory" aria-hidden="true"></i><i class="fa fa-minus fa-minus-subcategory" aria-hidden="true"></i></label>
-
-                    {% endif %}
-                    <ul class="sub-group-list">
-                    {% for type in subCategory.types %}
-                    <li class="left-nav-li-type" data-type="{{type.slug}}"><a class="left-nav-link-type" href="{{ path('recipe_browseByType', {'slug': type.slug}) }}">{{type.name}}</a></li>
-                    {% endfor %}
-                    </ul>
-                </li>
-                {% endfor %}
-                </ul>
-            </li>
+  <nav class="nav" role="navigation">
+    <ul class="nav__list">
+    {% for category in allCategory %}
+      <li>
+        <input id="group-{{ loop.index }}" type="checkbox" hidden />
+        <label class="left-nav-label left-nav-label-category" data-category="{{category.slug}}" for="group-{{ loop.index }}" ><a class="left-nav-link" href="{{path ('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}</a><i class="fa fa-plus fa-plus-category" aria-hidden="true"></i><i class="fa fa-minus fa-minus-category" aria-hidden="true"></i></label>
+        <ul class="group-list px-3">
+        {% for subCategory in category.subCategories %}
+          <li>
+          {% if category.id == 1 %}
+            <input id="sub-group-{{loop.index0 + 100}}" type="checkbox" hidden />
+            <label class="left-nav-label left-nav-label-subCategory" data-subcategory="{{subCategory.slug}}" for="sub-group-{{loop.index0 + 100}}"><a class="left-nav-link" href="{{path ('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}</a><i class="fa fa-plus fa-plus-subcategory" aria-hidden="true"></i><i class="fa fa-minus fa-minus-subcategory" aria-hidden="true"></i></label>
+          {% else %}
+            <input id="sub-group-{{loop.index0 + 200}}" type="checkbox" hidden />
+            <label class="left-nav-label left-nav-label-subCategory" data-subcategory="{{subCategory.slug}}" for="sub-group-{{loop.index0 + 200}}"><a class="left-nav-link" href="{{path ('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}</a><i class="fa fa-plus fa-plus-subcategory" aria-hidden="true"></i><i class="fa fa-minus fa-minus-subcategory" aria-hidden="true"></i></label>
+          {% endif %}
+            <ul class="sub-group-list">
+            {% for type in subCategory.types %}
+              <li class="left-nav-li-type" data-type="{{type.slug}}"><a class="left-nav-link-type" href="{{ path('recipe_browseByType', {'slug': type.slug}) }}">{{type.name}}</a></li>
             {% endfor %}
+            </ul>
+          </li>
+          {% endfor %}
         </ul>
-    </nav>
+      </li>
+    {% endfor %}
+    </ul>
+  </nav>
 </div>

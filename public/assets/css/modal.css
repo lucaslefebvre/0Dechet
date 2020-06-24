@@ -6,7 +6,8 @@
 	opacity: .80;
 	z-index: 9999;
 }
-.popup_block{
+
+.popup_block {
 	display: none; /*--masqué par défaut--*/
 	background: #fff;
 	padding: 20px;
@@ -27,12 +28,15 @@
 }
 img.btn_close {
 	float: right;
-	margin: -55px -55px 0 0;
+	margin
+	: -55px -55px 0 0;
 }
 /*--Gérer la position fixed pour IE6--*/
+
 *html #fade {
 position: absolute;
 }
+
 *html .popup_block {
 position: absolute;
 }

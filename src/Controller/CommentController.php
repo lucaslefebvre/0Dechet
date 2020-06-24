@@ -43,6 +43,7 @@ class CommentController extends AbstractController
                 'slug' => $comment->getRecipe()->getSlug(),
             ]);
         }
+        
         $formDelete = $this->createForm(DeleteType::class, null, [
             'action' => $this->generateUrl('comment_delete', ['id' => $comment->getId()])
         ]);

@@ -4,13 +4,9 @@
 
 <main>
     <p>Bonjour {{ username }},</p><br>
-
     <p>Pour réinitialiser votre mot de passe, vous pouvez <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">cliquer ici</a>.</p>
-
     <p>Le lien expire dans {{ tokenLifetime|date('g') }} heures.</p><br>
-
     <p>Cordialement,</p>
-
     <p><strong>L'équipe 0'déchet</strong></p>
 </main>
 

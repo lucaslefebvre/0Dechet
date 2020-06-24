@@ -23,13 +23,11 @@ class RemovedFileListener
         if (isset($_POST['user']['imageFile']['delete']) && $_POST['user']['imageFile']['delete'] == 1){
             $event->getObject()->setImage(null) ;
             $this->em->flush();
-
         }
 
-        if (isset($_POST['recipe']['imageFile']['delete']) && $_POST['recipe']['imageFile']['delete'] == 1){
+        if (isset($_POST['recipe']['imageFile']['delete']) && $_POST['recipe']['imageFile']['delete'] == 1) {
             $event->getObject()->setImage(null) ;
             $this->em->flush();
-
         }
     }
 }

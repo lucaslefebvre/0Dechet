@@ -42,7 +42,7 @@ class RecipeRepository extends ServiceEntityRepository
             ->orderBy('r.createdAt', 'DESC')
             ;
         }
-            return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
     }
 
     /**

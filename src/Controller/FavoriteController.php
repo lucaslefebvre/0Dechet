@@ -25,7 +25,6 @@ class FavoriteController extends AbstractController
         // After the first like it will be always full but to prepare the first time 
         //we need to to that
         if(!empty($favoriteRepository)){
-
             foreach ($favoriteRepository as $favoriteRecipe) {
                 //To know if the user has already this recipe in his favorite list
                 if ($favoriteRecipe->getUsers() == $this->getUser() && $favoriteRecipe->getRecipes() == $recipe) {
@@ -36,6 +35,7 @@ class FavoriteController extends AbstractController
                     return $this->redirect($referer);
                 }
             }   
+
             //If the foreach with the condition didn't find a correspondence between the user and the recipe,
             // the user want to add this recipe to his list
             $favorite =  new Favorite;

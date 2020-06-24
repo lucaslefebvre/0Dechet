@@ -9,19 +9,19 @@
   </div>
   <div class="row px-3 justify-content-center">
     {{ form_start(resetForm) }}
-        <div class="user-form-label">{{form_label (resetForm.plainPassword.first) }} <span class="form-asterisk-mandatory">*</span></div>
-        <div>{{form_help (resetForm.plainPassword) }}</div>
-        <div>{{form_widget (resetForm.plainPassword.first) }}</div>
+      <div class="user-form-label">{{form_label (resetForm.plainPassword.first) }} <span class="form-asterisk-mandatory">*</span></div>
+      <div>{{form_help (resetForm.plainPassword) }}</div>
+      <div>{{form_widget (resetForm.plainPassword.first) }}</div>
 
-        <div class="user-form-label">{{form_label (resetForm.plainPassword.second) }} <span class="form-asterisk-mandatory">*</span></div>
+      <div class="user-form-label">{{form_label (resetForm.plainPassword.second) }} <span class="form-asterisk-mandatory">*</span></div>
 
-        <div>{{form_widget (resetForm.plainPassword.second) }}</div>
+      <div>{{form_widget (resetForm.plainPassword.second) }}</div>
 
-        <div class="mt-3"><span class="form-asterisk-mandatory">*</span><span class="form-text-mandatory"> Champs obligatoires</span></div>
+      <div class="mt-3"><span class="form-asterisk-mandatory">*</span><span class="form-text-mandatory"> Champs obligatoires</span></div>
 
-        <div class="submit-button-container">
-            <button type="submit" class="btn form-btn">{{ button_label|default('Envoyer') }}</button>
-        </div>
+      <div class="submit-button-container">
+          <button type="submit" class="btn form-btn">{{ button_label|default('Envoyer') }}</button>
+      </div>
     {{ form_end(resetForm) }}
   </div>
 </main>

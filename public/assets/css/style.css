@@ -67,176 +67,169 @@ body {
 
 /* Navigation bar */
 
-ul li{
+ul li {
     list-style-type:none;
     display: inline;
 }
 
-#menu{
+#menu {
     border-bottom: 1px solid #617e64;
 }
 
 #menu ul {
     margin: 0;
     padding: 0;
-  }
-  
-  #menu .main-menu {
+}
+
+#menu .main-menu {
     display: none;
-  }
-  
-  #tm:checked + .main-menu {
+}
+
+#tm:checked + .main-menu {
     display: block;
-  }
-  
-  #menu input[type="checkbox"], 
-  #menu ul span.drop-icon {
+}
+
+#menu input[type="checkbox"], #menu ul span.drop-icon {
     margin-left: 0.2rem;
     display: none;
-  }
-  
-  .nav-link {
+}
+
+.nav-link {
     color: grey;
     padding: .5rem .5rem;
-  }
+}
 
-  .nav-link:hover {
-      color: black;
-  }
-  
-  #menu .sub-menu {
+.nav-link:hover {
+    color: black;
+}
+
+#menu .sub-menu {
     background-color: #f0f6e8;
     border-width: 1px 1px 0;
     margin: 0 1em;
-  }
-  
-  #menu .sub-menu li:last-child {
+}
+
+#menu .sub-menu li:last-child {
     border-width: 0;
-  }
-  
-  #menu li, 
-  #toggle-menu, 
-  #menu a {
+}
+
+#menu li, #toggle-menu, #menu a {
     position: relative;
     display: block;
-  }
+}
 
-  #menu .active {
+#menu .active {
     color: black;
     text-decoration: underline !important;
-  }
-  
-  #menu, 
-  #toggle-menu {
+}
+
+#menu, #toggle-menu {
     background-color: #f0f6e8; ;
-  }
-  
-  #menu a {
+}
+
+#menu a {
     padding-top: 1em;
     transition: all .125s ease-in-out;
     -webkit-transition: all .125s ease-in-out;
-  }
-  
-  #menu .sub-menu {
-    display: none;
-  }
-  
-  #menu input[type="checkbox"]:checked + .sub-menu {
-    display: block;
-  }
+}
 
-  #toggle-menu .drop-icon, 
-  #menu li label.drop-icon {
+#menu .sub-menu {
+    display: none;
+}
+
+#menu input[type="checkbox"]:checked + .sub-menu {
+    display: block;
+}
+
+#toggle-menu .drop-icon, #menu li label.drop-icon {
     position: absolute;
     right: 1.5em;
     top: 1.25em;
-  }
-  
-  #menu label.drop-icon, #toggle-menu span.drop-icon {
+}
+
+#menu label.drop-icon, #toggle-menu span.drop-icon {
     border-radius: 50%;
     width: 1em;
     height: 1em;
     text-align: center;
     text-shadow: 0 0 0 transparent;
     color: black;
-  }
+}
 
-  .drop-icon-burger{
+.drop-icon-burger {
     font-size: 2.5rem;
     margin-left: 2rem;
-  }
+}
 
-  #menu .drop-icon {
+#menu .drop-icon {
     line-height: 1;
-  }
+}
 
-  @media only screen and (max-width: 64em) and (min-width: 52.01em) {
-
+@media only screen and (max-width: 64em) and (min-width: 52.01em) {
     #menu .sub-menu li {
-      width: auto;
+        width: auto;
     }
-  
-  }
+}
 
-  @media only screen and (min-width: 992px) {
+@media only screen and (min-width: 992px) {
     #menu .main-menu {
-    display: flex;
-    justify-content: center;
-    }
-  
-    #toggle-menu, 
-    #menu label.drop-icon {
-      display: none;
-    }
-  
-    #menu ul span.drop-icon {
-      display: inline-block;
-    }
-  
-    #menu li {
-      float: left;
-      border-width: 0 1px 0 0;
-    }
-  
-    #menu .sub-menu li {
-      float: none;
-    }
-  
-    #menu .sub-menu {
-      border-width: 0;
-      margin: 0;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 13.5rem;
-      z-index: 3000;
-    }
-  
-    #menu .sub-menu, 
-    #menu input[type="checkbox"]:checked + .sub-menu {
-      display: none;
-    }
-  
-    #menu .sub-menu li {
-      border-width: 0 0 1px;
-    }
-  
-    #menu .sub-menu .sub-menu {
-      top: 0;
-      left: 100%;
-    }
-  
-    #menu li:hover > input[type="checkbox"] + .sub-menu {
-      display: block;
+        display: flex;
+        justify-content: center;
     }
 
-  }
-  @media only screen and (max-width: 990px) {
+    #toggle-menu,     #menu label.drop-icon {
+        display: none;
+    }
+
+    #menu ul span.drop-icon {
+        display: inline-block;
+    }
+
+    #menu li {
+        float: left;
+        border-width: 0 1px 0 0;
+    }
+
+    #menu .sub-menu li {
+        float: none;
+    }
+
+    #menu .sub-menu {
+        border-width: 0;
+        margin: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 13.5rem;
+        z-index: 3000;
+    }
+
+    #menu .sub-menu, #menu input[type="checkbox"]:checked + .sub-menu {
+        display: none;
+    }
+
+    #menu .sub-menu li {
+        border-width: 0 0 1px;
+    }
+
+    #menu .sub-menu .sub-menu {
+        top: 0;
+        left: 100%;
+    }
+
+    #menu li:hover > input[type="checkbox"] + .sub-menu {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 990px) {
     .form-inline {
         width: 90%;
         margin-left: 1rem;
     }
 }
+
+/* Search Button */
 
 .btn-search {
     border: 1px solid #617e64; 
@@ -252,7 +245,8 @@ ul li{
     border: 1px solid #617e64; 
 }
 
-/* top banner of the homepage */
+/* Top banner of the homepage */
+
 .banner-top {
     background-color: #f9f5f1;
     text-align: center;
@@ -278,36 +272,18 @@ ul li{
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
-.flash-notice-success{
+.flash-notice-success {
     background-color: #b7cbad;
     text-align: center;
     margin-right: -15px;
     margin-left: -15px;
 }
 
-.flash-notice-failed{
+.flash-notice-failed {
     background-color: #F1AF96; 
     text-align: center;
     margin-right: -15px;
     margin-left: -15px;
-}
-
-/* FOOTER ALL PAGES */
-
-footer {
-    background-color: #739377;
-    text-align: center;
-    padding: 1rem;
-    color: #ffffff;
-}
-
-.footer-link {
-    color: #ffffff;
-    font-size: 1.1rem;
-}
-
-.footer-link:hover {
-    color: #ffffff;
 }
 
 /* HOMEPAGE */
@@ -376,23 +352,22 @@ main {
     position: relative;
 }
 
-.card-fav-icon{
+.card-fav-icon {
     position: absolute;
     top: 0.75rem;
     left: 14.25rem;
     z-index: 100;
 }
 
-.card-fav-icon-full{
+.card-fav-icon-full {
     color: #f4bca6;
 }
 
-.card-fav-icon-empty{
+.card-fav-icon-empty {
     color: black;
 }
 
-.card-fav-icon-full:hover,
-.card-fav-icon-empty:hover{
+.card-fav-icon-full:hover, .card-fav-icon-empty:hover {
     color:#f4bca6;
 }
 
@@ -479,17 +454,16 @@ a {
 }
 
 /* Styling top level items */
+
 .nav {
     margin-right: 2rem;
 }
 
-.left-nav-link-type,
-.left-nav-link {
+.left-nav-link-type, .left-nav-link {
     color: #000000;
 }
 
-.left-nav-link-type:hover,
-.left-nav-link:hover {
+.left-nav-link-type:hover, .left-nav-link:hover {
     opacity: 0.8;
     color: #000000;
 }
@@ -763,6 +737,7 @@ ul.recipe-list li {
 }
 
 /* FORMS */
+
 .contact-form-label,
 .recipe-form-label,
 .user-form-label,
@@ -770,7 +745,7 @@ ul.recipe-list li {
     margin-top: 2rem;
 }
 
-.form-btn, .form-btn-delete, .form-btn-ingredients , .cgu-btn{
+.form-btn, .form-btn-delete, .form-btn-ingredients , .cgu-btn {
     width: 8rem;
     margin-top: 2rem;
     background-color: #b7cbad;
@@ -883,6 +858,7 @@ ul.recipe-list li {
 }
 
 /* Rating star */
+
 .stars {
 	direction: rtl;
 	margin: 0 auto;
@@ -898,15 +874,17 @@ label {
     font-size: 30px;
 }
 
-input:not(:checked) ~ label:not([for="difficulty-1"]) > .fa-star { display: none; }
+input:not(:checked) ~ label:not([for="difficulty-1"]) > .fa-star { 
+    display: none;
+}
 
-label:hover > .fa-star-o,
-label:hover ~ label > .fa-star-o,
-input:checked ~ label > .fa-star-o { display: none; }
+label:hover > .fa-star-o, label:hover ~ label > .fa-star-o, input:checked ~ label > .fa-star-o {
+    display: none;
+}
 
-label:hover > .fa-star,
-label:hover ~ label > .fa-star,
-input:checked ~ label > .fa-star { display: inline-block !important;}
+label:hover > .fa-star, label:hover ~ label > .fa-star, input:checked ~ label > .fa-star {
+    display: inline-block !important;
+}
 
 /* USER PROFILE */
 
@@ -914,7 +892,7 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     max-height: 200px;
 }
 
-/*Pagination*/
+/* PAGINATION */
 
 .page-link {
     color : #739377;
@@ -958,13 +936,13 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.19);
 }
 
-.form-asterisk-mandatory{
+.form-asterisk-mandatory {
     color: #F1AF96;
     font-weight: 700;
     font-size: 1.2rem;
 }
 
-/* Error 403/404 */
+/* PAGE ERROR */
 
 .message-error{
     text-align: center;
@@ -1037,4 +1015,22 @@ input:checked ~ label > .fa-star { display: inline-block !important;}
     display: list-item;
     list-style-type: initial;
     margin-top: .5rem;
+}
+
+/* FOOTER ALL PAGES */
+
+footer {
+    background-color: #739377;
+    text-align: center;
+    padding: 1rem;
+    color: #ffffff;
+}
+
+.footer-link {
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+.footer-link:hover {
+    color: #ffffff;
 }

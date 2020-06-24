@@ -15,10 +15,8 @@ class TimeStampEvent
 
         //If it's an entity with a createdAt property
         if(property_exists($entity, 'createdAt')){
-
             //Associate the new date time to the entity
             $entity->setCreatedAt(new \DateTime('now'));
-
         }
     }
     // This method is executed preUpdate of forms
@@ -30,10 +28,8 @@ class TimeStampEvent
 
         //If it's an entity with a updatedAt property
         if(property_exists($entity, 'updatedAt')){
-
             //Associate the new date time to the entity
             $entity->setUpdatedAt(new \DateTime('now'));
-
         }
     }
 }

@@ -1,232 +1,244 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="google-site-verification" content="D4t6H69pzONFYG8AQ02reQCKa8xA9alPDD8BYl1MoRc" />
-        <meta name="description" content="">
-        <meta name="author" content="Equipe 0'Déchet" />
-        <meta name="copyright" content="© 2020 0'Déchet" />
-        <meta property="og:url" content="https://0dechet.ddns.net/">
-        <meta property="og:title" content="0'Déchet">
-        <meta property="og:description" content="Site de partage de recettes écologiques 'Do It Yourself' de produits d'entretien, d'hygiène et de beauté.">
-        <meta name="image" property="og:image" content="{{ asset('assets/images/meta-image.png') }}">
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="D4t6H69pzONFYG8AQ02reQCKa8xA9alPDD8BYl1MoRc" />
+    <meta name="description" content="">
+    <meta name="author" content="Equipe 0'Déchet" />
+    <meta name="copyright" content="© 2020 0'Déchet" />
+    <meta property="og:url" content="https://0dechet.ddns.net/">
+    <meta property="og:title" content="0'Déchet">
+    <meta property="og:description" content="Site de partage de recettes écologiques 'Do It Yourself' de produits d'entretien, d'hygiène et de beauté.">
+    <meta name="image" property="og:image" content="{{ asset('assets/images/meta-image.png') }}">
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
 
-        {% block stylesheets %}
-        <link rel="icon" href="{{ asset('assets/images/logo-mobile.png') }}" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
-        <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
-        <link href="{{ asset('assets/css/croppie.css') }}" rel="stylesheet"/>
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        {% endblock %}
-        <title>{% block title %}{{title}} - 0Déchet{% endblock %}</title>
-    </head>
-    <body>
-        {% block nav %}
-        <header class="sticky-top">
-        <nav class="navbar justify-content-between navbar-top">
-            <a class="navbar-brand" href="{{ path('main_home') }}">
-                <img src="{{ asset('assets/images/logo.png') }}" height="80px" alt="logo" loading="lazy" class="d-none d-sm-block">
-                <img src="{{ asset('assets/images/logo.png') }}" height="60px" alt="logo" loading="lazy" class="d-sm-none">
-            </a>
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <div class="d-flex justify-content-between align-items-center navbar-profil mr-md-4">
-              <div class="d-none d-sm-flex navbar-user-img-div align-items-center">
-                <a href="{{ path('user_read', {'slug': app.user.slug})}}">
-                  {% if app.user.image is not empty %}
-                    <img src="{{ asset('assets/images/users/' ~ app.user.image) }}" class="navbar-user-img" alt="{{app.user.image}}">
-                  {% else %}
-                    <img src="{{ asset('assets/images/default-user.png') }}" class="navbar-user-img" alt="">
-                  {% endif %}
-                </a>
-              </div>
-              <div>
-                <p><a href="{{ path('user_read', {'slug': app.user.slug})}}">{{app.user.username}}</a></p>
-                <a class="btn header-btn-deconnexion mt-1" href="{{ path('app_logout') }}">Déconnexion</a>
-              </div>
-            </div>
+    {% block stylesheets %}
+    <link rel="icon" href="{{ asset('assets/images/logo-mobile.png') }}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/css/croppie.css') }}" rel="stylesheet"/>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    {% endblock %}
+    <title>{% block title %}{{title}} - 0Déchet{% endblock %}</title>
+  </head>
+  <body>
+    {% block nav %}
+    <header class="sticky-top">
+      <nav class="navbar justify-content-between navbar-top">
+        <a class="navbar-brand" href="{{ path('main_home') }}">
+            <img src="{{ asset('assets/images/logo.png') }}" height="80px" alt="logo" loading="lazy" class="d-none d-sm-block">
+            <img src="{{ asset('assets/images/logo.png') }}" height="60px" alt="logo" loading="lazy" class="d-sm-none">
+        </a>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="d-flex justify-content-between align-items-center navbar-profil mr-md-4">
+          <div class="d-none d-sm-flex navbar-user-img-div align-items-center">
+            <a href="{{ path('user_read', {'slug': app.user.slug})}}">
+            {% if app.user.image is not empty %}
+              <img src="{{ asset('assets/images/users/' ~ app.user.image) }}" class="navbar-user-img" alt="{{app.user.image}}">
             {% else %}
-            <button type="button" class="btn btn-lg form-btn-connexion" data-toggle="modal" data-target="#connexionModale">Connexion</button>
+              <img src="{{ asset('assets/images/default-user.png') }}" class="navbar-user-img" alt="">
             {% endif %}
-        </nav>
-
-        {% set route = app.request.attributes.get('_route') %}
-        {% set appSubCategory = app.request.attributes.get('subCategory') %}
-        {% set appType = app.request.attributes.get('type') %}
-        {% set appRecipe = app.request.attributes.get('recipe') %}
-
-        <nav id="menu">
-          <label for="tm" id="toggle-menu"><span class="drop-icon-burger">&equiv;</span></label>
-          <input type="checkbox" id="tm">
-
-            <ul class="main-menu clearfix">
-              <li>
-              {% if route == 'main_home' %}
-              <a class="nav-link active" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
-              {% else %}
-              <a class="nav-link" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
-              {% endif %}
-              </li>
-
-              {% if route == 'recipe_browse' %}
-              <li>
-              <a class="nav-link active" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
-              {% else %}
-              <a class="nav-link" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
-              {% endif %}
-              </li>
-
-              {% for category in allCategory %}
-              <li>
-                {% if category.slug == app.request.attributes.get('slug') %}
-                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
-
-                {% elseif appSubCategory is not null and appSubCategory.category == category %}
-                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
-
-                {% elseif appType is not null and appType.subCategory.category == category %}
-                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
-
-                {% elseif appRecipe is not null and appRecipe.type.subCategory.category == category %}
-                <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
-
-                {% else %}
-                <a class="nav-link" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
-                {% endif %}
-
-                <input type="checkbox" id="sm{{loop.index}}">
-                <ul class="sub-menu">
-                {% for subCategory in category.subCategories %}
-                  <li><a class="nav-link" href="{{ path('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}
-                      <span class="drop-icon">&rtrif;</span>
-                      {% if category.id == 1 %}
-                      <label title="Toggle Drop-down" class="drop-icon" for="sm{{100 + loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label>
-                      {% else %}
-                      <label title="Toggle Drop-down" class="drop-icon" for="sm{{200 + loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label>
-                      {% endif %}
-                    </a>
-                    {% if category.id == 1 %}
-                    <input type="checkbox" id="sm{{100 + loop.index}}">
-                    {% else %}
-                    <input type="checkbox" id="sm{{200 + loop.index}}">
-                    {% endif %}
-                    <ul class="sub-menu">
-                    {% for type in subCategory.types %}
-                      <li><a class="nav-link" href="{{ path('recipe_browseByType', {'slug': type.slug}) }}">{{type.name}}</a></li>
-                    {% endfor %}
-                    </ul>
-                  </li>
-                {% endfor %}
-                </ul>
-                
-              </li>
-              {% endfor %}
-              
-              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-              <li><a class="nav-link d-md-none" href="{{ path('user_read', {'slug': app.user.slug})}}">Accéder à mon profil</a></li>
-              {% endif %}
-              <li>
-                <form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
-                  <input class="form-control mr-sm-2" name="search" type="text" placeholder="Rechercher" aria-label="Rechercher">
-                  <button class="btn my-sm-0 btn-search" type="submit" formaction="{{ path('recipe_search') }}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </form>
-              </li>
-            </ul>
-        </nav>
-    </header>
-    {% endblock %}
-
-    {{ include('partials/modal.login.html.twig') }}
-
-    {% block body %}{% endblock %}
-
-    {% block footer %}
-        <footer>
-          <div>
-            <a class="footer-link" href="{{ path('main_mentions_legales') }}">Mentions légales</a> - 
-            <a class="footer-link" href="{{ path('main_contact') }}">Contact</a> - 
-            <a class="footer-link" href="{{ path('main_team') }}">Notre équipe</a>
+            </a>
           </div>
-            <p class="mt-4">Tous droits réservés © 2020 0'Déchet</p>
-        </footer>
-    {% endblock %}
+          <div>
+            <p><a href="{{ path('user_read', {'slug': app.user.slug})}}">{{app.user.username}}</a></p>
+            <a class="btn header-btn-deconnexion mt-1" href="{{ path('app_logout') }}">Déconnexion</a>
+          </div>
+        </div>
+        {% else %}
+        <button type="button" class="btn btn-lg form-btn-connexion" data-toggle="modal" data-target="#connexionModale">Connexion</button>
+        {% endif %}
+      </nav>
 
-    {% block javascripts %}
-    {# <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> #}
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-     <script src="https://www.google.com/recaptcha/api.js"></script>
-    <script>
-      $('.custom-file-input').on('change', function(event) {
-          var inputFile = event.currentTarget;
-          $(inputFile).parent()
-              .find('.custom-file-label')
-              .html(inputFile.files[0].name);
-      });
-    </script>
-    <script>
-      jQuery(document).ready(function () {
-      jQuery('.add-another-collection-widget').click(function (e) {
-          var list = jQuery(jQuery(this).attr('data-list-selector'));
-          // Try to find the counter of the list or use the length of the list
-          var counter = list.data('widget-counter') || list.children().length;
+      {% set route = app.request.attributes.get('_route') %}
+      {% set appSubCategory = app.request.attributes.get('subCategory') %}
+      {% set appType = app.request.attributes.get('type') %}
+      {% set appRecipe = app.request.attributes.get('recipe') %}
 
-          // grab the prototype template
-          var newWidget = list.attr('data-prototype');
-          // replace the "__name__" used in the id and name of the prototype
-          // with a number that's unique to your emails
-          // end name attribute looks like name="contact[emails][2]"
-          newWidget = newWidget.replace(/__name__/g, counter);
-          // Increase the counter
-          counter++;
-          // And store it, the length cannot be used if deleting widgets is allowed
-          list.data('widget-counter', counter);
+      <nav id="menu">
+        <label for="tm" id="toggle-menu"><span class="drop-icon-burger">&equiv;</span></label>
+        <input type="checkbox" id="tm">
 
-          // create a new list element and add it to the list
-          var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-          newElem.appendTo(list);
-          addTagFormDeleteLink(newElem);
+          <ul class="main-menu clearfix">
+            <li>
+            {% if route == 'main_home' %}
+            <a class="nav-link active" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
+            {% else %}
+            <a class="nav-link" href="{{ path('main_home') }}">Accueil<span class="sr-only">(current)</span></a></li>
+            {% endif %}
+            </li>
 
-          });
-      });
+            {% if route == 'recipe_browse' %}
+            <li>
+            <a class="nav-link active" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
+            {% else %}
+            <a class="nav-link" href="{{ path('recipe_browse') }}">Toutes les recettes</a></li>
+            {% endif %}
+            </li>
 
-      $ingredientsCollectionHolder = $('ul#ingredient-fields-list');
-      $ingredientsCollectionHolder.find('li').each(function() {
-          addTagFormDeleteLink($(this));
-      });
+            {% for category in allCategory %}
+            <li>
+              {% if category.slug == app.request.attributes.get('slug') %}
+              <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
 
-      $equipmentsCollectionHolder = $('ul#equipement-fields-list');
-      $equipmentsCollectionHolder.find('li').each(function() {
-          addTagFormDeleteLink($(this));
-      });
+              {% elseif appSubCategory is not null and appSubCategory.category == category %}
+              <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
 
-      function addTagFormDeleteLink($tagFormLi) {
-          var $removeFormButton = $('<a class="form-ingredient-delete">Supprimer</a>');
-          $tagFormLi.append($removeFormButton);
-          $removeFormButton.on('click', function(e) {
-              // remove the li for the tag form
-              $tagFormLi.remove();
-          });
-      }
-    </script>
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('assets/js/croppie.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/ajustement_photo.js') }}"></script>
-    <script>
-      $(document).ready(function () {
-        $(".confirmModalLink").click(function(e) {
-            e.preventDefault();
-            $("#confirmModal").modal("show");
-            $("#createmodel").modal("hide");
+              {% elseif appType is not null and appType.subCategory.category == category %}
+              <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
+
+              {% elseif appRecipe is not null and appRecipe.type.subCategory.category == category %}
+              <a class="nav-link active" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
+
+              {% else %}
+              <a class="nav-link" href="{{ path('recipe_browseByCategory', {'slug': category.slug}) }}">{{category.name}}<span class="drop-icon">▾</span><label title="Toggle Drop-down" class="drop-icon" for="sm{{loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label></a>
+              {% endif %}
+
+              <input type="checkbox" id="sm{{loop.index}}">
+              <ul class="sub-menu">
+              {% for subCategory in category.subCategories %}
+                <li><a class="nav-link" href="{{ path('recipe_browseBySubCategory', {'slug': subCategory.slug}) }}">{{subCategory.name}}
+                    <span class="drop-icon">&rtrif;</span>
+                    {% if category.id == 1 %}
+                    <label title="Toggle Drop-down" class="drop-icon" for="sm{{100 + loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label>
+                    {% else %}
+                    <label title="Toggle Drop-down" class="drop-icon" for="sm{{200 + loop.index}}"><span class="fa fa-plus fa-lg" aria-hidden="true"></span></label>
+                    {% endif %}
+                  </a>
+                  {% if category.id == 1 %}
+                  <input type="checkbox" id="sm{{100 + loop.index}}">
+                  {% else %}
+                  <input type="checkbox" id="sm{{200 + loop.index}}">
+                  {% endif %}
+                  <ul class="sub-menu">
+                  {% for type in subCategory.types %}
+                    <li><a class="nav-link" href="{{ path('recipe_browseByType', {'slug': type.slug}) }}">{{type.name}}</a></li>
+                  {% endfor %}
+                  </ul>
+                </li>
+              {% endfor %}
+              </ul>
+              
+            </li>
+            {% endfor %}
+            
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li><a class="nav-link d-md-none" href="{{ path('user_read', {'slug': app.user.slug})}}">Accéder à mon profil</a></li>
+            {% endif %}
+            <li>
+              <form class="form-inline my-2 align-self-center d-lg-flex flex-nowrap" method="get">
+                <input class="form-control mr-sm-2" name="search" type="text" placeholder="Rechercher" aria-label="Rechercher">
+                <button class="btn my-sm-0 btn-search" type="submit" formaction="{{ path('recipe_search') }}"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </form>
+            </li>
+          </ul>
+      </nav>
+  </header>
+  {% endblock %}
+
+  {{ include('partials/modal.login.html.twig') }}
+
+  {% block body %}{% endblock %}
+
+  {% block footer %}
+  <footer>
+    <div>
+      <a class="footer-link" href="{{ path('main_mentions_legales') }}">Mentions légales</a> - 
+      <a class="footer-link" href="{{ path('main_contact') }}">Contact</a> - 
+      <a class="footer-link" href="{{ path('main_team') }}">Notre équipe</a>
+    </div>
+      <p class="mt-4">Tous droits réservés © 2020 0'Déchet</p>
+  </footer>
+  {% endblock %}
+
+  {% block javascripts %}
+  {# Scripts Bootstrap #}
+  {# <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> #}
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+  {# Script Captcha #}
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+
+  {# Scripts Formulaires CollectionType #}
+  <script>
+    $('.custom-file-input').on('change', function(event) {
+        var inputFile = event.currentTarget;
+        $(inputFile).parent()
+            .find('.custom-file-label')
+            .html(inputFile.files[0].name);
+    });
+  </script>
+
+  <script>
+    jQuery(document).ready(function () {
+    jQuery('.add-another-collection-widget').click(function (e) {
+        var list = jQuery(jQuery(this).attr('data-list-selector'));
+        // Try to find the counter of the list or use the length of the list
+        var counter = list.data('widget-counter') || list.children().length;
+
+        // grab the prototype template
+        var newWidget = list.attr('data-prototype');
+        // replace the "__name__" used in the id and name of the prototype
+        // with a number that's unique to your emails
+        // end name attribute looks like name="contact[emails][2]"
+        newWidget = newWidget.replace(/__name__/g, counter);
+        // Increase the counter
+        counter++;
+        // And store it, the length cannot be used if deleting widgets is allowed
+        list.data('widget-counter', counter);
+
+        // create a new list element and add it to the list
+        var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+        newElem.appendTo(list);
+        addTagFormDeleteLink(newElem);
+
         });
-      });
-    </script>
+    });
 
-    {% endblock %}
-    </body>
+    $ingredientsCollectionHolder = $('ul#ingredient-fields-list');
+    $ingredientsCollectionHolder.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    $equipmentsCollectionHolder = $('ul#equipement-fields-list');
+    $equipmentsCollectionHolder.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    function addTagFormDeleteLink($tagFormLi) {
+        var $removeFormButton = $('<a class="form-ingredient-delete">Supprimer</a>');
+        $tagFormLi.append($removeFormButton);
+        $removeFormButton.on('click', function(e) {
+            // remove the li for the tag form
+            $tagFormLi.remove();
+        });
+    }
+  </script>
+
+  {# Script perso #}
+  <script src="{{ asset('assets/js/app.js') }}"></script>
+
+  {# Scripts Croppie #}
+  <script src="{{ asset('assets/js/croppie.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('assets/js/ajustement_photo.js') }}"></script>
+
+  {# Script Modales #}
+  <script>
+    $(document).ready(function () {
+      $(".confirmModalLink").click(function(e) {
+          e.preventDefault();
+          $("#confirmModal").modal("show");
+          $("#createmodel").modal("hide");
+      });
+    });
+  </script>
+
+  {% endblock %}
+  </body>
 </html>
